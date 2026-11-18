@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+<title>Vendor Billing & Ledger Pro</title>
+<link rel="stylesheet" href="style.css"/>
+<script>window.onerror=function(m,u,l){var b=document.getElementById('boot');if(b){b.innerHTML='⚠ App chali nahi — error: '+m+' (line '+l+').';b.style.animation='none';b.style.opacity=1}};</script>
+</head>
+<body>
+<div id="boot" style="position:fixed;left:0;right:0;top:0;z-index:99999;background:#e11d48;color:#fff;padding:10px 12px;font:700 13px sans-serif;text-align:center;opacity:0;animation:bootshow .01s 3s forwards">⚠ App poori load nahi hui. File dobara open karein.</div>
+<div class="app">
+<div id="toast" class="toast hidden"></div>
+
+<!-- HOME -->
+<div id="pg-home" class="pg">
+ <header class="hdr"><div class="row"><div><h1>Billing & Ledger</h1><p>Shop • Personal • Doctors • v18</p></div>
+ <button class="btn-glass" onclick="openModal('m-backup')">⬇ Backup</button></div></header>
+ <div class="body">
+  <div class="big" onclick="openShop()"><div class="left"><button type="button" class="pen" onpointerdown="penDown(event,'shop')" onpointerup="penUp()" onpointercancel="penUp()" onpointerleave="penUp()" onclick="penTap(event)" oncontextmenu="return false">✎</button><div class="ic">🏪</div><div><h3 id="h-n-shop">Shop Vendors Account</h3><small>Vendors ka baaki</small></div></div><div class="amt mono"><small>Total Baaki</small><span id="h-shop">₹0</span></div></div>
+  <div class="big" onclick="openCash('personal')"><div class="left"><button type="button" class="pen" onpointerdown="penDown(event,'personal')" onpointerup="penUp()" onpointercancel="penUp()" onpointerleave="penUp()" onclick="penTap(event)" oncontextmenu="return false">✎</button><div class="ic">👤</div><div><h3 id="h-n-personal">Personal Account</h3><small>Apna personal hisaab</small></div></div><div class="amt mono"><small>Total Baaki</small><span id="h-personal">₹0</span></div></div>
+  <div class="big" onclick="openVendors()"><div class="left"><button type="button" class="pen" onpointerdown="penDown(event,'vendors')" onpointerup="penUp()" onpointercancel="penUp()" onpointerleave="penUp()" onclick="penTap(event)" oncontextmenu="return false">✎</button><div class="ic">🧾</div><div><h3 id="h-n-vendors">Vendors Accounts</h3><small id="h-vcount">0 vendors</small></div></div><div class="amt mono"><small>Total Baaki</small><span id="h-vendors">₹0</span></div></div>
+  <div id="h-custom" style="display:contents"></div>
+  <button class="btn-d" style="padding:14px" onclick="openModal('m-acc')">+ Naya Account</button>
+ </div>
+</div>
+
+<!-- VENDORS LIST -->
+<div id="pg-vendors" class="pg hidden">
+ <div class="nav"><div class="l"><button class="nb" onclick="show('pg-home');renderHome()">← Home</button><div><small>Page 2</small><div class="t" id="v-title">Vendors Accounts</div></div></div>
+ <div class="mono" style="font-weight:900;color:#fde047" id="v-total">₹0</div></div>
+ <div class="tabs"><button id="tb-v" class="tab on" onclick="vTab('v')">Doctors (<span id="vcount">0</span>)</button><button id="tb-r" class="tab" onclick="vTab('r')">Fixed Rate List</button></div>
+ <div id="vw-v" class="body">
+  <div class="srow"><input id="vsearch" oninput="renderVendors()" placeholder="Doctor ka naam search karein..."/><button class="btn-p" onclick="openModal('m-vendor')">+ Add Doctor</button></div>
+  <div id="vlist" style="display:flex;flex-direction:column;gap:10px"></div>
+ </div>
+ <div id="vw-r" class="body hidden">
+  <div class="note"><b>Locked Rate Master</b><br/>Yahan set kiya rate billing me automatic lock hokar aayega. Badalne ke liye <b>Edit</b> dabayein.</div>
+  <form onsubmit="addRate(event)" class="arf"><input id="nr-name" type="text" required placeholder="Medicine / Item Name"/><input id="nr-val" type="number" step="0.01" min="0" required placeholder="Rate ₹"/><button class="btn-d">+ Fix Rate</button></form>
+  <div class="rt" id="rlist"></div>
+ </div>
+</div>
+
+<!-- CASHBOOK -->
+<div id="pg-cash" class="pg hidden">
+ <div class="nav no-print"><div class="l"><button class="nb" onclick="show('pg-home');renderHome()">← Home</button><div><small>Page 2 • Account</small><div class="t" id="c-name"></div></div></div>
+ <div style="display:flex;gap:6px"><button class="nb" onclick="openImport('cash')">📥</button><button class="nb pdf" onclick="window.print()">PDF / Print</button></div></div>
+ <div class="ws">
+  <div class="ban"><div class="a"><h2 id="c-title"></h2></div><div class="b mono" id="c-bal">0</div></div>
+  <div class="sc"><table><thead><tr><th>Date</th><th class="tl">Particular</th><th>Jama (+)</th><th>Kharch (−)</th><th>Balance</th><th class="ca no-print"></th></tr></thead><tbody id="c-body"></tbody></table></div>
+  <div class="ep no-print"><h3>+ Nayi Entry</h3>
+  <form onsubmit="addCash(event)" class="eg">
+   <div class="fg"><label class="fl">Date</label><input id="c-date" type="date" class="di" required/></div>
+   <div class="fg"><label class="fl">Type</label><select id="c-type" class="di"><option value="in">Jama (+)</option><option value="out">Kharch (−)</option></select></div>
+   <div class="fg"><label class="fl">Particular</label><input id="c-part" class="di" required placeholder="Detail"/></div>
+   <div class="fg"><label class="fl">Amount ₹</label><input id="c-amt" type="number" step="0.01" min="0.01" class="di mono" required/></div>
+   <button class="go">+ Save Entry</button></form></div>
+ </div>
+</div>
+
+<!-- SHOP -->
+<div id="pg-shop" class="pg hidden">
+ <div class="gh"><button class="gb" onclick="show('pg-home');renderHome()">←</button><b>Vendor Ledger</b><button class="gb" onclick="openImport('shop')">📥</button><button class="gb" onclick="toggleSearch()">🔍</button><button class="gb" onclick="openChipModal()">⋮</button></div>
+ <div id="s-srow" class="srch hidden"><input id="s-q" placeholder="Amount (349) ya date (5, 7, 12 / 05-11) ya naam" oninput="renderShopAll()"/></div>
+ <div id="s-chips" class="chips"></div><div id="s-sum"></div>
+ <div class="sinfo" id="s-info"></div>
+ <div class="st"><div class="sc"><table><colgroup><col style="width:26%"><col style="width:14%"><col style="width:14%"><col style="width:17%"><col style="width:29%"></colgroup><thead><tr><th>Vendor</th><th>Bills</th><th>Paid</th><th>Net Amount</th><th>Date</th></tr></thead><tbody id="s-body"></tbody></table></div></div>
+ <button class="more" style="width:auto;margin:0 12px 10px" id="s-more" onclick="openShopFull()"></button>
+ <form class="addbar" onsubmit="addShop(event)">
+  <input id="s-v" class="ai" list="s-vlist" placeholder="Vendor ▼" autocomplete="off"/><input id="s-bill" class="ai" type="number" step="0.01" placeholder="Bill (₹)"/><input id="s-paid" class="ai" type="number" step="0.01" placeholder="Paid (₹)"/>
+  <input id="s-date" class="ai" type="text" placeholder="Date" onfocus="this.type='date'" onblur="if(!this.value)this.type='text'"/><button class="adb">Add</button>
+ </form><datalist id="s-vlist"></datalist>
+</div>
+<div id="pg-shopv" class="pg hidden">
+ <div class="gh"><button class="gb" onclick="show('pg-shop');renderShopAll()">←</button><b id="sv-name"></b></div>
+ <div class="sumr" style="margin-top:12px"><div class="l">Remaining</div><div class="v mono" id="sv-bal"></div></div>
+ <div class="sinfo" id="sv-info"></div>
+ <div class="st"><div class="sc"><table><colgroup><col style="width:26%"><col style="width:14%"><col style="width:14%"><col style="width:17%"><col style="width:29%"></colgroup><thead><tr><th>Vendor</th><th>Bills</th><th>Paid</th><th>Net Amount</th><th>Date</th></tr></thead><tbody id="sv-body"></tbody></table></div></div>
+</div>
+<div id="pg-shopfull" class="pg hidden">
+ <div class="gh"><button class="gb" onclick="show('pg-shop');renderShopAll()">←</button><b>Full Entries (sab months)</b></div>
+ <div class="srch"><input id="sf-q" placeholder="Amount (349) ya date (5, 7, 12 / 05-11) ya naam" oninput="renderShopAll()"/></div>
+ <div class="sinfo" id="sf-info" style="margin-top:6px"></div>
+ <div class="st"><div class="sc"><table><colgroup><col style="width:26%"><col style="width:14%"><col style="width:14%"><col style="width:17%"><col style="width:29%"></colgroup><thead><tr><th>Vendor</th><th>Bills</th><th>Paid</th><th>Net Amount</th><th>Date</th></tr></thead><tbody id="sf-body"></tbody></table></div></div>
+</div>
+
+<!-- UDHAAR -->
+<div id="pg-ud" class="pg hidden">
+ <div class="gh"><button class="gb" onclick="show('pg-home');renderHome()">←</button><b id="ud-title"></b><span id="ud-tot" class="mono" style="font-size:13px;font-weight:800;white-space:nowrap"></span><button class="gb" onclick="openImport('ud')">📥</button></div>
+ <div class="srch"><input id="ud-q" list="ud-nl" placeholder="🔍 Naam search karein" oninput="udInput()" autocomplete="off"/></div>
+ <div id="ud-sug" class="chips hidden" style="grid-template-columns:1fr;max-height:50vh;overflow:auto"></div>
+ <div class="sinfo" id="ud-info" style="margin-top:4px"></div>
+ <div class="st" id="ud-st"><div class="sc"><table><colgroup><col style="width:19%"><col style="width:10%"><col style="width:25%"><col style="width:10%"><col style="width:10%"><col style="width:16%"><col style="width:10%"></colgroup><thead><tr><th class="h1">Name</th><th class="h2">Amount</th><th class="h1">Description</th><th class="h3">Paid<br>Amount</th><th class="h1">Net<br>amount</th><th class="h1">Date</th><th class="h1"></th></tr></thead><tbody id="ud-body"></tbody></table></div></div>
+ <form class="addbar" style="grid-template-columns:repeat(6,1fr)" onsubmit="addUd(event)">
+  <input id="ud-n" class="ai" list="ud-nl" placeholder="Name" autocomplete="off" style="grid-column:span 3"/>
+  <input id="ud-d" class="ai" placeholder="Description" style="grid-column:span 3"/>
+  <input id="ud-a" class="ai" type="number" step="0.01" placeholder="Amount ₹" style="grid-column:span 2"/>
+  <input id="ud-p" class="ai" type="number" step="0.01" placeholder="Paid ₹" style="grid-column:span 2"/>
+  <button class="adb" style="grid-column:span 2;padding:8px">Add</button>
+ </form><datalist id="ud-nl"></datalist>
+</div>
+
+<!-- SHEET (including Rate sheet) -->
+<div id="pg-sh" class="pg hidden">
+ <div class="gh"><button class="gb" onclick="show('pg-home');renderHome()">←</button><b id="sh-title"></b><span id="sh-tot" class="mono" style="font-size:13px;font-weight:800;white-space:nowrap"></span><button class="gb" onclick="openImport('sheet')">📥</button><button class="gb" onclick="openModal('m-rf')" title="Price formula">⚙</button></div>
+ <div id="sh-pl" class="hidden"><button class="plbar" onclick="plToggle()"><span id="pl-t"></span><span id="pl-a">▼</span></button><div id="pl-body" class="stt hidden"></div></div>
+ <div class="srch"><input id="sh-q" list="sh-nl" placeholder="🔍 Search karein" oninput="renderSheet()" autocomplete="off"/></div>
+ <div class="sinfo" id="sh-info" style="margin-top:4px"></div>
+ <div class="st" id="sh-st"><div class="sc"><table><colgroup id="sh-cg"></colgroup><thead id="sh-th"></thead><tbody id="sh-body"></tbody></table></div></div>
+ <form class="addbar" id="sh-form" style="grid-template-columns:repeat(6,1fr)" onsubmit="addSheet(event)"></form><datalist id="sh-nl"></datalist>
+</div>
+
+<!-- CLINIC -->
+<div id="pg-cl" class="pg hidden">
+ <div class="nav"><div class="l"><button class="nb" onclick="backToVendors()">← Doctors</button><div style="min-width:0"><small>Clinic Sheet</small><div class="t" id="cl-nt"></div></div></div><button class="nb wa" onclick="clImg()">📷 Image</button></div>
+ <div class="clban"><div class="cla"><div class="cln" id="cl-name"></div><div class="cll">IS PERIOD KA NET AMOUNT</div><div class="clp"><span id="cl-per"></span><button class="clpen" onclick="openCper()">✎</button></div></div><div class="clb mono" id="cl-tot"></div></div>
+ <div class="clt"><table><colgroup><col style="width:37%"><col style="width:15%"><col style="width:13%"><col style="width:17.5%"><col style="width:17.5%"></colgroup><thead><tr><th>Products</th><th>Net Qty<br>in (tab)</th><th>MRP<br>per tab</th><th>Total<br>Amount</th><th id="cl-th5"></th></tr></thead><tbody id="cl-body"></tbody></table></div>
+ <div class="clbot">
+  <form id="cl-form" onsubmit="addClinic(event)" style="display:flex;flex-direction:column;gap:6px">
+   <div class="clin1"><input id="cl-p" list="cl-pl" placeholder="Product naam" autocomplete="off" oninput="clHint()"/><input id="cl-m" type="number" step="0.01" placeholder="MRP/tab"/></div>
+   <button type="button" class="clhd" onclick="openClog()"><span>Product<br>Added</span><span>Minus<br>product</span><span>Last month's<br>qty.</span><span>Qty. remained<br>at shop</span><span>Date</span></button>
+   <div class="clin"><input id="cl-a" type="number" step="0.01" placeholder="+"/><input id="cl-n" type="number" step="0.01" placeholder="−"/><input id="cl-l" type="number" step="0.01" placeholder="Last"/><input id="cl-r" type="number" step="0.01" placeholder="Remain"/><input id="cl-d" type="text" placeholder="Auto" onfocus="this.type='date'" onblur="if(!this.value)this.type='text'"/></div>
+   <button class="cladd">+ Add Entry</button>
+   <div class="clcap">Upar ke header par tap karein = is period ki saari entries</div>
+  </form><datalist id="cl-pl"></datalist>
+ </div>
+</div>
+
+<div id="pg-l3" class="pg hidden"></div>
+<div id="pg-l4" class="pg hidden"></div>
+
+<datalist id="items"></datalist>
+
+<!-- MODALS -->
+<div id="m-imp" class="mb hidden"><div class="mc"><div class="mh"><h3>📥 Excel se Import</h3><button class="x" onclick="closeModal('m-imp')">✕</button></div>
+<div class="note" id="imp-help" style="margin-bottom:10px"></div>
+<textarea id="imp-text" rows="6" class="li mono" style="font-size:11px;margin-bottom:8px" placeholder="Excel ke cells copy karke yahan paste karein..."></textarea>
+<input type="file" accept=".csv,.tsv,.txt,text/csv,text/plain" onchange="impFile(event)" style="width:100%;font-size:12px;margin-bottom:10px"/>
+<button class="btn-p" style="width:100%;padding:12px" onclick="runImport()">Import Karein</button></div></div>
+
+<div id="m-rf" class="mb hidden"><div class="mc"><div class="mh"><h3>Price formula</h3><button class="x" onclick="closeModal('m-rf')">✕</button></div>
+<form onsubmit="saveRf(event)"><div class="note" style="margin-bottom:10px">Net rate = Rate + GST %<br>Price = (Net rate + Extra ₹) + Margin %<br><small>Badlav sirf aage ki nayi entries par lagega.</small></div>
+<div class="g2"><div class="lf"><label>Extra ₹ (default 3)</label><input id="rf-add" class="li mono" type="number" step="0.01"/></div><div class="lf"><label>Margin % (default 20)</label><input id="rf-mp" class="li mono" type="number" step="0.01"/></div></div>
+<button class="btn-p" style="width:100%;padding:12px">Save</button></form></div></div>
+
+<div id="m-accren" class="mb hidden"><div class="mc"><div class="mh"><h3>Account ka naam badlein</h3><button class="x" onclick="closeModal('m-accren')">✕</button></div>
+<form onsubmit="saveAccRen(event)"><div class="lf"><label>Naya naam</label><input id="ar-name" class="li" required/></div><div id="ar-catbox" class="hidden"><div class="lf"><label>Andar ka format</label><select id="ar-fmt" class="li"><option value="cash">Jama / Kharch (cashbook)</option><option value="udhaar">Udhaar sheet</option><option value="personal">Personal sheet</option><option value="rate">Rate sheet (GST + Price)</option><option value="sheet">Apne columns</option></select></div><div class="lf"><label>Category (icon)</label><select id="ar-cat" class="li"><option value="shop">🏪 Shop</option><option value="udhaar">💸 Udhaar Khata</option><option value="personal">👤 Personal</option><option value="bank">🏦 Bank</option><option value="ghar">🏠 Ghar</option><option value="other">📒 Other</option></select></div></div><button class="btn-p" style="width:100%;padding:12px">Save Name</button></form></div></div>
+
+<div id="m-acc" class="mb hidden"><div class="mc"><div class="mh"><h3>Naya Account</h3><button class="x" onclick="closeModal('m-acc')">✕</button></div>
+<form onsubmit="createAcc(event)">
+<div class="lf"><label>Account ka naam *</label><input id="ac-name" class="li" required/></div>
+<div class="lf"><label>Category (icon)</label><select id="ac-cat" class="li"><option value="shop">🏪 Shop</option><option value="udhaar">💸 Udhaar Khata</option><option value="personal">👤 Personal</option><option value="bank">🏦 Bank</option><option value="ghar">🏠 Ghar</option><option value="other">📒 Other</option></select></div>
+<div class="lf"><label>Andar ka format</label><select id="ac-fmt" class="li" onchange="fmtChange()"><option value="cash">Jama / Kharch (cashbook)</option><option value="udhaar">Udhaar sheet</option><option value="personal">Personal sheet</option><option value="rate">Rate sheet — Products, Rate, GST, MRP, Qty (Net+Price auto)</option><option value="sheet">Apne columns khud banayein</option></select></div>
+<div id="ac-ds" class="lf hidden"><label>Apne columns (Date apne aap lagegi)</label><div id="ds-list"></div><button type="button" class="btn-d" style="margin-top:6px" onclick="dsAdd()">+ Column</button></div>
+<button class="btn-p" style="width:100%;padding:12px">Account Banayein</button></form></div></div>
+
+<div id="m-vendor" class="mb hidden"><div class="mc"><div class="mh"><h3>Add New Doctor</h3><button class="x" onclick="closeModal('m-vendor')">✕</button></div>
+<form onsubmit="createVendor(event)">
+<div class="lf"><label>Doctor Name *</label><input id="vn-name" class="li" required/></div>
+<div class="lf"><label>WhatsApp Number (optional)</label><input id="vn-phone" class="li" type="tel"/></div>
+<div class="lf"><label>Format</label><select id="vn-fmt" class="li"><option value="">Normal ledger</option><option value="clinic">Clinic sheet</option></select></div>
+<div class="g2"><div class="lf"><label>Opening Date</label><input id="vn-date" class="li" type="date" required/></div><div class="lf"><label>Previous Balance ₹</label><input id="vn-bal" class="li mono" type="number" step="0.01" value="0" required/></div></div>
+<button class="btn-p" style="width:100%;padding:12px">Create Doctor Ledger</button></form></div></div>
+
+<div id="m-edit" class="mb hidden"><div class="mc"><div class="mh"><h3>Edit Entry</h3><button class="x" onclick="closeModal('m-edit')">✕</button></div>
+<form onsubmit="saveEdit(event)"><input type="hidden" id="ed-id"/><input type="hidden" id="ed-type"/>
+<div class="lf"><label>Date</label><input id="ed-date" class="li" type="date" required/></div>
+<div id="ed-o" class="lf hidden"><label>Previous Balance ₹</label><input id="ed-open" class="li mono" type="number" step="0.01"/></div>
+<div id="ed-i" class="hidden"><div class="lf"><label>Particular</label><input id="ed-part" class="li"/></div>
+<div class="g2"><div class="lf"><label>Qty</label><input id="ed-qty" class="li mono" type="number" step="1"/></div><div class="lf"><label>Rate ₹</label><input id="ed-rate" class="li mono" type="number" step="0.01"/></div></div></div>
+<div id="ed-r" class="hidden"><div class="g2"><div class="lf"><label>Mode</label><select id="ed-mode" class="li"><option>cash</option><option>online</option></select></div><div class="lf"><label>Received ₹</label><input id="ed-rec" class="li mono" type="number" step="0.01"/></div></div></div>
+<button class="btn-p" style="width:100%;padding:12px">Update & Recalculate</button></form></div></div>
+
+<div id="m-ren" class="mb hidden"><div class="mc"><div class="mh"><h3>Vendor ka naam badlein</h3><button class="x" onclick="closeModal('m-ren')">✕</button></div>
+<form onsubmit="saveRename(event)"><div class="lf"><label>Naya naam</label><input id="ren-name" class="li" required/></div><button class="btn-p" style="width:100%;padding:12px">Save Name</button></form></div></div>
+<div id="m-chip" class="mb hidden"><div class="mc"><div class="mh"><h3>Vendor Chips</h3><button class="x" onclick="closeModal('m-chip')">✕</button></div>
+<form onsubmit="addChip(event)" class="arf"><input id="chip-name" type="text" required placeholder="Naya vendor naam"/><button class="btn-d">+ Add</button></form>
+<div class="rt" id="chip-list" style="margin-top:10px"></div></div></div>
+<div id="m-share" class="mb hidden"><div class="mc"><div class="mh"><h3>Bill Image Ready</h3><button class="x" onclick="closeModal('m-share')">✕</button></div>
+<img id="share-img" alt="Bill" style="width:100%;border:1px solid #cbd5e1;border-radius:10px;margin-bottom:12px"/>
+<div class="g2"><button class="btn-p" style="background:#22c55e;color:#052e16" onclick="retryShare()">Share / WhatsApp</button><button class="btn-d" onclick="saveJpg()">Save JPG</button></div></div></div>
+
+<div id="m-backup" class="mb hidden"><div class="mc"><div class="mh"><h3>Backup & Restore</h3><button class="x" onclick="closeModal('m-backup')">✕</button></div>
+<div class="bk"><h4>1. Full Backup</h4><p>Shop, Personal, Doctors, Rates sab ka backup.</p><div class="g2"><button class="btn-p" onclick="dlBackup()">Download .JSON</button><button class="btn-d" onclick="copyBackup()">Copy Text</button></div></div>
+<div class="bk"><h4>2. Restore</h4><p>.json file chunein ya text paste karein.</p>
+<input type="file" accept=".json,application/json" onchange="restoreFile(event)" style="width:100%;font-size:12px;margin-bottom:8px"/>
+<textarea id="rs-text" rows="3" class="li mono" style="font-size:11px;margin-bottom:8px" placeholder="Backup text yahan paste karein..."></textarea>
+<button class="btn-d" style="width:100%" onclick="restoreText()">Restore From Text</button></div>
+<div style="text-align:center;margin-bottom:10px"><button class="btn-d" onclick="toggleTheme()">🌙 / ☀ Theme</button></div>
+<div style="text-align:center"><button onclick="resetDemo()" style="background:none;color:#e11d48;font-size:12px;font-weight:700">Reset to Default Sample Data</button></div></div></div>
+
+<div id="m-redit" class="mb hidden"><div class="mc"><div class="mh"><h3>Edit Rate Entry</h3><button class="x" onclick="closeModal('m-redit')">✕</button></div>
+<form onsubmit="saveRedit(event)"><input type="hidden" id="re-id"/>
+<div class="lf"><label>Product</label><input id="re-p" class="li" required/></div>
+<div class="g2"><div class="lf"><label>Rate ₹</label><input id="re-r" class="li mono" type="number" step="0.01" required/></div>
+<div class="lf"><label>GST %</label><input id="re-g" class="li mono" type="number" step="0.01" placeholder="5"/></div></div>
+<div class="g2"><div class="lf"><label>MRP ₹</label><input id="re-m" class="li mono" type="number" step="0.01"/></div>
+<div class="lf"><label>Qty</label><input id="re-q" class="li mono" type="number" step="0.01"/></div></div>
+<div class="lf"><label>Date</label><input id="re-d" class="li" type="date"/></div>
+<button class="btn-p" style="width:100%;padding:12px">Update</button></form></div></div>
+
+<!-- NEW: Shop Entry Edit Modal -->
+<div id="m-shopedit" class="mb hidden"><div class="mc"><div class="mh"><h3>Edit Shop Entry</h3><button class="x" onclick="closeModal('m-shopedit')">✕</button></div>
+<form onsubmit="saveShopEdit(event)"><input type="hidden" id="se-id"/>
+<div class="lf"><label>Vendor</label><input id="se-v" class="li" list="s-vlist" required/></div>
+<div class="g2"><div class="lf"><label>Bill ₹</label><input id="se-bill" class="li mono" type="number" step="0.01"/></div>
+<div class="lf"><label>Paid ₹</label><input id="se-paid" class="li mono" type="number" step="0.01"/></div></div>
+<div class="lf"><label>Date</label><input id="se-date" class="li" type="date" required/></div>
+<button class="btn-p" style="width:100%;padding:12px">Update Entry</button></form></div></div>
+
+<!-- NEW: Clinic Period Modal -->
+<div id="m-cper" class="mb hidden"><div class="mc"><div class="mh"><h3>Period Set</h3><button class="x" onclick="closeModal('m-cper')">✕</button></div>
+<form onsubmit="saveCper(event)">
+<div class="g2"><div class="lf"><label>From</label><input id="cp-from" class="li" type="date" required/></div>
+<div class="lf"><label>To</label><input id="cp-to" class="li" type="date" required/></div></div>
+<div class="lf"><label>Net % of MRP</label><input id="cp-pct" class="li mono" type="number" step="0.01" value="30"/></div>
+<div class="g2"><button type="button" class="btn-d" onclick="resetCper()">Auto Reset</button><button class="btn-p">Save</button></div></form></div></div>
+
+</div>
+
+<script src="script.js"></script>
+</body>
+                                                               </html>
