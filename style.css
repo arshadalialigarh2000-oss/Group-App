@@ -1,0 +1,121 @@
+/* ============================================
+   SHOP ENTRIES TABLE — 4 columns default visible,
+   Date+Edit+Delete right side hidden (scroll par)
+   ============================================ */
+
+/* Shop ke teeno pages ki tables fixed layout */
+#pg-shop .st table,
+#pg-shopv .st table,
+#pg-shopfull .st table{
+  table-layout:fixed;
+  width:100%;
+  min-width:100%;
+}
+
+/* Vendor column — bada aur wrap ho */
+#pg-shop .st colgroup col:nth-child(1),
+#pg-shopv .st colgroup col:nth-child(1),
+#pg-shopfull .st colgroup col:nth-child(1){
+  width:42% !important;
+}
+#pg-shop .st colgroup col:nth-child(2),
+#pg-shopv .st colgroup col:nth-child(2),
+#pg-shopfull .st colgroup col:nth-child(2){
+  width:15% !important;
+}
+#pg-shop .st colgroup col:nth-child(3),
+#pg-shopv .st colgroup col:nth-child(3),
+#pg-shopfull .st colgroup col:nth-child(3){
+  width:15% !important;
+}
+#pg-shop .st colgroup col:nth-child(4),
+#pg-shopv .st colgroup col:nth-child(4),
+#pg-shopfull .st colgroup col:nth-child(4){
+  width:18% !important;
+}
+/* Date column — default chhupa (scroll par dikhega) */
+#pg-shop .st colgroup col:nth-child(5),
+#pg-shopv .st colgroup col:nth-child(5),
+#pg-shopfull .st colgroup col:nth-child(5){
+  width:180px !important;
+}
+
+/* Vendor cell bada aur wrap */
+#pg-shop .st td.sv,
+#pg-shopv .st td.sv,
+#pg-shopfull .st td.sv{
+  font-size:13px !important;
+  white-space:normal;
+  word-break:break-word;
+  line-height:1.25;
+  font-weight:800;
+}
+
+/* Table wrapper — 4 columns screen fit, baaki right scroll */
+#pg-shop .st,
+#pg-shopv .st,
+#pg-shopfull .st{
+  overflow-x:auto;
+  overflow-y:auto;
+  -webkit-overflow-scrolling:touch;
+}
+
+/* Table ki visual width — 4 columns (100%) + Date (180px) = 100% + 180px */
+#pg-shop .st table,
+#pg-shopv .st table,
+#pg-shopfull .st table{
+  width:calc(100% + 180px);
+  min-width:calc(100% + 180px);
+}
+
+/* Date cell aur Edit/Delete — default off-screen right */
+#pg-shop .st td.sd,
+#pg-shopv .st td.sd,
+#pg-shopfull .st td.sd{
+  min-width:180px;
+  font-size:12px !important;
+}
+
+/* Edit + Delete buttons ✕ ke barabar */
+#pg-shop .st td.sd .ra,
+#pg-shopv .st td.sd .ra,
+#pg-shopfull .st td.sd .ra{
+  display:inline-block;
+  margin:0 2px;
+  min-width:22px;
+  height:22px;
+  padding:0 5px;
+  border-radius:10px;
+  background:#e0e7ff;
+  color:#1e40af;
+  font-size:11px;
+  line-height:22px;
+  vertical-align:middle;
+}
+#pg-shop .st td.sd .ra:hover,
+#pg-shopv .st td.sd .ra:hover,
+#pg-shopfull .st td.sd .ra:hover{
+  background:#c7d2fe;
+}
+
+/* Edit button (✎) ka special colour — Delete (✕) se alag dikhe */
+#pg-shop .st td.sd .ra[onclick*="openShopEdit"],
+#pg-shopv .st td.sd .ra[onclick*="openShopEdit"],
+#pg-shopfull .st td.sd .ra[onclick*="openShopEdit"]{
+  background:#dbeafe;
+  color:#1d4ed8;
+}
+
+/* Mobile — chhota screen, font thoda kam */
+@media (max-width:400px){
+  #pg-shop .st td,
+  #pg-shopv .st td,
+  #pg-shopfull .st td{
+    font-size:12px !important;
+  }
+  #pg-shop .st colgroup col:nth-child(1),
+  #pg-shopv .st colgroup col:nth-child(1),
+  #pg-shopfull .st colgroup col:nth-child(1){
+    width:44% !important;
+  }
+}
