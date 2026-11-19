@@ -176,6 +176,13 @@ tr.b1{background:#e8f0fe}tr.b0{background:#fff}tr.sep{height:18px}
 .ai[readonly]{background:#eef2ff;color:#1e3a8a}
 #pg-ud .st table{width:135%}
 #pg-sh.rate .st th,#pg-sh.rate .st td{padding-left:6px;padding-right:6px}
+
+/* --- CUSTOM TABLE SCROLL FIX --- */
+.scroll-table { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.table-fixed-width { min-width: 480px; width: 100%; table-layout: fixed; }
+.table-fixed-width th, .table-fixed-width td { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.st table col { width: auto; }
+
 @media print{body{background:#fff}.nav,.tb,.ep,.ca,.no-print,.more{display:none!important}.ban{position:static;-webkit-print-color-adjust:exact;print-color-adjust:exact}tr.b1{-webkit-print-color-adjust:exact;print-color-adjust:exact}.sc{overflow:visible}#pg-l3 .sc,#pg-l4 .sc,#pg-cred .sc{max-height:none!important;overflow:visible!important}}
 @keyframes bootshow{to{opacity:1}}
 </style>
@@ -233,7 +240,22 @@ tr.b1{background:#e8f0fe}tr.b0{background:#fff}tr.sep{height:18px}
  <div id="s-srow" class="srch hidden"><input id="s-q" placeholder="Amount (349) ya date (5, 7, 12 / 05-11) ya naam" oninput="renderShopAll()"/></div>
  <div id="s-chips" class="chips"></div><div id="s-sum"></div>
  <div class="sinfo" id="s-info"></div>
- <div class="st"><div class="sc"><table><colgroup><col style="width:26%"><col style="width:14%"><col style="width:14%"><col style="width:17%"><col style="width:29%"></colgroup><thead><tr><th>Vendor</th><th>Bills</th><th>Paid</th><th>Net Amount</th><th>Date</th></tr></thead><tbody id="s-body"></tbody></table></div></div>
+ 
+ <!-- UPDATED SCROLL TABLE SECTION -->
+ <div class="st"><div class="sc scroll-table">
+    <table class="table-fixed-width">
+      <colgroup>
+        <col style="width: 26%"><col style="width: 14%"><col style="width: 14%"><col style="width: 17%">
+        <col style="width: 18%"><col style="width: 11%">
+      </colgroup>
+      <thead>
+        <tr><th>Vendor</th><th>Bills</th><th>Paid</th><th>Net Amount</th><th>Date</th><th class="ca no-print"></th></tr>
+      </thead>
+      <tbody id="s-body"></tbody>
+    </table>
+ </div></div>
+ <!-- END UPDATED SCROLL TABLE SECTION -->
+
  <button class="more" style="width:auto;margin:0 12px 10px" id="s-more" onclick="openShopFull()"></button>
  <form class="addbar" onsubmit="addShop(event)">
   <input id="s-v" class="ai" list="s-vlist" placeholder="Vendor ▼" autocomplete="off"/><input id="s-bill" class="ai" type="number" step="0.01" placeholder="Bill (₹)"/><input id="s-paid" class="ai" type="number" step="0.01" placeholder="Paid (₹)"/>
@@ -633,15 +655,15 @@ function matchQ(e,q){q=(q||'').trim().toLowerCase();if(!q)return true;
    if(pt.length===3){let yy=pt[2];if(yy<100)yy+=2000;return pt[0]===d&&pt[1]===m&&yy===y}
    if(pt.length===2)return pt[1]>=100?(pt[0]===m&&pt[1]===y):(pt[0]===d&&pt[1]===m);return false}
   return kv(e.vendor).includes(t)})}
-function shopRow(e,i){return `<tr class="${i%2?'':'o'}"><td class="sv">${esc(e.vendor)}</td><td class="sb">${e.bill}</td><td class="sp">${e.paid}</td><td class="sr ${e.rem<0?'neg':''}">${e.rem}</td><td class="sd">${fmtDate(e.date)} <button class="ra" onclick="openShopEdit('${e.id}')">✎</button><button class="ra" onclick="delShop('${e.id}')">${pendDel===e.id?'OK?':'✕'}</button></td></tr>`}
+function shopRow(e,i){return `<tr class="${i%2?'':'o'}"><td class="sv">${esc(e.vendor)}</td><td class="sb">${e.bill}</td><td class="sp">${e.paid}</td><td class="sr ${e.rem<0?'neg':''}">${e.rem}</td><td class="sd">${fmtDate(e.date)}</td><td class="sd no-print"><button class="ra" onclick="openShopEdit('${e.id}')">✎</button><button class="ra" onclick="delShop('${e.id}')">${pendDel===e.id?'OK?':'✕'}</button></td></tr>`}
 function vTotals(vl,prev){
  const ym=today().slice(0,7),y=Number(ym.slice(0,4)),m=Number(ym.slice(5)),mm=ym.slice(5),last=String(new Date(y,m,0).getDate()).padStart(2,'0');
  let mb=0,mp=0,ab=0,ap=0;vl.forEach(e=>{const b=Number(e.bill||0),p=Number(e.paid||0);ab+=b;ap+=p;if(e.date.startsWith(ym)){mb+=b;mp+=p}});
  const r=n=>Math.round(n*100)/100,mn=r(mb-mp),an=r(Number(prev||0)+ab-ap);
  const f=vl.length?fmtDate(vl[0].date):'-',l=vl.length?fmtDate(vl[vl.length-1].date):'-';
- return `<tr class="tr1"><td class="sv">Month Total<br><small>${MN[m-1]} ${y}</small></td><td>${r(mb)}</td><td>${r(mp)}</td><td class="${mn<0?'neg':''}">${mn}</td><td class="sd">01-${mm}-${y}<br>se ${last}-${mm}-${y}</td></tr><tr class="tr2"><td class="sv">Kul Total<br><small>Previous sahit</small></td><td>${r(ab)}</td><td>${r(ap)}</td><td class="${an<0?'neg':''}">${an}</td><td class="sd">${f}<br>se ${l}</td></tr>`}
+ return `<tr class="tr1"><td class="sv">Month Total<br><small>${MN[m-1]} ${y}</small></td><td>${r(mb)}</td><td>${r(mp)}</td><td class="${mn<0?'neg':''}">${mn}</td><td class="sd">01-${mm}-${y}<br>se ${last}-${mm}-${y}</td><td class="sd no-print"></td></tr><tr class="tr2"><td class="sv">Kul Total<br><small>Previous sahit</small></td><td>${r(ab)}</td><td>${r(ap)}</td><td class="${an<0?'neg':''}">${an}</td><td class="sd">${f}<br>se ${l}</td><td class="sd no-print"></td></tr>`}
 function openRow(i,label){const v=i<0?(state.shop.openOthers||0):(state.shop.open[kv(state.shop.chips[i])]||0);
- return `<tr class="${(i<0?state.shop.chips.length:i)%2?'':'o'}"><td class="sv">${esc(label)}</td><td class="sb">—</td><td class="sp">—</td><td class="sr"><input class="oi mono" type="number" step="any" value="${v}" onchange="setOpen(${i},this.value)"/></td><td class="sd">Previous</td></tr>`}
+ return `<tr class="${(i<0?state.shop.chips.length:i)%2?'':'o'}"><td class="sv">${esc(label)}</td><td class="sb">—</td><td class="sp">—</td><td class="sr"><input class="oi mono" type="number" step="any" value="${v}" onchange="setOpen(${i},this.value)"/></td><td class="sd">Previous</td><td class="sd no-print"></td></tr>`}
 function openRowsHTML(){return state.shop.chips.map((c,i)=>openRow(i,c)).join('')+openRow(-1,'Others')}
 function setOpen(i,val){const n=parseFloat(val)||0;if(i<0)state.shop.openOthers=n;else state.shop.open[kv(state.shop.chips[i])]=n;save();renderShopAll();toast('Previous amount saved')}
 function openShop(){show('pg-shop');renderShopAll();scrollShopEnd()}
@@ -947,4 +969,4 @@ document.getElementById('boot').style.display='none';
 renderHome();
 </script>
 </body>
-</html>
+                 </html>
