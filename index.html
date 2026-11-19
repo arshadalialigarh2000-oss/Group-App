@@ -105,7 +105,7 @@ tr.b1{background:#e8f0fe}tr.b0{background:#fff}tr.sep{height:18px}
 .ci{background:none;font-size:15px;padding:2px 3px}
 .sumr{margin:0 10px 5px;border-radius:10px}.sumr .l{padding:5px 10px;font-size:13px}.sumr .v{padding:5px;font-size:15px}
 #pg-shop .st,#pg-shopv .st,#pg-shopfull .st,#pg-ud .st,#pg-sh .st{flex:1;min-height:0;overflow:auto;margin:4px 10px;-webkit-overflow-scrolling:touch;touch-action:pan-x pan-y}
-#pg-shop .st .sc,#pg-shopv .st .sc,#pg-shopfull .st .sc,#pg-ud .st .sc,#pg-sh .st .sc{overflow:visible;border:none;width:max-content;min-width:100%}
+#pg-shop .st .sc,#pg-shopv .st .sc,#pg-shopfull .st .sc,#pg-ud .st .sc,#pg-sh .st .sc{overflow:visible;border:none;width:100%}
 #pg-shop .st th,#pg-shopv .st th,#pg-shopfull .st th,#pg-ud .st th,#pg-sh .st th{position:sticky;top:0;z-index:5}
 #pg-shop .st td,#pg-shopv .st td,#pg-shopfull .st td,#pg-ud .st td,#pg-sh .st td{padding:6px 4px;font-size:13px}
 #s-more{padding:7px!important;font-size:12px!important;margin:0 10px 4px!important;width:calc(100% - 20px)!important}
@@ -115,7 +115,7 @@ tr.b1{background:#e8f0fe}tr.b0{background:#fff}tr.sep{height:18px}
 .sd .ra{padding:0 3px;color:#9aa8ad;font-size:11px}
 .oi{width:82px;text-align:center;border:1px dashed #93c5fd;border-radius:6px;padding:3px;font-weight:800;font-size:13px;background:#fff;color:#0f172a}
 .st table{table-layout:fixed}
-#pg-shop .st table,#pg-shopv .st table,#pg-shopfull .st table{width:142%}
+#pg-shop .st table,#pg-shopv .st table,#pg-shopfull .st table{width:142%;table-layout:fixed}
 #pg-shop .st th:first-child,#pg-shop .st td.sv,#pg-shopv .st th:first-child,#pg-shopv .st td.sv,#pg-shopfull .st th:first-child,#pg-shopfull .st td.sv{position:sticky;left:0;z-index:3}
 #pg-shop .st th:first-child,#pg-shopv .st th:first-child,#pg-shopfull .st th:first-child{z-index:6}
 #pg-shop .st td.sv,#pg-shopv .st td.sv,#pg-shopfull .st td.sv{background:#fff}
@@ -185,7 +185,7 @@ tr.b1{background:#e8f0fe}tr.b0{background:#fff}tr.sep{height:18px}
 #pg-l3 .sc,#pg-l4 .sc,#pg-cash .sc{overflow:auto;max-height:calc(100vh - var(--nav-h) - var(--ban-h,90px) - 70px);max-height:calc(100dvh - var(--nav-h) - var(--ban-h,90px) - 70px)}
 #pg-l3 th,#pg-l4 th,#pg-cash th{position:sticky;top:0;z-index:30;background:#1e3a8a;color:#fff}
 .ai[readonly]{background:#eef2ff;color:#1e3a8a}
-#pg-ud .st table{width:135%}
+#pg-ud .st table{width:155%;table-layout:fixed}
 #pg-sh.rate .st th,#pg-sh.rate .st td{padding-left:6px;padding-right:6px}
 @media print{body{background:#fff}.nav,.tb,.ep,.ca,.no-print,.more{display:none!important}.ban{position:static;-webkit-print-color-adjust:exact;print-color-adjust:exact}tr.b1{-webkit-print-color-adjust:exact;print-color-adjust:exact}.sc{overflow:visible}#pg-l3 .sc,#pg-l4 .sc,#pg-cred .sc{max-height:none!important;overflow:visible!important}}
 @keyframes bootshow{to{opacity:1}}
@@ -269,7 +269,7 @@ tr.b1{background:#e8f0fe}tr.b0{background:#fff}tr.sep{height:18px}
  <div class="srch"><input id="ud-q" list="ud-nl" placeholder="🔍 Naam search karein" oninput="udInput()" autocomplete="off"/></div>
  <div id="ud-sug" class="chips hidden" style="grid-template-columns:1fr;max-height:50vh;overflow:auto"></div>
  <div class="sinfo" id="ud-info" style="margin-top:4px"></div>
- <div class="st" id="ud-st"><div class="sc"><table><colgroup><col style="width:19%"><col style="width:10%"><col style="width:25%"><col style="width:10%"><col style="width:10%"><col style="width:16%"><col style="width:10%"></colgroup><thead><tr><th class="h1">Name</th><th class="h2">Amount</th><th class="h1">Description</th><th class="h3">Paid<br>Amount</th><th class="h1">Net<br>amount</th><th class="h1">Date</th><th class="h1"></th></tr></thead><tbody id="ud-body"></tbody></table></div></div>
+ <div class="st" id="ud-st"><div class="sc"><table><colgroup><col style="width:18%"><col style="width:14%"><col style="width:14%"><col style="width:18.5%"><col style="width:17.5%"><col style="width:11%"><col style="width:7%"></colgroup><thead><tr><th class="h1">Name</th><th class="h2">Amount</th><th class="h3">Paid<br>Amount</th><th class="h1">Net<br>amount</th><th class="h1">Description</th><th class="h1">Date</th><th class="h1"></th></tr></thead><tbody id="ud-body"></tbody></table></div></div>
  <form class="addbar" style="grid-template-columns:repeat(6,1fr)" onsubmit="addUd(event)">
   <input id="ud-n" class="ai" list="ud-nl" placeholder="Name" autocomplete="off" style="grid-column:span 3"/>
   <input id="ud-d" class="ai" placeholder="Description" style="grid-column:span 3"/>
@@ -716,7 +716,7 @@ function udTotal(id){let t=0;Object.values(udCalc(id).run).forEach(v=>t+=v);retu
 function openUd(k){udId=k;cashKey=k;$('ud-q').value='';show('pg-ud');renderUd();udScrollEnd()}
 function udScrollEnd(){const t=$('ud-st');if(t)setTimeout(()=>{t.scrollTop=t.scrollHeight},30)}
 function udInput(){renderUd()}
-function udRow(e,i){return `<tr class="${i%2?'':'o'}"><td class="sv">${esc(e.name)}</td><td class="ua">${e.amount||''}</td><td class="sv ud">${esc(e.desc)}</td><td class="up">${e.paid||''}</td><td class="sr ${e.net<0?'neg':''}">${e.net}</td><td class="sd">${fmtShort(e.at)}</td><td class="sd"><button class="ra" onclick="delUd('${e.id}')">${pendDel===e.id?'OK?':'✕'}</button></td></tr>`}
+function udRow(e,i){return `<tr class="${i%2?'':'o'}"><td class="sv">${esc(e.name)}</td><td class="ua">${e.amount||''}</td><td class="up">${e.paid||''}</td><td class="sr ${e.net<0?'neg':''}">${e.net}</td><td class="sv ud">${esc(e.desc)}</td><td class="sd">${fmtShort(e.at)}</td><td class="sd"><button class="ra" onclick="delUd('${e.id}')">${pendDel===e.id?'OK?':'✕'}</button></td></tr>`}
 function renderUd(){
  const a=state.custom.find(x=>x.id===udId);if(!a)return;
  const{rows,run}=udCalc(udId);const udNm={};rows.forEach(r=>{if(!udNm[r.k])udNm[r.k]=r.name});
@@ -727,7 +727,7 @@ function renderUd(){
  if(q){const mk=Object.keys(udNm).filter(k=>k.includes(q));list=rows.filter(r=>mk.includes(r.k));
   if(mk.length===1){const k=mk[0];let sa=0,sp=0;list.forEach(r=>{sa+=Number(r.amount||0);sp+=Number(r.paid||0)});
    info=`${udNm[k]} • ${list.length} entries • Baaki ₹${fn(run[k])}`;
-   tr=`<tr class="tr2"><td class="sv">Kul</td><td>${rd2(sa)}</td><td></td><td>${rd2(sp)}</td><td class="${run[k]<0?'neg':''}">${run[k]}</td><td></td><td></td></tr>`}
+   tr=`<tr class="tr2"><td class="sv">Kul</td><td>${rd2(sa)}</td><td>${rd2(sp)}</td><td class="${run[k]<0?'neg':''}">${run[k]}</td><td></td><td></td><td></td></tr>`}
   else info=`${mk.length} naam • ${list.length} entries`}
  $('ud-info').textContent=info;
  $('ud-body').innerHTML=(list.map(udRow).join('')||`<tr><td colspan="7" style="padding:18px;color:#64748b">${q?'Is naam ki koi entry nahi mili':'Abhi koi entry nahi.'}</td></tr>`)+tr}
