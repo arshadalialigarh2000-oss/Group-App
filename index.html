@@ -1,3 +1,12 @@
+Aapke teeno parts jodkar aur aapke saare required changes karke poora complete code taiyaar kar diya hai:
+Kya-kya badla gaya hai:
+ * Vendor Ledger (#pg-shop, #pg-shopv, #pg-shopfull):
+   * Screen par default sirf Vendor, Bills, Paid, Net Amount hi fit dikhenge (28% + 22% + 22% + 28% = 100%).
+   * Date aur uske sath Edit (✎) / Delete (✕) buttons ek separate 6th column me right side (screen ke bahar) chale gaye hain — right scroll karne par dikhenge.
+ * Clinic Sheet (#pg-cl — Screenshot wala page):
+   * Edit (✎) aur Delete (✕) buttons product name ke left se hatakar table ke ekdam right side (screen ke bahar scroll karne par) kar diye gaye hain, taaki screen par sirf 5 main columns (Products, Net Qty, MRP, Total Amount, Net Amount) clean dikhein.
+   * 📷 Image Button (clImg()): Isme full working Canvas Image Generator laga diya hai. Image button dabate hi waisa hi dark header + clean table + Total row wala bill image bankar Bill Image Ready modal me khul jayega (Share / Save JPG ke sath), aur us image me Edit / Delete buttons bilkul nahi aayenge.
+Complete Updated HTML Code:
 <!DOCTYPE html>
 <html lang="hi">
 <head>
@@ -113,11 +122,19 @@ tr.b1{background:#e8f0fe}tr.b0{background:#fff}tr.sep{height:18px}
 .ai{padding:8px 6px;font-size:12px;border-radius:9px}
 .adb{padding:0 12px;font-size:13px}
 .sd .ra{padding:0 3px;color:#9aa8ad;font-size:11px}
-.oi{width:92px;text-align:center;border:1px dashed #93c5fd;border-radius:6px;padding:3px;font-weight:800;font-size:13px;background:#fff;color:#0f172a}
+.oi{width:82px;text-align:center;border:1px dashed #93c5fd;border-radius:6px;padding:3px;font-weight:800;font-size:13px;background:#fff;color:#0f172a}
 .st table{table-layout:fixed;width:100%}
+#pg-shop .st table,#pg-shopv .st table,#pg-shopfull .st table{width:142%}
+#pg-shop .st th:first-child,#pg-shop .st td.sv,#pg-shopv .st th:first-child,#pg-shopv .st td.sv,#pg-shopfull .st th:first-child,#pg-shopfull .st td.sv{position:sticky;left:0;z-index:3}
+#pg-shop .st th:first-child,#pg-shopv .st th:first-child,#pg-shopfull .st th:first-child{z-index:6}
+#pg-shop .st td.sv,#pg-shopv .st td.sv,#pg-shopfull .st td.sv{background:#fff}
+#pg-shop .st tr.o td.sv,#pg-shopv .st tr.o td.sv,#pg-shopfull .st tr.o td.sv{background:#f1f5f9}
+#pg-shop .st tr.tr1 td.sv,#pg-shopv .st tr.tr1 td.sv{background:#dbeafe!important}
+#pg-shop .st tr.tr2 td.sv,#pg-shopv .st tr.tr2 td.sv{background:#1e3a8a!important}
 .st td.sv{white-space:normal;word-break:break-word;text-align:left}
 .st .sd{font-size:12px!important}
-.st .sd .ra{margin-left:6px;min-width:22px;height:22px;padding:0 5px;border-radius:10px;background:#fee2e2;color:#dc2626;font-size:11px;line-height:22px;vertical-align:middle}
+.st .sd .ra{margin-left:4px;min-width:22px;height:22px;padding:0 5px;border-radius:10px;background:#fee2e2;color:#dc2626;font-size:11px;line-height:22px;vertical-align:middle}
+.st .sd .ra.ed{background:#dbeafe;color:#1d4ed8}
 .st tr.tr1 td{background:#dbeafe!important;font-weight:800;border-top:2px solid #1e3a8a}
 .st tr.tr2 td{background:#1e3a8a!important;color:#fff!important;font-weight:800}
 .st tr.tr2 td.neg{color:#fecaca!important}
@@ -152,12 +169,15 @@ tr.b1{background:#e8f0fe}tr.b0{background:#fff}tr.sep{height:18px}
 .clpen{background:#facc15;color:#111827;border-radius:50%;width:28px;height:28px;font-size:14px;font-weight:900;box-shadow:0 2px 0 #a16207}
 .clb{display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:900;margin:8px;border-radius:12px;background:linear-gradient(180deg,#1e293b,#020617);color:#facc15;text-shadow:0 2px 3px rgba(0,0,0,.6);box-shadow:0 0 0 2px #facc15,0 4px 0 #a16207,inset 0 2px 0 rgba(255,255,255,.16)}
 #pg-cl .clt{flex:1;min-height:0;overflow:auto;margin:4px 10px;border:1.5px solid #1e3a8a;border-radius:12px;background:#fff}
-#pg-cl table{table-layout:fixed}
+#pg-cl table{table-layout:fixed;width:118%}
 #pg-cl th{position:sticky;top:0;z-index:5;background:#1e3a8a;color:#fff;font-size:12px;padding:8px 4px;white-space:normal;line-height:1.2;border-color:#334e9b}
 #pg-cl td{font-size:13px;padding:6px 4px;text-align:center;font-weight:700;color:#0f172a;white-space:normal;border-color:#cbd5e1}
-#pg-cl td.pn{text-align:left}
+#pg-cl td.pn{text-align:left;padding-left:8px;position:sticky;left:0;z-index:3;background:#fff}
+#pg-cl th:first-child{position:sticky;left:0;z-index:6}
 #pg-cl tr.g td{background:#f1f5f9}
+#pg-cl tr.g td.pn{background:#f1f5f9}
 #pg-cl tr.tt td{background:#1e3a8a;color:#fff;font-weight:900}
+#pg-cl tr.tt td.pn{background:#1e3a8a}
 .clbot{background:#fff;border:2px solid #1e3a8a;border-radius:16px;margin:6px 8px 8px;padding:8px;display:flex;flex-direction:column;gap:6px}
 .clcap{font-size:10px;color:#64748b;text-align:center}
 .clin1{display:grid;grid-template-columns:2fr 1fr;gap:6px}
@@ -168,35 +188,14 @@ tr.b1{background:#e8f0fe}tr.b0{background:#fff}tr.sep{height:18px}
 .cladd{background:#1e3a8a;color:#fff;border-radius:12px;padding:10px;font-weight:800;font-size:14px;width:100%}
 .clogt th{background:#1e3a8a;color:#fff;font-size:11px;padding:6px 3px}
 .clogt td{font-size:12px;text-align:center;font-weight:700;padding:5px 3px}
-.pnw{display:flex;align-items:center;gap:6px}.pnb{display:flex;gap:3px;flex-shrink:0}
-.clib{width:24px;height:24px;border-radius:50%;font-size:12px;font-weight:900;display:flex;align-items:center;justify-content:center;padding:0}
-.clib.e{background:#dbeafe;color:#1d4ed8}.clib.d{background:#fee2e2;color:#dc2626;width:auto;min-width:24px;padding:0 4px;border-radius:12px}
+.pnb{display:inline-flex;gap:4px;align-items:center;justify-content:center}
+.clib{width:24px;height:24px;border-radius:50%;font-size:12px;font-weight:900;display:inline-flex;align-items:center;justify-content:center;padding:0}
+.clib.e{background:#dbeafe;color:#1d4ed8}.clib.d{background:#fee2e2;color:#dc2626;width:auto;min-width:24px;padding:0 5px;border-radius:12px}
 #pg-l3 .sc,#pg-l4 .sc,#pg-cash .sc{overflow:auto;max-height:calc(100vh - var(--nav-h) - var(--ban-h,90px) - 70px);max-height:calc(100dvh - var(--nav-h) - var(--ban-h,90px) - 70px)}
 #pg-l3 th,#pg-l4 th,#pg-cash th{position:sticky;top:0;z-index:30;background:#1e3a8a;color:#fff}
 .ai[readonly]{background:#eef2ff;color:#1e3a8a}
 #pg-ud .st table{width:135%}
 #pg-sh.rate .st th,#pg-sh.rate .st td{padding-left:6px;padding-right:6px}
-
-/* --- 100% WORKING SCROLL FIX --- */
-#pg-shop .st {
-    overflow: hidden !important; /* Parent won't scroll, only .sc will */
-}
-#pg-shop .st .sc {
-    overflow-x: auto !important; /* Enables horizontal swipe */
-    -webkit-overflow-scrolling: touch !important;
-}
-#pg-shop .st table {
-    min-width: 520px !important; /* Forces table wider than screen */
-    width: 100% !important;
-    table-layout: fixed !important;
-}
-#pg-shop .st th, #pg-shop .st td {
-    white-space: nowrap !important;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-/* -------------------------------- */
-
 @media print{body{background:#fff}.nav,.tb,.ep,.ca,.no-print,.more{display:none!important}.ban{position:static;-webkit-print-color-adjust:exact;print-color-adjust:exact}tr.b1{-webkit-print-color-adjust:exact;print-color-adjust:exact}.sc{overflow:visible}#pg-l3 .sc,#pg-l4 .sc,#pg-cred .sc{max-height:none!important;overflow:visible!important}}
 @keyframes bootshow{to{opacity:1}}
 </style>
@@ -254,28 +253,7 @@ tr.b1{background:#e8f0fe}tr.b0{background:#fff}tr.sep{height:18px}
  <div id="s-srow" class="srch hidden"><input id="s-q" placeholder="Amount (349) ya date (5, 7, 12 / 05-11) ya naam" oninput="renderShopAll()"/></div>
  <div id="s-chips" class="chips"></div><div id="s-sum"></div>
  <div class="sinfo" id="s-info"></div>
- 
- <!-- UPDATED TABLE FOR VENDOR LEDGER -->
- <div class="st">
-    <div class="sc">
-      <table>
-        <colgroup>
-          <col style="width: 130px;">
-          <col style="width: 70px;">
-          <col style="width: 70px;">
-          <col style="width: 90px;">
-          <col style="width: 100px;">
-          <col style="width: 70px;">
-        </colgroup>
-        <thead>
-          <tr><th>Vendor</th><th>Bills</th><th>Paid</th><th>Net Amount</th><th>Date</th><th class="no-print"></th></tr>
-        </thead>
-        <tbody id="s-body"></tbody>
-      </table>
-    </div>
- </div>
- <!-- END UPDATED TABLE -->
-
+ <div class="st"><div class="sc"><table><colgroup><col style="width:19.7%"><col style="width:15.5%"><col style="width:15.5%"><col style="width:19.7%"><col style="width:17.6%"><col style="width:12%"></colgroup><thead><tr><th>Vendor</th><th>Bills</th><th>Paid</th><th>Net Amount</th><th>Date</th><th></th></tr></thead><tbody id="s-body"></tbody></table></div></div>
  <button class="more" style="width:auto;margin:0 12px 10px" id="s-more" onclick="openShopFull()"></button>
  <form class="addbar" onsubmit="addShop(event)">
   <input id="s-v" class="ai" list="s-vlist" placeholder="Vendor ▼" autocomplete="off"/><input id="s-bill" class="ai" type="number" step="0.01" placeholder="Bill (₹)"/><input id="s-paid" class="ai" type="number" step="0.01" placeholder="Paid (₹)"/>
@@ -286,13 +264,13 @@ tr.b1{background:#e8f0fe}tr.b0{background:#fff}tr.sep{height:18px}
  <div class="gh"><button class="gb" onclick="show('pg-shop');renderShopAll()">←</button><b id="sv-name"></b></div>
  <div class="sumr" style="margin-top:12px"><div class="l">Remaining</div><div class="v mono" id="sv-bal"></div></div>
  <div class="sinfo" id="sv-info"></div>
- <div class="st"><div class="sc"><table><colgroup><col style="width:26%"><col style="width:14%"><col style="width:14%"><col style="width:17%"><col style="width:29%"></colgroup><thead><tr><th>Vendor</th><th>Bills</th><th>Paid</th><th>Net Amount</th><th>Date</th></tr></thead><tbody id="sv-body"></tbody></table></div></div>
+ <div class="st"><div class="sc"><table><colgroup><col style="width:19.7%"><col style="width:15.5%"><col style="width:15.5%"><col style="width:19.7%"><col style="width:17.6%"><col style="width:12%"></colgroup><thead><tr><th>Vendor</th><th>Bills</th><th>Paid</th><th>Net Amount</th><th>Date</th><th></th></tr></thead><tbody id="sv-body"></tbody></table></div></div>
 </div>
 <div id="pg-shopfull" class="pg hidden">
  <div class="gh"><button class="gb" onclick="show('pg-shop');renderShopAll()">←</button><b>Full Entries (sab months)</b></div>
  <div class="srch"><input id="sf-q" placeholder="Amount (349) ya date (5, 7, 12 / 05-11) ya naam" oninput="renderShopAll()"/></div>
  <div class="sinfo" id="sf-info" style="margin-top:6px"></div>
- <div class="st"><div class="sc"><table><colgroup><col style="width:26%"><col style="width:14%"><col style="width:14%"><col style="width:17%"><col style="width:29%"></colgroup><thead><tr><th>Vendor</th><th>Bills</th><th>Paid</th><th>Net Amount</th><th>Date</th></tr></thead><tbody id="sf-body"></tbody></table></div></div>
+ <div class="st"><div class="sc"><table><colgroup><col style="width:19.7%"><col style="width:15.5%"><col style="width:15.5%"><col style="width:19.7%"><col style="width:17.6%"><col style="width:12%"></colgroup><thead><tr><th>Vendor</th><th>Bills</th><th>Paid</th><th>Net Amount</th><th>Date</th><th></th></tr></thead><tbody id="sf-body"></tbody></table></div></div>
 </div>
 
 <div id="pg-ud" class="pg hidden">
@@ -322,7 +300,7 @@ tr.b1{background:#e8f0fe}tr.b0{background:#fff}tr.sep{height:18px}
 <div id="pg-cl" class="pg hidden">
  <div class="nav"><div class="l"><button class="nb" onclick="backToVendors()">← Doctors</button><div style="min-width:0"><small>Clinic Sheet</small><div class="t" id="cl-nt"></div></div></div><button class="nb wa" onclick="clImg()">📷 Image</button></div>
  <div class="clban"><div class="cla"><div class="cln" id="cl-name"></div><div class="cll">IS PERIOD KA NET AMOUNT</div><div class="clp"><span id="cl-per"></span><button class="clpen" onclick="openCper()">✎</button></div></div><div class="clb mono" id="cl-tot"></div></div>
- <div class="clt"><table><colgroup><col style="width:37%"><col style="width:15%"><col style="width:13%"><col style="width:17.5%"><col style="width:17.5%"></colgroup><thead><tr><th>Products</th><th>Net Qty<br>in (tab)</th><th>MRP<br>per tab</th><th>Total<br>Amount</th><th id="cl-th5"></th></tr></thead><tbody id="cl-body"></tbody></table></div>
+ <div class="clt"><table><colgroup><col style="width:31.3%"><col style="width:12.7%"><col style="width:11%"><col style="width:14.8%"><col style="width:14.8%"><col style="width:15.4%"></colgroup><thead><tr><th>Products</th><th>Net Qty<br>in (tab)</th><th>MRP<br>per tab</th><th>Total<br>Amount</th><th id="cl-th5"></th><th></th></tr></thead><tbody id="cl-body"></tbody></table></div>
  <div class="clbot">
   <form id="cl-form" onsubmit="addClinic(event)" style="display:flex;flex-direction:column;gap:6px">
    <div class="clin1"><input id="cl-p" list="cl-pl" placeholder="Product naam" autocomplete="off" oninput="clHint()"/><input id="cl-m" type="number" step="0.01" placeholder="MRP/tab"/></div>
@@ -609,7 +587,7 @@ function rowsHTML(rows,limit){
   let p='',q='',rt='',t='',rc='';
   if(r.type==='opening')p='Previous Balance';
   else if(r.type==='item'){p=esc(r.particular);q=r.qty;rt=r.rate;t=r.totalVal}
-  else{p=esc(r.particular||'Received Amt');q=esc(r.mode||'cash');rc=r.recVal}
+  else{p=esc(r.particular||'Received Amt');q=r.mode||'cash';rc=r.recVal}
   html+=`<tr class="${v%2?'b1':'b0'}"><td class="cd">${showDate?fmtDate(r.date):''}</td><td class="cp">${p}</td><td class="cn mono">${q}</td><td class="cn mono">${rt}</td><td class="cn mono">${t}</td><td class="cn mono">${rc}</td><td class="cf mono">${r.isLast?r.finalVal:''}</td><td class="ca no-print"><button class="ra" onclick="openEdit('${r.id}')">✎</button><button class="ra" onclick="delRow('${r.id}')">${pendDel===r.id?'OK?':'✕'}</button></td></tr>`});
  for(let k=0;k<3;k++){v++;html+=`<tr class="sep ${v%2?'b1':'b0'}"><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td class="no-print"></td></tr>`}
  return html}
@@ -646,7 +624,7 @@ function openEdit(id){const v=state.vendors.find(x=>x.id===activeV),r=v&&v.entri
  else if(r.type==='item'){$('ed-i').classList.remove('hidden');$('ed-part').value=r.particular||'';$('ed-qty').value=r.qty||1;$('ed-rate').value=r.rate||0}
  else{$('ed-r').classList.remove('hidden');$('ed-mode').value=r.mode||'cash';$('ed-rec').value=r.received||0}
  openModal('m-edit')}
-function saveEdit(e){e.preventDefault();const v=state.vendors.find(x=>x.id===activeV),r=v&&v.entries.find(x=>x.id===$('ed-id').value);if(!r)return;
+function saveEdit(e){e.preventDefault();const v=state.vendors.find(x=>x.id===activeV),r=v&&v.entries.find(e=>e.id===$('ed-id').value);if(!r)return;
  r.date=$('ed-date').value;const t=$('ed-type').value;
  if(t==='opening')r.openingAmount=parseFloat($('ed-open').value)||0;
  else if(t==='item'){r.particular=$('ed-part').value.trim();r.qty=parseFloat($('ed-qty').value)||0;r.rate=parseFloat($('ed-rate').value)||0}
@@ -675,15 +653,15 @@ function matchQ(e,q){q=(q||'').trim().toLowerCase();if(!q)return true;
    if(pt.length===3){let yy=pt[2];if(yy<100)yy+=2000;return pt[0]===d&&pt[1]===m&&yy===y}
    if(pt.length===2)return pt[1]>=100?(pt[0]===m&&pt[1]===y):(pt[0]===d&&pt[1]===m);return false}
   return kv(e.vendor).includes(t)})}
-function shopRow(e,i){return `<tr class="${i%2?'':'o'}"><td class="sv">${esc(e.vendor)}</td><td class="sb">${e.bill}</td><td class="sp">${e.paid}</td><td class="sr ${e.rem<0?'neg':''}">${e.rem}</td><td class="sd">${fmtDate(e.date)}</td><td class="sd no-print"><button class="ra" onclick="openShopEdit('${e.id}')">✎</button><button class="ra" onclick="delShop('${e.id}')">${pendDel===e.id?'OK?':'✕'}</button></td></tr>`}
+function shopRow(e,i){return `<tr class="${i%2?'':'o'}"><td class="sv">${esc(e.vendor)}</td><td class="sb">${e.bill}</td><td class="sp">${e.paid}</td><td class="sr ${e.rem<0?'neg':''}">${e.rem}</td><td class="sd">${fmtDate(e.date)}</td><td class="sd"><button class="ra ed" onclick="openShopEdit('${e.id}')">✎</button><button class="ra" onclick="delShop('${e.id}')">${pendDel===e.id?'OK?':'✕'}</button></td></tr>`}
 function vTotals(vl,prev){
  const ym=today().slice(0,7),y=Number(ym.slice(0,4)),m=Number(ym.slice(5)),mm=ym.slice(5),last=String(new Date(y,m,0).getDate()).padStart(2,'0');
  let mb=0,mp=0,ab=0,ap=0;vl.forEach(e=>{const b=Number(e.bill||0),p=Number(e.paid||0);ab+=b;ap+=p;if(e.date.startsWith(ym)){mb+=b;mp+=p}});
  const r=n=>Math.round(n*100)/100,mn=r(mb-mp),an=r(Number(prev||0)+ab-ap);
  const f=vl.length?fmtDate(vl[0].date):'-',l=vl.length?fmtDate(vl[vl.length-1].date):'-';
- return `<tr class="tr1"><td class="sv">Month Total<br><small>${MN[m-1]} ${y}</small></td><td>${r(mb)}</td><td>${r(mp)}</td><td class="${mn<0?'neg':''}">${mn}</td><td class="sd">01-${mm}-${y}<br>se ${last}-${mm}-${y}</td><td class="sd no-print"></td></tr><tr class="tr2"><td class="sv">Kul Total<br><small>Previous sahit</small></td><td>${r(ab)}</td><td>${r(ap)}</td><td class="${an<0?'neg':''}">${an}</td><td class="sd">${f}<br>se ${l}</td><td class="sd no-print"></td></tr>`}
+ return `<tr class="tr1"><td class="sv">Month Total<br><small>${MN[m-1]} ${y}</small></td><td>${r(mb)}</td><td>${r(mp)}</td><td class="${mn<0?'neg':''}">${mn}</td><td class="sd">01-${mm}-${y}<br>se ${last}-${mm}-${y}</td><td></td></tr><tr class="tr2"><td class="sv">Kul Total<br><small>Previous sahit</small></td><td>${r(ab)}</td><td>${r(ap)}</td><td class="${an<0?'neg':''}">${an}</td><td class="sd">${f}<br>se ${l}</td><td></td></tr>`}
 function openRow(i,label){const v=i<0?(state.shop.openOthers||0):(state.shop.open[kv(state.shop.chips[i])]||0);
- return `<tr class="${(i<0?state.shop.chips.length:i)%2?'':'o'}"><td class="sv">${esc(label)}</td><td class="sb">—</td><td class="sp">—</td><td class="sr"><input class="oi mono" type="number" step="any" value="${v}" onchange="setOpen(${i},this.value)"/></td><td class="sd">Previous</td><td class="sd no-print"></td></tr>`}
+ return `<tr class="${(i<0?state.shop.chips.length:i)%2?'':'o'}"><td class="sv">${esc(label)}</td><td class="sb">—</td><td class="sp">—</td><td class="sr"><input class="oi mono" type="number" step="any" value="${v}" onchange="setOpen(${i},this.value)"/></td><td class="sd">Previous</td><td></td></tr>`}
 function openRowsHTML(){return state.shop.chips.map((c,i)=>openRow(i,c)).join('')+openRow(-1,'Others')}
 function setOpen(i,val){const n=parseFloat(val)||0;if(i<0)state.shop.openOthers=n;else state.shop.open[kv(state.shop.chips[i])]=n;save();renderShopAll();toast('Previous amount saved')}
 function openShop(){show('pg-shop');renderShopAll();scrollShopEnd()}
@@ -904,8 +882,8 @@ function renderClinic(){const v=cv();if(!v)return;const C=clinicCalc(v);
  $('cl-th5').innerHTML='Net Amount<br>('+C.pct+'% of MRP)';
  $('cl-pl').innerHTML=(v.products||[]).map(p=>`<option value="${esc(p.name)}">`).join('');
  let sn=0,st=0,sa=0;C.rows.forEach(r=>{sn+=r.net;st+=r.total;sa+=r.na});
- $('cl-body').innerHTML=(C.rows.map((r,i)=>`<tr class="${i%2?'g':''}"><td class="pn"><div class="pnw"><span class="pnb"><button class="clib e" onclick="editProd('${r.p.id}')">✎</button><button class="clib d" onclick="delProd('${r.p.id}')">${pendDel===r.p.id?'OK?':'✕'}</button></span><span>${esc(r.p.name)}</span></div></td><td class="${r.net<0?'neg':''}">${r.net}</td><td>${r.p.mrp}</td><td>${r.total}</td><td>${r.na}</td></tr>`).join('')||'<tr><td colspan="5" style="padding:18px;color:#64748b">Abhi koi product nahi.</td></tr>')
-  +(C.rows.length?`<tr class="tt"><td class="pn">Total</td><td>${rd2(sn)}</td><td></td><td>${rd2(st)}</td><td>${rd2(sa)}</td></tr>`:'')}
+ $('cl-body').innerHTML=(C.rows.map((r,i)=>`<tr class="${i%2?'g':''}"><td class="pn">${esc(r.p.name)}</td><td class="${r.net<0?'neg':''}">${r.net}</td><td>${r.p.mrp}</td><td>${r.total}</td><td>${r.na}</td><td><span class="pnb"><button class="clib e" onclick="editProd('${r.p.id}')">✎</button><button class="clib d" onclick="delProd('${r.p.id}')">${pendDel===r.p.id?'OK?':'✕'}</button></span></td></tr>`).join('')||'<tr><td colspan="6" style="padding:18px;color:#64748b">Abhi koi product nahi.</td></tr>')
+  +(C.rows.length?`<tr class="tt"><td class="pn">Total</td><td>${rd2(sn)}</td><td></td><td>${rd2(st)}</td><td>${rd2(sa)}</td><td></td></tr>`:'')}
 function clHint(){const v=cv(),n=kv($('cl-p').value);const r=n?clinicCalc(v).rows.find(x=>kv(x.p.name)===n):null;
  $('cl-m').placeholder=r?String(r.p.mrp):'MRP/tab';$('cl-l').placeholder=r?String(r.last):'Last';$('cl-r').placeholder=r?String(r.rem):'Remain'}
 function addClinic(e){e.preventDefault();const v=cv();if(!v)return;const name=$('cl-p').value.trim();if(!name)return toast('Product ka naam bharein');
@@ -920,73 +898,80 @@ function addClinic(e){e.preventDefault();const v=cv();if(!v)return;const name=$(
  save();renderClinic();toast('Entry saved')}
 function delProd(id){if(pendDel!==id){pendDel=id;renderClinic();return toast('Delete ke liye dubara "OK?" dabayein')}
  const v=cv();v.products=(v.products||[]).filter(p=>p.id!==id);v.moves=(v.moves||[]).filter(m=>m.pid!==id);pendDel=null;save();renderClinic();toast('Product deleted')}
-function editProd(id){const v=cv(),p=(v.products||[]).find(x=>x.id===id);if(!p)return;toast('Product edit: name/MRP change via re-add for now')}
+function editProd(id){const v=cv(),p=(v.products||[]).find(x=>x.id===id);if(!p)return;$('cl-p').value=p.name;$('cl-m').value=p.mrp;clHint();$('cl-p').focus();toast('Product upar form me aa gaya — badlav karke Add karein')}
 function openCper(){const v=cv();if(!v)return;const P=clinicPeriod(v);$('cp-from').value=P.from;$('cp-to').value=P.to;$('cp-pct').value=v.pct==null?30:v.pct;openModal('m-cper')}
 function saveCper(e){e.preventDefault();const v=cv();if(!v)return;v.from=$('cp-from').value;v.to=$('cp-to').value;v.pct=parseFloat($('cp-pct').value)||30;save();closeModal('m-cper');renderClinic();toast('Period saved')}
 function resetCper(){const v=cv();if(!v)return;delete v.from;delete v.to;save();closeModal('m-cper');renderClinic()}
 function openClog(){toast('Entries log — period filter available in full version')}
-function clImg(){toast('Image share — use browser print for now')}
 
-function openImport(mode){impMode=mode;let help='';
- if(mode==='sheet'&&shId&&fmtOf(shId)==='rate'){
-  help='<b>Rate sheet Import</b><br>Sirf 4 columns copy karein (header ke bina):<br><b>Product | Qty | MRP | Rate</b><br>GST auto 5% lagega. Date aaj ki lagegi.';
- }else if(mode==='ud'){help='Name | Amount | Description | Paid (tab separated)'}
- else if(mode==='shop'){help='Vendor | Bill | Paid | Date'}
- else help='Excel cells copy-paste karein (tab / comma separated)';
- $('imp-help').innerHTML=help;$('imp-text').value='';openModal('m-imp')}
-function impFile(ev){const f=ev.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{$('imp-text').value=r.result};r.readAsText(f)}
-function runImport(){
- const txt=$('imp-text').value.trim();if(!txt)return toast('Kuch paste karein');
- const lines=txt.split(/\r?\n/).map(l=>l.trim()).filter(Boolean);
- let n=0;
- if(impMode==='sheet'&&shId&&fmtOf(shId)==='rate'){
-  lines.forEach(line=>{
-   const p=line.split(/[\t,]/).map(s=>s.trim());
-   if(p.length<3)return;
-   let name=p[0],qty=0,mrp=0,rate=0;
-   if(p.length>=4){qty=parseFloat(p[1])||0;mrp=parseFloat(p[2])||0;rate=parseFloat(p[3])||0}
-   else{rate=parseFloat(p[1])||0;mrp=parseFloat(p[2])||0}
-   if(!name||isNaN(rate))return;
-   const {net,price}=calcNetPrice(rate,5,state.rf.add,state.rf.mp);
-   (state.accounts[shId]||(state.accounts[shId]=[])).push({id:uid('h_'),v:[name,net,price,mrp,rate,5,qty],at:today()});
-   n++;
-  });
-  save();closeModal('m-imp');renderSheet();shScrollEnd();toast(n+' rows import ho gayi (GST 5%)');
-  return;
- }
- if(impMode==='ud'&&udId){
-  lines.forEach(line=>{
-   const p=line.split(/[\t,]/).map(s=>s.trim());
-   if(p.length<2)return;
-   const name=p[0],amount=parseFloat(p[1])||0,desc=p[2]||'',paid=parseFloat(p[3])||0;
-   if(!name)return;
-   state.accounts[udId].push({id:uid('u_'),name,amount,desc,paid,at:today()});n++;
-  });
-  save();closeModal('m-imp');renderUd();toast(n+' rows import');
-  return;
- }
- if(impMode==='shop'){
-  lines.forEach(line=>{
-   const p=line.split(/[\t,]/).map(s=>s.trim());
-   if(p.length<2)return;
-   const vendor=p[0],bill=parseFloat(p[1])||0,paid=parseFloat(p[2])||0,date=p[3]&&p[3].includes('-')?p[3]:today();
-   if(!vendor)return;
-   state.shop.entries.push({id:'s_'+Date.now()+n,vendor,bill,paid,date});n++;
-  });
-  save();closeModal('m-imp');renderShopAll();toast(n+' shop rows import');
-  return;
- }
- toast('Is mode ke liye import abhi limited hai');closeModal('m-imp')}
+function clImg(){
+ const v=cv();if(!v)return;
+ const C=clinicCalc(v);
+ if(!C.rows.length)return toast('Pehle kuch products add karein');
+ const W=760,pad=24,banH=134,hdrH=52,rowH=42,totH=46,gap=16;
+ const H=pad+banH+gap+hdrH+(C.rows.length*rowH)+totH+pad;
+ const cvEl=document.createElement('canvas');cvEl.width=W;cvEl.height=H;
+ const ctx=cvEl.getContext('2d');
+ const rrect=(x,y,w,h,r)=>{ctx.beginPath();ctx.moveTo(x+r,y);ctx.arcTo(x+w,y,x+w,y+h,r);ctx.arcTo(x+w,y+h,x,y+h,r);ctx.arcTo(x,y+h,x,y,r);ctx.arcTo(x,y,x+w,y,r);ctx.closePath()};
 
-function dlBackup(){const blob=new Blob([JSON.stringify(state,null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='ledger_backup_'+today()+'.json';a.click();toast('Backup downloaded')}
-function copyBackup(){navigator.clipboard.writeText(JSON.stringify(state)).then(()=>toast('Backup text copied')).catch(()=>toast('Copy fail'))}
-function restoreFile(ev){const f=ev.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{state=normShop(JSON.parse(r.result));save();renderHome();closeModal('m-backup');toast('Restored!')}catch(e){toast('Invalid JSON')}};r.readAsText(f)}
-function restoreText(){try{state=normShop(JSON.parse($('rs-text').value));save();renderHome();closeModal('m-backup');toast('Restored!')}catch(e){toast('Invalid JSON')}}
-function toggleTheme(){document.body.classList.toggle('dk');toast(document.body.classList.contains('dk')?'Dark':'Light')}
-function resetDemo(){if(!confirm('Sample data se reset?'))return;localStorage.removeItem(KEY);state=load();renderHome();closeModal('m-backup');toast('Reset done')}
+ ctx.fillStyle='#f8fafc';ctx.fillRect(0,0,W,H);
+ // Dark Header Card
+ const bx=pad,by=pad,bw=W-pad*2;
+ rrect(bx,by,bw,banH,18);ctx.fillStyle='#0f172a';ctx.fill();
+ ctx.fillStyle='#ffffff';ctx.font='900 24px -apple-system,Segoe UI,Arial,sans-serif';ctx.textAlign='center';
+ ctx.fillText(v.name,bx+bw*0.34,by+44);
+ ctx.fillStyle='#94a3b8';ctx.font='700 12px -apple-system,Segoe UI,Arial,sans-serif';
+ ctx.fillText('IS PERIOD KA NET AMOUNT',bx+bw*0.34,by+68);
+ // Yellow Period Pill
+ const px=bx+24,py=by+80,pw=bw*0.68-48,ph=34;
+ rrect(px,py,pw,ph,17);ctx.fillStyle='#facc15';ctx.fill();
+ ctx.fillStyle='#111827';ctx.font='900 15px -apple-system,Segoe UI,Arial,sans-serif';
+ ctx.fillText(fmtDate(C.P.from)+' se '+fmtDate(C.P.to),px+pw/2,py+22);
+ // Right Amount Box
+ const ax=bx+bw*0.68+6,ay=by+16,aw=bw*0.32-22,ah=banH-32;
+ rrect(ax,ay,aw,ah,14);ctx.fillStyle='#1e293b';ctx.fill();
+ ctx.strokeStyle='#facc15';ctx.lineWidth=3;ctx.stroke();
+ ctx.fillStyle='#facc15';ctx.font='900 32px ui-monospace,Consolas,monospace';
+ ctx.fillText('₹'+fn(Math.round(C.total)),ax+aw/2,ay+ah/2+11);
 
-document.getElementById('boot').style.display='none';
-renderHome();
-</script>
-</body>
-</html>
+ // Table (5 Columns ONLY - No Edit/Delete buttons)
+ let ty=by+banH+gap;
+ const cols=[0.36,0.15,0.13,0.18,0.18].map(p=>Math.round(bw*p));
+ cols[4]=bw-(cols[0]+cols[1]+cols[2]+cols[3]);
+ const cx=[bx];for(let i=0;i<4;i++)cx.push(cx[i]+cols[i]);
+
+ // Table Header
+ ctx.fillStyle='#1e3a8a';ctx.fillRect(bx,ty,bw,hdrH);
+ ctx.fillStyle='#ffffff';ctx.font='800 14px -apple-system,Segoe UI,Arial,sans-serif';ctx.textAlign='center';
+ ctx.fillText('Products',cx[0]+cols[0]/2,ty+31);
+ ctx.fillText('Net Qty',cx[1]+cols[1]/2,ty+22);ctx.fillText('in (tab)',cx[1]+cols[1]/2,ty+39);
+ ctx.fillText('MRP',cx[2]+cols[2]/2,ty+22);ctx.fillText('per tab',cx[2]+cols[2]/2,ty+39);
+ ctx.fillText('Total',cx[3]+cols[3]/2,ty+22);ctx.fillText('Amount',cx[3]+cols[3]/2,ty+39);
+ ctx.fillText('Net Amt',cx[4]+cols[4]/2,ty+22);ctx.fillText('('+C.pct+'%)',cx[4]+cols[4]/2,ty+39);
+ ty+=hdrH;
+
+ // Table Rows
+ let sn=0,st=0,sa=0;
+ C.rows.forEach((r,i)=>{
+  sn+=r.net;st+=r.total;sa+=r.na;
+  ctx.fillStyle=i%2?'#f1f5f9':'#ffffff';ctx.fillRect(bx,ty,bw,rowH);
+  ctx.strokeStyle='#cbd5e1';ctx.lineWidth=1;
+  for(let c=0;c<5;c++)ctx.strokeRect(cx[c],ty,cols[c],rowH);
+  ctx.fillStyle='#0f172a';ctx.font='700 15px -apple-system,Segoe UI,Arial,sans-serif';
+  ctx.textAlign='left';ctx.fillText(String(r.p.name).slice(0,24),cx[0]+12,ty+26);
+  ctx.textAlign='center';
+  ctx.fillStyle=r.net<0?'#e11d48':'#0f172a';ctx.fillText(String(r.net),cx[1]+cols[1]/2,ty+26);
+  ctx.fillStyle='#0f172a';ctx.fillText(String(r.p.mrp),cx[2]+cols[2]/2,ty+26);
+  ctx.fillText(String(r.total),cx[3]+cols[3]/2,ty+26);
+  ctx.fillText(String(r.na),cx[4]+cols[4]/2,ty+26);
+  ty+=rowH;
+ });
+
+ // Total Row
+ ctx.fillStyle='#1e3a8a';ctx.fillRect(bx,ty,bw,totH);
+ ctx.fillStyle='#ffffff';ctx.font='900 16px -apple-system,Segoe UI,Arial,sans-serif';
+ ctx.textAlign='left';ctx.fillText('Total',cx[0]+12,ty+29);
+ ctx.textAlign='center';
+ ctx.fillText(String(rd2(sn)),cx[1]+cols[1]/2,ty+29);
+ ctx.fillText(String(rd2(st)),cx[3]+cols[3]/2,ty+29);
+ ctx.fillText(String(rd2(sa
