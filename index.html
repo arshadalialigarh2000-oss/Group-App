@@ -1,12 +1,3 @@
-Aapke teeno parts jodkar aur aapke saare required changes karke poora complete code taiyaar kar diya hai:
-Kya-kya badla gaya hai:
- * Vendor Ledger (#pg-shop, #pg-shopv, #pg-shopfull):
-   * Screen par default sirf Vendor, Bills, Paid, Net Amount hi fit dikhenge (28% + 22% + 22% + 28% = 100%).
-   * Date aur uske sath Edit (✎) / Delete (✕) buttons ek separate 6th column me right side (screen ke bahar) chale gaye hain — right scroll karne par dikhenge.
- * Clinic Sheet (#pg-cl — Screenshot wala page):
-   * Edit (✎) aur Delete (✕) buttons product name ke left se hatakar table ke ekdam right side (screen ke bahar scroll karne par) kar diye gaye hain, taaki screen par sirf 5 main columns (Products, Net Qty, MRP, Total Amount, Net Amount) clean dikhein.
-   * 📷 Image Button (clImg()): Isme full working Canvas Image Generator laga diya hai. Image button dabate hi waisa hi dark header + clean table + Total row wala bill image bankar Bill Image Ready modal me khul jayega (Share / Save JPG ke sath), aur us image me Edit / Delete buttons bilkul nahi aayenge.
-Complete Updated HTML Code:
 <!DOCTYPE html>
 <html lang="hi">
 <head>
@@ -63,7 +54,7 @@ input,select,textarea{font-family:inherit;font-size:14px;outline:none}
 .ban .a{padding:12px;border-right:1px solid rgba(255,255,255,.25);display:flex;align-items:center;justify-content:center;text-align:center}
 .ban h2{font-size:17px;font-weight:900;line-height:1.25;text-shadow:0 2px 3px rgba(0,0,0,.35)}.ban .b{display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:900;margin:8px;border-radius:12px;background:linear-gradient(180deg,#fde68a,#f59e0b);color:#1e293b;box-shadow:0 3px 0 #b45309,inset 0 2px 0 rgba(255,255,255,.6)}
 .tb{background:#f1f5f9;border:1px solid #64748b;border-bottom:none;padding:6px 10px;display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:11px;color:#475569}
-.sc{width:100%;overflow-x:auto;border:1px solid #64748b}
+.sc{width:100%;overflow-x:auto;border:1px solid #64748b;-webkit-overflow-scrolling:touch;touch-action:pan-x pan-y}
 table{width:100%;border-collapse:collapse;font-size:12px;background:#fff}
 th,td{border:1px solid #7c8b9e;padding:5px 6px;white-space:nowrap;color:#000}
 th{font-weight:800;text-align:center;padding:7px 6px}th.tl{text-align:left}
@@ -97,7 +88,7 @@ tr.b1{background:#e8f0fe}tr.b0{background:#fff}tr.sep{height:18px}
 .sumr{display:grid;grid-template-columns:1.2fr 1fr;border:1.5px solid #93c5fd;border-radius:14px;overflow:hidden;margin:0 12px 8px}
 .sumr .l{background:linear-gradient(90deg,#dbeafe,#eff6ff);padding:10px 14px;font-weight:800;font-size:15px}.sumr .v{background:#fff;text-align:center;font-weight:900;font-size:18px;padding:10px;border-left:1.5px solid #93c5fd}
 .neg{color:#e11d48!important}
-.st{margin:6px 12px 10px;border:1.5px solid #93c5fd;border-radius:12px;overflow:hidden}.st .sc{border:none}
+.st{margin:6px 12px 10px;border:1.5px solid #93c5fd;border-radius:12px;overflow:auto;-webkit-overflow-scrolling:touch;touch-action:pan-x pan-y}.st .sc{border:none;overflow:visible}
 .st th{background:#1e3a8a;color:#fff;font-size:13px!important;font-weight:800;padding:9px 6px!important}
 .st td{text-align:center;font-weight:700}.st td.sv{text-align:left}.st .sr{background:#dbeafe}
 .st tr.o td{background:#f1f5f9}
@@ -113,17 +104,17 @@ tr.b1{background:#e8f0fe}tr.b0{background:#fff}tr.sep{height:18px}
 .chip em{padding-left:6px;min-width:44px;font-size:13px}
 .ci{background:none;font-size:15px;padding:2px 3px}
 .sumr{margin:0 10px 5px;border-radius:10px}.sumr .l{padding:5px 10px;font-size:13px}.sumr .v{padding:5px;font-size:15px}
-#pg-shop .st,#pg-ud .st,#pg-sh .st{flex:1;min-height:0;overflow:auto;margin:4px 10px}
-#pg-shop .st .sc,#pg-ud .st .sc,#pg-sh .st .sc{overflow:visible}
-#pg-shop .st th,#pg-ud .st th,#pg-sh .st th{position:sticky;top:0;z-index:5}
-#pg-shop .st td,#pg-ud .st td,#pg-sh .st td{padding:6px 4px;font-size:13px}
+#pg-shop .st,#pg-shopv .st,#pg-shopfull .st,#pg-ud .st,#pg-sh .st{flex:1;min-height:0;overflow:auto;margin:4px 10px;-webkit-overflow-scrolling:touch;touch-action:pan-x pan-y}
+#pg-shop .st .sc,#pg-shopv .st .sc,#pg-shopfull .st .sc,#pg-ud .st .sc,#pg-sh .st .sc{overflow:visible;border:none;width:max-content;min-width:100%}
+#pg-shop .st th,#pg-shopv .st th,#pg-shopfull .st th,#pg-ud .st th,#pg-sh .st th{position:sticky;top:0;z-index:5}
+#pg-shop .st td,#pg-shopv .st td,#pg-shopfull .st td,#pg-ud .st td,#pg-sh .st td{padding:6px 4px;font-size:13px}
 #s-more{padding:7px!important;font-size:12px!important;margin:0 10px 4px!important;width:calc(100% - 20px)!important}
 .addbar{grid-template-columns:1.3fr 1fr 1fr 1fr auto;gap:4px;padding:6px;margin:6px;border-radius:14px}
 .ai{padding:8px 6px;font-size:12px;border-radius:9px}
 .adb{padding:0 12px;font-size:13px}
 .sd .ra{padding:0 3px;color:#9aa8ad;font-size:11px}
 .oi{width:82px;text-align:center;border:1px dashed #93c5fd;border-radius:6px;padding:3px;font-weight:800;font-size:13px;background:#fff;color:#0f172a}
-.st table{table-layout:fixed;width:100%}
+.st table{table-layout:fixed}
 #pg-shop .st table,#pg-shopv .st table,#pg-shopfull .st table{width:142%}
 #pg-shop .st th:first-child,#pg-shop .st td.sv,#pg-shopv .st th:first-child,#pg-shopv .st td.sv,#pg-shopfull .st th:first-child,#pg-shopfull .st td.sv{position:sticky;left:0;z-index:3}
 #pg-shop .st th:first-child,#pg-shopv .st th:first-child,#pg-shopfull .st th:first-child{z-index:6}
@@ -168,8 +159,8 @@ tr.b1{background:#e8f0fe}tr.b0{background:#fff}tr.sep{height:18px}
 #cl-per{background:linear-gradient(180deg,#fde047,#facc15);color:#111827;padding:5px 12px;border-radius:999px;font-size:13px;font-weight:900;box-shadow:0 3px 0 #a16207,inset 0 1px 0 rgba(255,255,255,.7)}
 .clpen{background:#facc15;color:#111827;border-radius:50%;width:28px;height:28px;font-size:14px;font-weight:900;box-shadow:0 2px 0 #a16207}
 .clb{display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:900;margin:8px;border-radius:12px;background:linear-gradient(180deg,#1e293b,#020617);color:#facc15;text-shadow:0 2px 3px rgba(0,0,0,.6);box-shadow:0 0 0 2px #facc15,0 4px 0 #a16207,inset 0 2px 0 rgba(255,255,255,.16)}
-#pg-cl .clt{flex:1;min-height:0;overflow:auto;margin:4px 10px;border:1.5px solid #1e3a8a;border-radius:12px;background:#fff}
-#pg-cl table{table-layout:fixed;width:118%}
+#pg-cl .clt{flex:1;min-height:0;overflow:auto;margin:4px 10px;border:1.5px solid #1e3a8a;border-radius:12px;background:#fff;-webkit-overflow-scrolling:touch;touch-action:pan-x pan-y}
+#pg-cl table{table-layout:fixed;width:124%}
 #pg-cl th{position:sticky;top:0;z-index:5;background:#1e3a8a;color:#fff;font-size:12px;padding:8px 4px;white-space:normal;line-height:1.2;border-color:#334e9b}
 #pg-cl td{font-size:13px;padding:6px 4px;text-align:center;font-weight:700;color:#0f172a;white-space:normal;border-color:#cbd5e1}
 #pg-cl td.pn{text-align:left;padding-left:8px;position:sticky;left:0;z-index:3;background:#fff}
@@ -300,7 +291,7 @@ tr.b1{background:#e8f0fe}tr.b0{background:#fff}tr.sep{height:18px}
 <div id="pg-cl" class="pg hidden">
  <div class="nav"><div class="l"><button class="nb" onclick="backToVendors()">← Doctors</button><div style="min-width:0"><small>Clinic Sheet</small><div class="t" id="cl-nt"></div></div></div><button class="nb wa" onclick="clImg()">📷 Image</button></div>
  <div class="clban"><div class="cla"><div class="cln" id="cl-name"></div><div class="cll">IS PERIOD KA NET AMOUNT</div><div class="clp"><span id="cl-per"></span><button class="clpen" onclick="openCper()">✎</button></div></div><div class="clb mono" id="cl-tot"></div></div>
- <div class="clt"><table><colgroup><col style="width:31.3%"><col style="width:12.7%"><col style="width:11%"><col style="width:14.8%"><col style="width:14.8%"><col style="width:15.4%"></colgroup><thead><tr><th>Products</th><th>Net Qty<br>in (tab)</th><th>MRP<br>per tab</th><th>Total<br>Amount</th><th id="cl-th5"></th><th></th></tr></thead><tbody id="cl-body"></tbody></table></div>
+ <div class="clt"><table><colgroup><col style="width:29.8%"><col style="width:12.1%"><col style="width:10.5%"><col style="width:14.5%"><col style="width:14.5%"><col style="width:18.6%"></colgroup><thead><tr><th>Products</th><th>Net Qty<br>in (tab)</th><th>MRP<br>per tab</th><th>Total<br>Amount</th><th id="cl-th5"></th><th></th></tr></thead><tbody id="cl-body"></tbody></table></div>
  <div class="clbot">
   <form id="cl-form" onsubmit="addClinic(event)" style="display:flex;flex-direction:column;gap:6px">
    <div class="clin1"><input id="cl-p" list="cl-pl" placeholder="Product naam" autocomplete="off" oninput="clHint()"/><input id="cl-m" type="number" step="0.01" placeholder="MRP/tab"/></div>
@@ -915,32 +906,27 @@ function clImg(){
  const rrect=(x,y,w,h,r)=>{ctx.beginPath();ctx.moveTo(x+r,y);ctx.arcTo(x+w,y,x+w,y+h,r);ctx.arcTo(x+w,y+h,x,y+h,r);ctx.arcTo(x,y+h,x,y,r);ctx.arcTo(x,y,x+w,y,r);ctx.closePath()};
 
  ctx.fillStyle='#f8fafc';ctx.fillRect(0,0,W,H);
- // Dark Header Card
  const bx=pad,by=pad,bw=W-pad*2;
  rrect(bx,by,bw,banH,18);ctx.fillStyle='#0f172a';ctx.fill();
  ctx.fillStyle='#ffffff';ctx.font='900 24px -apple-system,Segoe UI,Arial,sans-serif';ctx.textAlign='center';
  ctx.fillText(v.name,bx+bw*0.34,by+44);
  ctx.fillStyle='#94a3b8';ctx.font='700 12px -apple-system,Segoe UI,Arial,sans-serif';
  ctx.fillText('IS PERIOD KA NET AMOUNT',bx+bw*0.34,by+68);
- // Yellow Period Pill
  const px=bx+24,py=by+80,pw=bw*0.68-48,ph=34;
  rrect(px,py,pw,ph,17);ctx.fillStyle='#facc15';ctx.fill();
  ctx.fillStyle='#111827';ctx.font='900 15px -apple-system,Segoe UI,Arial,sans-serif';
  ctx.fillText(fmtDate(C.P.from)+' se '+fmtDate(C.P.to),px+pw/2,py+22);
- // Right Amount Box
  const ax=bx+bw*0.68+6,ay=by+16,aw=bw*0.32-22,ah=banH-32;
  rrect(ax,ay,aw,ah,14);ctx.fillStyle='#1e293b';ctx.fill();
  ctx.strokeStyle='#facc15';ctx.lineWidth=3;ctx.stroke();
  ctx.fillStyle='#facc15';ctx.font='900 32px ui-monospace,Consolas,monospace';
  ctx.fillText('₹'+fn(Math.round(C.total)),ax+aw/2,ay+ah/2+11);
 
- // Table (5 Columns ONLY - No Edit/Delete buttons)
  let ty=by+banH+gap;
  const cols=[0.36,0.15,0.13,0.18,0.18].map(p=>Math.round(bw*p));
  cols[4]=bw-(cols[0]+cols[1]+cols[2]+cols[3]);
  const cx=[bx];for(let i=0;i<4;i++)cx.push(cx[i]+cols[i]);
 
- // Table Header
  ctx.fillStyle='#1e3a8a';ctx.fillRect(bx,ty,bw,hdrH);
  ctx.fillStyle='#ffffff';ctx.font='800 14px -apple-system,Segoe UI,Arial,sans-serif';ctx.textAlign='center';
  ctx.fillText('Products',cx[0]+cols[0]/2,ty+31);
@@ -950,7 +936,6 @@ function clImg(){
  ctx.fillText('Net Amt',cx[4]+cols[4]/2,ty+22);ctx.fillText('('+C.pct+'%)',cx[4]+cols[4]/2,ty+39);
  ty+=hdrH;
 
- // Table Rows
  let sn=0,st=0,sa=0;
  C.rows.forEach((r,i)=>{
   sn+=r.net;st+=r.total;sa+=r.na;
@@ -967,11 +952,81 @@ function clImg(){
   ty+=rowH;
  });
 
- // Total Row
  ctx.fillStyle='#1e3a8a';ctx.fillRect(bx,ty,bw,totH);
  ctx.fillStyle='#ffffff';ctx.font='900 16px -apple-system,Segoe UI,Arial,sans-serif';
  ctx.textAlign='left';ctx.fillText('Total',cx[0]+12,ty+29);
  ctx.textAlign='center';
  ctx.fillText(String(rd2(sn)),cx[1]+cols[1]/2,ty+29);
  ctx.fillText(String(rd2(st)),cx[3]+cols[3]/2,ty+29);
- ctx.fillText(String(rd2(sa
+ ctx.fillText(String(rd2(sa)),cx[4]+cols[4]/2,ty+29);
+
+ pendShare={url:cvEl.toDataURL('image/jpeg',0.95),name:v.name.replace(/[^a-z0-9]/gi,'_')+'_Bill.jpg'};
+ $('share-img').src=pendShare.url;
+ openModal('m-share');
+}
+async function retryShare(){if(!pendShare)return;try{const res=await fetch(pendShare.url),blob=await res.blob(),file=new File([blob],pendShare.name,{type:'image/jpeg'});if(navigator.canShare&&navigator.canShare({files:[file]})){await navigator.share({files:[file],title:pendShare.name});return}}catch(e){}saveJpg()}
+function saveJpg(){if(!pendShare)return;const a=document.createElement('a');a.href=pendShare.url;a.download=pendShare.name;a.click();toast('JPG Saved!')}
+
+function openImport(mode){impMode=mode;let help='';
+ if(mode==='sheet'&&shId&&fmtOf(shId)==='rate'){
+  help='<b>Rate sheet Import</b><br>Sirf 4 columns copy karein (header ke bina):<br><b>Product | Qty | MRP | Rate</b><br>GST auto 5% lagega. Date aaj ki lagegi.';
+ }else if(mode==='ud'){help='Name | Amount | Description | Paid (tab separated)'}
+ else if(mode==='shop'){help='Vendor | Bill | Paid | Date'}
+ else help='Excel cells copy-paste karein (tab / comma separated)';
+ $('imp-help').innerHTML=help;$('imp-text').value='';openModal('m-imp')}
+function impFile(ev){const f=ev.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{$('imp-text').value=r.result};r.readAsText(f)}
+function runImport(){
+ const txt=$('imp-text').value.trim();if(!txt)return toast('Kuch paste karein');
+ const lines=txt.split(/\r?\n/).map(l=>l.trim()).filter(Boolean);
+ let n=0;
+ if(impMode==='sheet'&&shId&&fmtOf(shId)==='rate'){
+  lines.forEach(line=>{
+   const p=line.split(/[\t,]/).map(s=>s.trim());
+   if(p.length<3)return;
+   let name=p[0],qty=0,mrp=0,rate=0;
+   if(p.length>=4){qty=parseFloat(p[1])||0;mrp=parseFloat(p[2])||0;rate=parseFloat(p[3])||0}
+   else{rate=parseFloat(p[1])||0;mrp=parseFloat(p[2])||0}
+   if(!name||isNaN(rate))return;
+   const {net,price}=calcNetPrice(rate,5,state.rf.add,state.rf.mp);
+   (state.accounts[shId]||(state.accounts[shId]=[])).push({id:uid('h_'),v:[name,net,price,mrp,rate,5,qty],at:today()});
+   n++;
+  });
+  save();closeModal('m-imp');renderSheet();shScrollEnd();toast(n+' rows import ho gayi (GST 5%)');
+  return;
+ }
+ if(impMode==='ud'&&udId){
+  lines.forEach(line=>{
+   const p=line.split(/[\t,]/).map(s=>s.trim());
+   if(p.length<2)return;
+   const name=p[0],amount=parseFloat(p[1])||0,desc=p[2]||'',paid=parseFloat(p[3])||0;
+   if(!name)return;
+   state.accounts[udId].push({id:uid('u_'),name,amount,desc,paid,at:today()});n++;
+  });
+  save();closeModal('m-imp');renderUd();toast(n+' rows import');
+  return;
+ }
+ if(impMode==='shop'){
+  lines.forEach(line=>{
+   const p=line.split(/[\t,]/).map(s=>s.trim());
+   if(p.length<2)return;
+   const vendor=p[0],bill=parseFloat(p[1])||0,paid=parseFloat(p[2])||0,date=p[3]&&p[3].includes('-')?p[3]:today();
+   if(!vendor)return;
+   state.shop.entries.push({id:'s_'+Date.now()+n,vendor,bill,paid,date});n++;
+  });
+  save();closeModal('m-imp');renderShopAll();toast(n+' shop rows import');
+  return;
+ }
+ toast('Is mode ke liye import abhi limited hai');closeModal('m-imp')}
+
+function dlBackup(){const blob=new Blob([JSON.stringify(state,null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='ledger_backup_'+today()+'.json';a.click();toast('Backup downloaded')}
+function copyBackup(){navigator.clipboard.writeText(JSON.stringify(state)).then(()=>toast('Backup text copied')).catch(()=>toast('Copy fail'))}
+function restoreFile(ev){const f=ev.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{state=normShop(JSON.parse(r.result));save();renderHome();closeModal('m-backup');toast('Restored!')}catch(e){toast('Invalid JSON')}};r.readAsText(f)}
+function restoreText(){try{state=normShop(JSON.parse($('rs-text').value));save();renderHome();closeModal('m-backup');toast('Restored!')}catch(e){toast('Invalid JSON')}}
+function toggleTheme(){document.body.classList.toggle('dk');toast(document.body.classList.contains('dk')?'Dark':'Light')}
+function resetDemo(){if(!confirm('Sample data se reset?'))return;localStorage.removeItem(KEY);state=load();renderHome();closeModal('m-backup');toast('Reset done')}
+
+document.getElementById('boot').style.display='none';
+renderHome();
+</script>
+</body>
+</html>
