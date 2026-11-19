@@ -177,11 +177,22 @@ tr.b1{background:#e8f0fe}tr.b0{background:#fff}tr.sep{height:18px}
 #pg-ud .st table{width:135%}
 #pg-sh.rate .st th,#pg-sh.rate .st td{padding-left:6px;padding-right:6px}
 
-/* --- CUSTOM TABLE SCROLL FIX --- */
-.scroll-table { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
-.table-fixed-width { min-width: 480px; width: 100%; table-layout: fixed; }
-.table-fixed-width th, .table-fixed-width td { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.st table col { width: auto; }
+/* --- CUSTOM TABLE SCROLL FIX FOR VENDOR LEDGER --- */
+#pg-shop .st .sc {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+#pg-shop .st table {
+    min-width: 520px; /* Forces scroll on mobile */
+    table-layout: fixed;
+    width: 100%;
+}
+#pg-shop .st table th, #pg-shop .st table td {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+/* --- END FIX --- */
 
 @media print{body{background:#fff}.nav,.tb,.ep,.ca,.no-print,.more{display:none!important}.ban{position:static;-webkit-print-color-adjust:exact;print-color-adjust:exact}tr.b1{-webkit-print-color-adjust:exact;print-color-adjust:exact}.sc{overflow:visible}#pg-l3 .sc,#pg-l4 .sc,#pg-cred .sc{max-height:none!important;overflow:visible!important}}
 @keyframes bootshow{to{opacity:1}}
@@ -241,20 +252,19 @@ tr.b1{background:#e8f0fe}tr.b0{background:#fff}tr.sep{height:18px}
  <div id="s-chips" class="chips"></div><div id="s-sum"></div>
  <div class="sinfo" id="s-info"></div>
  
- <!-- UPDATED SCROLL TABLE SECTION -->
- <div class="st"><div class="sc scroll-table">
-    <table class="table-fixed-width">
+ <!-- UPDATED TABLE FOR VENDOR LEDGER -->
+ <div class="st"><div class="sc">
+    <table>
       <colgroup>
-        <col style="width: 26%"><col style="width: 14%"><col style="width: 14%"><col style="width: 17%">
-        <col style="width: 18%"><col style="width: 11%">
+        <col style="width: 26%"><col style="width: 14%"><col style="width: 14%"><col style="width: 17%"><col style="width: 18%"><col style="width: 11%">
       </colgroup>
       <thead>
-        <tr><th>Vendor</th><th>Bills</th><th>Paid</th><th>Net Amount</th><th>Date</th><th class="ca no-print"></th></tr>
+        <tr><th>Vendor</th><th>Bills</th><th>Paid</th><th>Net Amount</th><th>Date</th><th class="no-print"></th></tr>
       </thead>
       <tbody id="s-body"></tbody>
     </table>
  </div></div>
- <!-- END UPDATED SCROLL TABLE SECTION -->
+ <!-- END UPDATED TABLE -->
 
  <button class="more" style="width:auto;margin:0 12px 10px" id="s-more" onclick="openShopFull()"></button>
  <form class="addbar" onsubmit="addShop(event)">
@@ -687,7 +697,7 @@ function renderShopAll(){
  const un=Math.round((mb-mp)*100)/100,mn=MN[Number(ym.slice(5))-1]+' '+ym.slice(0,4);
  $('s-sum').innerHTML=`<div class="sumr"><div class="l">Total Month Bills</div><div class="v mono">${fn(mb)}</div></div><div class="sumr"><div class="l">Total Month Paid</div><div class="v mono">${fn(mp)}</div></div><div class="sumr"><div class="l">This Month Unpaid</div><div class="v mono ${un>0?'neg':''}">${fn(un)}</div></div>`;
  const q=$('s-q').value.trim();let list=E.filter(e=>matchQ(e,q)),shown=q?list:list.slice(-SHOP_LIMIT);
- $('s-body').innerHTML=(q?'':openRowsHTML())+(shown.map(shopRow).join('')||(q?'<tr><td colspan="5" style="padding:18px;color:#64748b">Koi entry nahi mili</td></tr>':''));
+ $('s-body').innerHTML=(q?'':openRowsHTML())+(shown.map(shopRow).join('')||(q?'<tr><td colspan="6" style="padding:18px;color:#64748b">Koi entry nahi mili</td></tr>':''));
  $('s-info').textContent=q?`${list.length} entries mili`:`${mn} • Latest ${shown.length} entries (kul ${E.length})`;
  const more=$('s-more');more.textContent=`📂 Full Entries dekhein (kul ${E.length})`;more.classList.toggle('hidden',!!q||E.length<=SHOP_LIMIT);
  if(shopV!==null){const isO=shopV<0,ck=isO?null:kv(state.shop.chips[shopV]),vl=E.filter(e=>isO?!chipKeys.includes(e.k):e.k===ck);
@@ -697,9 +707,9 @@ function renderShopAll(){
   $('sv-body').innerHTML=openRow(shopV,nm)+vl.map(shopRow).join('')+vTotals(vl,isO?(state.shop.openOthers||0):(state.shop.open[ck]||0))}
  const fq=$('sf-q').value.trim(),fl=E.filter(e=>matchQ(e,fq));let fh='',cm='',idx=0;
  fl.forEach(e=>{const m=e.date.slice(0,7);if(m!==cm){cm=m;let b=0,p=0;fl.forEach(x=>{if(x.date.startsWith(m)){b+=Number(x.bill||0);p+=Number(x.paid||0)}});
-  fh+=`<tr class="mh"><td colspan="5">${MN[Number(m.slice(5))-1]} ${m.slice(0,4)} — Bills ${fn(b)} • Paid ${fn(p)} • Unpaid ${fn(Math.round((b-p)*100)/100)}</td></tr>`;idx=0}
+  fh+=`<tr class="mh"><td colspan="6">${MN[Number(m.slice(5))-1]} ${m.slice(0,4)} — Bills ${fn(b)} • Paid ${fn(p)} • Unpaid ${fn(Math.round((b-p)*100)/100)}</td></tr>`;idx=0}
   fh+=shopRow(e,idx++)});
- $('sf-body').innerHTML=(fq?'':openRowsHTML())+(fh||(fq?'<tr><td colspan="5" style="padding:18px;color:#64748b">Koi entry nahi mili</td></tr>':''));
+ $('sf-body').innerHTML=(fq?'':openRowsHTML())+(fh||(fq?'<tr><td colspan="6" style="padding:18px;color:#64748b">Koi entry nahi mili</td></tr>':''));
  $('sf-info').textContent=`${fl.length} entries (kul ${E.length})`}
 function addShop(e){e.preventDefault();let name=$('s-v').value.trim();if(!name)return toast('Vendor ka naam bharein');
  const bill=parseFloat($('s-bill').value)||0,paid=parseFloat($('s-paid').value)||0;if(!bill&&!paid)return toast('Bill ya Paid amount bharein');
@@ -969,4 +979,4 @@ document.getElementById('boot').style.display='none';
 renderHome();
 </script>
 </body>
-                 </html>
+</html>
