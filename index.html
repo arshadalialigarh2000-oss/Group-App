@@ -269,7 +269,7 @@ tr.b1{background:#e8f0fe}tr.b0{background:#fff}tr.sep{height:18px}
  <div class="srch"><input id="ud-q" list="ud-nl" placeholder="🔍 Naam search karein" oninput="udInput()" autocomplete="off"/></div>
  <div id="ud-sug" class="chips hidden" style="grid-template-columns:1fr;max-height:50vh;overflow:auto"></div>
  <div class="sinfo" id="ud-info" style="margin-top:4px"></div>
- <div class="st" id="ud-st"><div class="sc"><table><colgroup><col style="width:18%"><col style="width:14%"><col style="width:14%"><col style="width:18.5%"><col style="width:17.5%"><col style="width:11%"><col style="width:7%"></colgroup><thead><tr><th class="h1">Name</th><th class="h2">Amount</th><th class="h3">Paid<br>Amount</th><th class="h1">Net<br>amount</th><th class="h1">Description</th><th class="h1">Date</th><th class="h1"></th></tr></thead><tbody id="ud-body"></tbody></table></div></div>
+<div class="st" id="ud-st"><div class="sc"><table><colgroup><col style="width:27%"><col style="width:10.5%"><col style="width:10.5%"><col style="width:10.5%"><col style="width:27%"><col style="width:8.5%"><col style="width:6%"></colgroup><thead><tr><th class="h1">Name</th><th class="h2">Amount</th><th class="h3">Paid<br>Amount</th><th class="h1">Net<br>amount</th><th class="h1">Description</th><th class="h1">Date</th><th class="h1"></th></tr></thead><tbody id="ud-body"></tbody></table></div></div>
  <form class="addbar" style="grid-template-columns:repeat(6,1fr)" onsubmit="addUd(event)">
   <input id="ud-n" class="ai" list="ud-nl" placeholder="Name" autocomplete="off" style="grid-column:span 3"/>
   <input id="ud-d" class="ai" placeholder="Description" style="grid-column:span 3"/>
@@ -384,6 +384,20 @@ tr.b1{background:#e8f0fe}tr.b0{background:#fff}tr.sep{height:18px}
 <button class="btn-p" style="width:100%;padding:12px">Update Entry</button></form></div></div>
 
 <div id="m-cper" class="mb hidden"><div class="mc"><div class="mh"><h3>Period Set</h3><button class="x" onclick="closeModal('m-cper')">✕</button></div>
+<form onsubmit="saveCper(event)">
+<div class="g2"><div class="lf"><label>From</label><input id="cp-from" class="li" type="date" required/></div>
+<div class="lf"><label>To</label><input id="cp-to" class="li" type="date" required/></div></div>
+<div class="lf"><label>Net % of MRP</label><input id="cp-pct" class="li mono" type="number" step="0.01" value="30"/></div>
+<div class="g2"><button type="button" class="btn-d" onclick="resetCper()">Auto Reset</button><button class="btn-p">Save</button></div></form></div></div>
+
+<div id="m-udedit" class="mb hidden"><div class="mc"><div class="mh"><h3>Edit Udhaar Entry</h3><button class="x" onclick="closeModal('m-udedit')">✕</button></div>
+<form onsubmit="saveUdEdit(event)"><input type="hidden" id="ue-id"/>
+<div class="lf"><label>Name</label><input id="ue-n" class="li" list="ud-nl" required/></div>
+<div class="lf"><label>Description</label><input id="ue-d" class="li"/></div>
+<div class="g2"><div class="lf"><label>Amount ₹</label><input id="ue-a" class="li mono" type="number" step="0.01"/></div>
+<div class="lf"><label>Paid ₹</label><input id="ue-p" class="li mono" type="number" step="0.01"/></div></div>
+<div class="lf"><label>Date</label><input id="ue-at" class="li" type="date" required/></div>
+<button class="btn-p" style="width:100%;padding:12px">Update Entry</button></form></div></div>
 <form onsubmit="saveCper(event)">
 <div class="g2"><div class="lf"><label>From</label><input id="cp-from" class="li" type="date" required/></div>
 <div class="lf"><label>To</label><input id="cp-to" class="li" type="date" required/></div></div>
@@ -716,7 +730,7 @@ function udTotal(id){let t=0;Object.values(udCalc(id).run).forEach(v=>t+=v);retu
 function openUd(k){udId=k;cashKey=k;$('ud-q').value='';show('pg-ud');renderUd();udScrollEnd()}
 function udScrollEnd(){const t=$('ud-st');if(t)setTimeout(()=>{t.scrollTop=t.scrollHeight},30)}
 function udInput(){renderUd()}
-function udRow(e,i){return `<tr class="${i%2?'':'o'}"><td class="sv">${esc(e.name)}</td><td class="ua">${e.amount||''}</td><td class="up">${e.paid||''}</td><td class="sr ${e.net<0?'neg':''}">${e.net}</td><td class="sv ud">${esc(e.desc)}</td><td class="sd">${fmtShort(e.at)}</td><td class="sd"><button class="ra" onclick="delUd('${e.id}')">${pendDel===e.id?'OK?':'✕'}</button></td></tr>`}
+function udRow(e,i){return `<tr class="${i%2?'':'o'}"><td class="sv">${esc(e.name)}</td><td class="ua">${e.amount||''}</td><td class="up">${e.paid||''}</td><td class="sr ${e.net<0?'neg':''}">${e.net}</td><td class="sv ud">${esc(e.desc)}</td><td class="sd">${fmtShort(e.at)}</td><td class="sd"><button class="ra ed" onclick="openUdEdit('${e.id}')">✎</button><button class="ra" onclick="delUd('${e.id}')">${pendDel===e.id?'OK?':'✕'}</button></td></tr>`}
 function renderUd(){
  const a=state.custom.find(x=>x.id===udId);if(!a)return;
  const{rows,run}=udCalc(udId);const udNm={};rows.forEach(r=>{if(!udNm[r.k])udNm[r.k]=r.name});
@@ -738,6 +752,14 @@ function addUd(e){e.preventDefault();let name=$('ud-n').value.trim();if(!name)re
  ['ud-n','ud-d','ud-a','ud-p'].forEach(i=>$(i).value='');
  save();renderUd();udScrollEnd();toast('Entry saved')}
 function delUd(id){if(pendDel!==id){pendDel=id;renderUd();return toast('Delete ke liye dubara "OK?" dabayein')}
+ state.accounts[udId]=state.accounts[udId].filter(x=>x.id!==id);pendDel=null;save();renderUd();toast('Entry deleted')}
+function openUdEdit(id){const e=(state.accounts[udId]||[]).find(x=>x.id===id);if(!e)return;
+ $('ue-id').value=e.id;$('ue-n').value=e.name||'';$('ue-d').value=e.desc||'';$('ue-a').value=e.amount||'';$('ue-p').value=e.paid||'';$('ue-at').value=e.at||today();
+ openModal('m-udedit')}
+function saveUdEdit(ev){ev.preventDefault();const e=(state.accounts[udId]||[]).find(x=>x.id===$('ue-id').value);if(!e)return;
+ const name=$('ue-n').value.trim();if(!name)return toast('Naam bharein');
+ e.name=name;e.desc=$('ue-d').value.trim();e.amount=parseFloat($('ue-a').value)||0;e.paid=parseFloat($('ue-p').value)||0;e.at=$('ue-at').value||today();
+ save();closeModal('m-udedit');renderUd();toast('Entry updated!')}
  state.accounts[udId]=state.accounts[udId].filter(x=>x.id!==id);pendDel=null;save();renderUd();toast('Entry deleted')}
 
 const PERS_COLS=[{n:'Name',t:'text'},{n:'Amount Given',t:'num'},{n:'Description',t:'text'},{n:'Amount Received',t:'num'}];
