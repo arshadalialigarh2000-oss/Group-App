@@ -185,12 +185,7 @@ tr.b1{background:#e8f0fe}tr.b0{background:#fff}tr.sep{height:18px}
 <div id="boot" style="position:fixed;left:0;right:0;top:0;z-index:99999;background:#e11d48;color:#fff;padding:10px 12px;font:700 13px sans-serif;text-align:center;opacity:0;animation:bootshow .01s 3s forwards">⚠ App poori load nahi hui. File dobara open karein.</div>
 <div class="app">
 <div id="toast" class="toast hidden"></div>
-/* --- NAYA CSS: Right side alignment & Image mode hide --- */
-.st td, .st th { position: relative; }
-.row-btns { position: absolute; right: 4px; top: 50%; transform: translateY(-50%); display: flex; gap: 2px; z-index: 10; }
-.shooting .no-print, .shooting .gb, .shooting .addbar, .shooting .clbot, .shooting .row-btns, .shooting .ra, .shooting .clib, .shooting .more, .shooting .sinfo, .shooting .srch, .shooting .tb, .shooting .ep { display: none !important; }
-.shooting .st { overflow: visible !important; max-height: none !important; }
-.shooting .sc { overflow: visible !important; }
+
 <!-- HOME -->
 <div id="pg-home" class="pg">
  <header class="hdr"><div class="row"><div><h1>Billing & Ledger</h1><p>Shop • Personal • Doctors • v18</p></div>
@@ -564,7 +559,7 @@ function rowsHTML(rows,limit){
   if(r.type==='opening')p='Previous Balance';
   else if(r.type==='item'){p=esc(r.particular);q=r.qty;rt=r.rate;t=r.totalVal}
   else{p=esc(r.particular||'Received Amt');q=esc(r.mode||'cash');rc=r.recVal}
-html+=`<tr class="${v%2?'b1':'b0'}"><td class="cd">${showDate?fmtDate(r.date):''}</td><td class="cp">${p}</td><td class="cn mono">${q}</td><td class="cn mono">${rt}</td><td class="cn mono">${t}</td><td class="cn mono">${rc}</td><td class="cf mono">${r.isLast?r.finalVal:''}</td><td class="ca no-print"><div class="row-btns"><button class="ra" onclick="openEdit('${r.id}')">✎</button><button class="ra" onclick="delRow('${r.id}')">${pendDel===r.id?'OK?':'✕'}</button></div></td></tr>`});
+  html+=`<tr class="${v%2?'b1':'b0'}"><td class="cd">${showDate?fmtDate(r.date):''}</td><td class="cp">${p}</td><td class="cn mono">${q}</td><td class="cn mono">${rt}</td><td class="cn mono">${t}</td><td class="cn mono">${rc}</td><td class="cf mono">${r.isLast?r.finalVal:''}</td><td class="ca no-print"><button class="ra" onclick="openEdit('${r.id}')">✎</button><button class="ra" onclick="delRow('${r.id}')">${pendDel===r.id?'OK?':'✕'}</button></td></tr>`});
  for(let k=0;k<3;k++){v++;html+=`<tr class="sep ${v%2?'b1':'b0'}"><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td class="no-print"></td></tr>`}
  return html}
 function renderLedger(){
@@ -631,7 +626,7 @@ function matchQ(e,q){q=(q||'').trim().toLowerCase();if(!q)return true;
    if(pt.length===3){let yy=pt[2];if(yy<100)yy+=2000;return pt[0]===d&&pt[1]===m&&yy===y}
    if(pt.length===2)return pt[1]>=100?(pt[0]===m&&pt[1]===y):(pt[0]===d&&pt[1]===m);return false}
   return kv(e.vendor).includes(t)})}
-function shopRow(e,i){return `<tr class="${i%2?'':'o'}"><td class="sv">${esc(e.vendor)}</td><td class="sb">${e.bill}</td><td class="sp">${e.paid}</td><td class="sr ${e.rem<0?'neg':''}">${e.rem}</td><td class="sd">${fmtDate(e.date)} <div class="row-btns"><button class="ra" onclick="delShop('${e.id}')">${pendDel===e.id?'OK?':'✕'}</button></div></td></tr>`}
+function shopRow(e,i){return `<tr class="${i%2?'':'o'}"><td class="sv">${esc(e.vendor)}</td><td class="sb">${e.bill}</td><td class="sp">${e.paid}</td><td class="sr ${e.rem<0?'neg':''}">${e.rem}</td><td class="sd">${fmtDate(e.date)} <button class="ra" onclick="delShop('${e.id}')">${pendDel===e.id?'OK?':'✕'}</button></td></tr>`}
 function vTotals(vl,prev){
  const ym=today().slice(0,7),y=Number(ym.slice(0,4)),m=Number(ym.slice(5)),mm=ym.slice(5),last=String(new Date(y,m,0).getDate()).padStart(2,'0');
  let mb=0,mp=0,ab=0,ap=0;vl.forEach(e=>{const b=Number(e.bill||0),p=Number(e.paid||0);ab+=b;ap+=p;if(e.date.startsWith(ym)){mb+=b;mp+=p}});
@@ -698,7 +693,7 @@ function udTotal(id){let t=0;Object.values(udCalc(id).run).forEach(v=>t+=v);retu
 function openUd(k){udId=k;cashKey=k;$('ud-q').value='';show('pg-ud');renderUd();udScrollEnd()}
 function udScrollEnd(){const t=$('ud-st');if(t)setTimeout(()=>{t.scrollTop=t.scrollHeight},30)}
 function udInput(){renderUd()}
-function udRow(e,i){return `<tr class="${i%2?'':'o'}"><td class="sv">${esc(e.name)}</td><td class="ua">${e.amount||''}</td><td class="sv ud">${esc(e.desc)}</td><td class="up">${e.paid||''}</td><td class="sr ${e.net<0?'neg':''}">${e.net}</td><td class="sd">${fmtShort(e.at)}</td><td class="sd"><div class="row-btns"><button class="ra" onclick="delUd('${e.id}')">${pendDel===e.id?'OK?':'✕'}</button></div></td></tr>`}
+function udRow(e,i){return `<tr class="${i%2?'':'o'}"><td class="sv">${esc(e.name)}</td><td class="ua">${e.amount||''}</td><td class="sv ud">${esc(e.desc)}</td><td class="up">${e.paid||''}</td><td class="sr ${e.net<0?'neg':''}">${e.net}</td><td class="sd">${fmtShort(e.at)}</td><td class="sd"><button class="ra" onclick="delUd('${e.id}')">${pendDel===e.id?'OK?':'✕'}</button></td></tr>`}
 function renderUd(){
  const a=state.custom.find(x=>x.id===udId);if(!a)return;
  const{rows,run}=udCalc(udId);const udNm={};rows.forEach(r=>{if(!udNm[r.k])udNm[r.k]=r.name});
@@ -799,7 +794,7 @@ function renderSheet(){const k=shId,cs=colsOf(k);if(!cs.length)return;
    const rate=Number(e.v[4]||0),gst=e.v[5]==null||e.v[5]===''?5:Number(e.v[5]);
    const {net,price}=calcNetPrice(rate,gst,state.rf.add,state.rf.mp);
    // keep stored net/price in sync for display
-return `<tr class="${i%2?'':'o'}"><td class="sv">${esc(e.v[0])}</td><td>${net}</td><td>${price}</td><td>${e.v[3]||''}</td><td>${rate||''}</td><td>${gst}</td><td>${e.v[6]||''}</td><td class="sd">${fmtShort(e.at)}</td><td class="sd"><div class="row-btns"><button class="ra" onclick="openRedit('${e.id}')">✎</button> <button class="ra" onclick="delSheet('${e.id}')">${pendDel===e.id?'OK?':'✕'}</button></div></td></tr>`
+   return `<tr class="${i%2?'':'o'}"><td class="sv">${esc(e.v[0])}</td><td>${net}</td><td>${price}</td><td>${e.v[3]||''}</td><td>${rate||''}</td><td>${gst}</td><td>${e.v[6]||''}</td><td class="sd">${fmtShort(e.at)}</td><td class="sd"><button class="ra" onclick="openRedit('${e.id}')">✎</button> <button class="ra" onclick="delSheet('${e.id}')">${pendDel===e.id?'OK?':'✕'}</button></td></tr>`
   }).join('')||`<tr><td colspan="9" style="padding:18px;color:#64748b">Abhi koi entry nahi. Neeche se Product + Rate + (GST optional) + MRP + Qty add karein.</td></tr>`);
  }else{
   const sums=cs.map((c,i)=>c.t==='num'?rd2(rows.reduce((s,e)=>s+Number(e.v[i]||0),0)):'');
@@ -860,7 +855,7 @@ function renderClinic(){const v=cv();if(!v)return;const C=clinicCalc(v);
  $('cl-th5').innerHTML='Net Amount<br>('+C.pct+'% of MRP)';
  $('cl-pl').innerHTML=(v.products||[]).map(p=>`<option value="${esc(p.name)}">`).join('');
  let sn=0,st=0,sa=0;C.rows.forEach(r=>{sn+=r.net;st+=r.total;sa+=r.na});
-$('cl-body').innerHTML=(C.rows.map((r,i)=>`<tr class="${i%2?'g':''}"><td class="pn"><span>${esc(r.p.name)}</span><div class="row-btns"><button class="clib e" onclick="editProd('${r.p.id}')">✎</button><button class="clib d" onclick="delProd('${r.p.id}')">${pendDel===r.p.id?'OK?':'✕'}</button></div></td><td class="${r.net<0?'neg':''}">${r.net}</td><td>${r.p.mrp}</td><td>${r.total}</td><td>${r.na}</td></tr>`).join('')||'<tr><td colspan="5" style="padding:18px;color:#64748b">Abhi koi product nahi.</td></tr>')
+ $('cl-body').innerHTML=(C.rows.map((r,i)=>`<tr class="${i%2?'g':''}"><td class="pn"><div class="pnw"><span class="pnb"><button class="clib e" onclick="editProd('${r.p.id}')">✎</button><button class="clib d" onclick="delProd('${r.p.id}')">${pendDel===r.p.id?'OK?':'✕'}</button></span><span>${esc(r.p.name)}</span></div></td><td class="${r.net<0?'neg':''}">${r.net}</td><td>${r.p.mrp}</td><td>${r.total}</td><td>${r.na}</td></tr>`).join('')||'<tr><td colspan="5" style="padding:18px;color:#64748b">Abhi koi product nahi.</td></tr>')
   +(C.rows.length?`<tr class="tt"><td class="pn">Total</td><td>${rd2(sn)}</td><td></td><td>${rd2(st)}</td><td>${rd2(sa)}</td></tr>`:'')}
 function clHint(){const v=cv(),n=kv($('cl-p').value);const r=n?clinicCalc(v).rows.find(x=>kv(x.p.name)===n):null;
  $('cl-m').placeholder=r?String(r.p.mrp):'MRP/tab';$('cl-l').placeholder=r?String(r.last):'Last';$('cl-r').placeholder=r?String(r.rem):'Remain'}
@@ -881,14 +876,7 @@ function openCper(){const v=cv();if(!v)return;const P=clinicPeriod(v);$('cp-from
 function saveCper(e){e.preventDefault();const v=cv();if(!v)return;v.from=$('cp-from').value;v.to=$('cp-to').value;v.pct=parseFloat($('cp-pct').value)||30;save();closeModal('m-cper');renderClinic();toast('Period saved')}
 function resetCper(){const v=cv();if(!v)return;delete v.from;delete v.to;save();closeModal('m-cper');renderClinic()}
 function openClog(){toast('Entries log — period filter available in full version')}
-function clImg(){
-  document.body.classList.add('shooting');
-  toast('Screenshot le raha hai...');
-  setTimeout(()=>{
-    window.print(); // Mobile me Print/PDF dialog aayega jisse image save ho sakti hai
-    document.body.classList.remove('shooting');
-  }, 500);
-}
+function clImg(){toast('Image share — use browser print for now')}
 
 /* ---------- IMPORT (Rate sheet aware) ---------- */
 function openImport(mode){impMode=mode;let help='';
