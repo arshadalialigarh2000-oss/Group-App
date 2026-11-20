@@ -176,27 +176,25 @@ tr.b1{background:#e8f0fe}tr.b0{background:#fff}tr.sep{height:18px}
 .ai[readonly]{background:#eef2ff;color:#1e3a8a}
 #pg-ud .st table{width:135%}
 #pg-sh.rate .st th,#pg-sh.rate .st td{padding-left:6px;padding-right:6px}
+
+/* ---- Edit / Delete buttons: sabse right me, screen ke bahar (left swipe par dikhenge) ---- */
 td{position:relative}
 .row-btns{position:absolute;left:100%;top:50%;transform:translateY(-50%);margin-left:8px;display:flex;gap:6px;white-space:nowrap;z-index:10}
 .row-btns .ra,.row-btns .clib{background:#e2e8f0;color:#334155;border-radius:8px;padding:4px 9px;font-size:13px;min-width:28px;height:26px;line-height:18px}
 .row-btns .ra:last-child,.row-btns .clib.d{background:#fee2e2;color:#dc2626}
-th.ca,td.ca{width:0!important;padding:0!important;border:none!important}
+th.ca,td.ca{width:0!important;min-width:0!important;padding:0!important;border:none!important}
 .shooting .row-btns,.shooting .ra,.shooting .clib{display:none!important}
-.shooting .st,.shooting .clt,.shooting .sc{overflow:visible!important;max-height:none!important}@media print{.row-btns,.ra,.clib{display:none!important}body{background:#fff}.nav,.tb,.ep,.ca,.no-print,.more{display:none!important}.ban{position:static;-webkit-print-color-adjust:exact;print-color-adjust:exact}tr.b1{-webkit-print-color-adjust:exact;print-color-adjust:exact}.sc{overflow:visible}#pg-l3 .sc,#pg-l4 .sc,#pg-cash .sc{max-height:none!important;overflow:visible!important}}
+.shooting .st,.shooting .clt,.shooting .sc{overflow:visible!important;max-height:none!important}
+
+@media print{body{background:#fff}.nav,.tb,.ep,.ca,.no-print,.more{display:none!important}.row-btns,.ra,.clib{display:none!important}.ban{position:static;-webkit-print-color-adjust:exact;print-color-adjust:exact}tr.b1{-webkit-print-color-adjust:exact;print-color-adjust:exact}.sc{overflow:visible}#pg-l3 .sc,#pg-l4 .sc,#pg-cash .sc{max-height:none!important;overflow:visible!important}}
 @keyframes bootshow{to{opacity:1}}
 </style>
-b=document.getElementById('boot');if(b){b.innerHTML='⚠ App chali nahi — error: '+m+' (line '+l+').';b.style.animation='none';b.style.opacity=1}};</script>
+<script>window.onerror=function(m,u,l){var b=document.getElementById('boot');if(b){b.innerHTML='⚠ App chali nahi — error: '+m+' (line '+l+').';b.style.animation='none';b.style.opacity=1}};</script>
 </head>
 <body>
 <div id="boot" style="position:fixed;left:0;right:0;top:0;z-index:99999;background:#e11d48;color:#fff;padding:10px 12px;font:700 13px sans-serif;text-align:center;opacity:0;animation:bootshow .01s 3s forwards">⚠ App poori load nahi hui. File dobara open karein.</div>
 <div class="app">
 <div id="toast" class="toast hidden"></div>
-/* --- NAYA CSS: Right side alignment & Image mode hide --- */
-.st td, .st th { position: relative; }
-.row-btns { position: absolute; right: 4px; top: 50%; transform: translateY(-50%); display: flex; gap: 2px; z-index: 10; }
-.shooting .no-print, .shooting .gb, .shooting .addbar, .shooting .clbot, .shooting .row-btns, .shooting .ra, .shooting .clib, .shooting .more, .shooting .sinfo, .shooting .srch, .shooting .tb, .shooting .ep { display: none !important; }
-.shooting .st { overflow: visible !important; max-height: none !important; }
-.shooting .sc { overflow: visible !important; }
 <!-- HOME -->
 <div id="pg-home" class="pg">
  <header class="hdr"><div class="row"><div><h1>Billing & Ledger</h1><p>Shop • Personal • Doctors • v18</p></div>
@@ -526,7 +524,7 @@ function renderCash(){
  let run=0,html='',i=0;
  list.forEach((e,idx)=>{run+=(e.type==='in'?1:-1)*Number(e.amount);run=Math.round(run*100)/100;i++;
   const dt=idx===0||list[idx-1].date!==e.date?fmtDate(e.date):'';
-<td class="ca no-print"><div class="row-btns"><button class="ra" onclick="delCash('${e.id}')">${pendDel===e.id?'OK?':'✕'}</button></div></td>
+  html+=`<tr class="${i%2?'b1':'b0'}"><td class="cd">${dt}</td><td class="cp">${esc(e.particular)}</td><td class="cn mono">${e.type==='in'?e.amount:''}</td><td class="cn mono">${e.type==='out'?e.amount:''}</td><td class="cf mono">${run}</td><td class="ca no-print"><div class="row-btns"><button class="ra" onclick="delCash('${e.id}')">${pendDel===e.id?'OK?':'✕'}</button></div></td></tr>`});
  for(let k=0;k<3;k++)html+=`<tr class="sep ${(i+k)%2?'b1':'b0'}"><td></td><td></td><td></td><td></td><td></td><td class="no-print"></td></tr>`;
  $('c-body').innerHTML=html;$('c-bal').textContent=run;$('c-title').innerHTML=esc(nm)+',<br/>final balance';setBanH()}
 function addCash(e){e.preventDefault();const amt=parseFloat($('c-amt').value);if(isNaN(amt)||amt<=0)return toast('Sahi amount bharein');
@@ -728,7 +726,7 @@ function addUd(e){e.preventDefault();let name=$('ud-n').value.trim();if(!name)re
 function delUd(id){if(pendDel!==id){pendDel=id;renderUd();return toast('Delete ke liye dubara "OK?" dabayein')}
  state.accounts[udId]=state.accounts[udId].filter(x=>x.id!==id);pendDel=null;save();renderUd();toast('Entry deleted')}
 
-/* ---------- SHEET + RATE SHEET (main fixes) ---------- */
+/* ---------- SHEET + RATE SHEET ---------- */
 const PERS_COLS=[{n:'Name',t:'text'},{n:'Amount Given',t:'num'},{n:'Description',t:'text'},{n:'Amount Received',t:'num'}];
 const RATE_COLS=[{n:'Products',t:'text'},{n:'Net rate',t:'num'},{n:'Price',t:'num'},{n:'MRP',t:'num'},{n:'Rate',t:'num'},{n:'GST %',t:'num'},{n:'Qty.',t:'num'}];
 const RATE_FORM=`<input id="sh-f0" class="ai" type="text" list="sh-nl" placeholder="Product" autocomplete="off" style="grid-column:span 3"/>
@@ -751,7 +749,7 @@ function calcNetPrice(rate,gst,extra,mp){
  const price=rd2((net+Number(extra||0))*(1+Number(mp||0)/100));
  return{net,price,gst:g}}
 function plItems(k){return shRows(k)}
-function renderPl(){/* optional product list summary - kept simple */ $('sh-pl').classList.add('hidden')}
+function renderPl(){$('sh-pl').classList.add('hidden')}
 function plToggle(){}
 
 function accInfo(k){const f=fmtOf(k);
@@ -785,7 +783,6 @@ function renderSheet(){const k=shId,cs=colsOf(k);if(!cs.length)return;
  const rows=q?all.filter(e=>cs.some((c,i)=>c.t!=='num'&&kv(String(e.v[i]||'')).includes(q))||fmtShort(e.at).includes(q)):all;
  const tbl=$('sh-st').querySelector('table'),isR=fmtOf(k)==='rate';$('pg-sh').classList.toggle('rate',isR);
  if(isR){
-  // Products | Net rate | Price | MRP | Rate | GST % | Qty | Date | Edit
   const W=Math.max(320,$('sh-st').clientWidth-4);
   const px=[.34,.22,.22,.22,.18,.14,.14,.22,.20].map(x=>Math.round(x*W));
   $('sh-cg').innerHTML=px.map(w=>`<col style="width:${w}px">`).join('');
@@ -804,12 +801,11 @@ function renderSheet(){const k=shId,cs=colsOf(k);if(!cs.length)return;
   $('sh-body').innerHTML=(rows.map((e,i)=>{
    const rate=Number(e.v[4]||0),gst=e.v[5]==null||e.v[5]===''?5:Number(e.v[5]);
    const {net,price}=calcNetPrice(rate,gst,state.rf.add,state.rf.mp);
-   // keep stored net/price in sync for display
 return `<tr class="${i%2?'':'o'}"><td class="sv">${esc(e.v[0])}</td><td>${net}</td><td>${price}</td><td>${e.v[3]||''}</td><td>${rate||''}</td><td>${gst}</td><td>${e.v[6]||''}</td><td class="sd">${fmtShort(e.at)}</td><td class="sd"><div class="row-btns"><button class="ra" onclick="openRedit('${e.id}')">✎</button> <button class="ra" onclick="delSheet('${e.id}')">${pendDel===e.id?'OK?':'✕'}</button></div></td></tr>`
   }).join('')||`<tr><td colspan="9" style="padding:18px;color:#64748b">Abhi koi entry nahi. Neeche se Product + Rate + (GST optional) + MRP + Qty add karein.</td></tr>`);
  }else{
   const sums=cs.map((c,i)=>c.t==='num'?rd2(rows.reduce((s,e)=>s+Number(e.v[i]||0),0)):'');
-<td class="sd"><div class="row-btns"><button class="ra" onclick="delSheet('${e.id}')">${pendDel===e.id?'OK?':'✕'}</button></div></td></tr>`).join('')||
+  $('sh-body').innerHTML=(rows.map((e,i)=>`<tr class="${i%2?'':'o'}">`+cs.map((c,j)=>`<td class="${c.t==='num'?'':'sv'}">${c.t==='num'?(e.v[j]||''):esc(e.v[j])}</td>`).join('')+`<td class="sd">${fmtShort(e.at)}</td><td class="sd"><div class="row-btns"><button class="ra" onclick="delSheet('${e.id}')">${pendDel===e.id?'OK?':'✕'}</button></div></td></tr>`).join('')||`<tr><td colspan="${cs.length+2}" style="padding:18px;color:#64748b">Abhi koi entry nahi.</td></tr>`)+(rows.length?'<tr class="tr2">'+cs.map((c,i)=>i===0?'<td class="sv">Kul</td>':`<td>${sums[i]}</td>`).join('')+'<td></td><td></td></tr>':'');
  }
 }
 
@@ -826,7 +822,6 @@ function addRateEntry(e){e.preventDefault();
  const mrp=parseFloat($('sh-f3').value)||0;
  const qty=parseFloat($('sh-f4').value)||0;
  const {net,price}=calcNetPrice(rate,gst,state.rf.add,state.rf.mp);
- // v order matches RATE_COLS: Products, Net rate, Price, MRP, Rate, GST %, Qty
  const v=[name,net,price,mrp,rate,gst,qty];
  (state.accounts[shId]||(state.accounts[shId]=[])).push({id:uid('h_'),v,at:today()});
  ['sh-f0','sh-f1','sh-f2','sh-f3','sh-f4'].forEach(i=>$(i).value='');
@@ -846,7 +841,7 @@ function saveRf(e){e.preventDefault();state.rf.add=parseFloat($('rf-add').value)
 
 function setBanH(){const b=document.querySelector('.pg:not(.hidden) .ban');if(b)document.documentElement.style.setProperty('--ban-h',b.offsetHeight+'px')}
 
-/* ---------- CLINIC (kept) ---------- */
+/* ---------- CLINIC ---------- */
 const isClinic=v=>v.fmt==='clinic'||/rehman|रहमान/i.test(v.name||'');
 const cv=()=>state.vendors.find(x=>x.id===activeV);
 function clinicPeriod(v){const t=today(),y=t.slice(0,4),m=t.slice(5,7),last=new Date(+y,+m,0).getDate();
@@ -866,7 +861,7 @@ function renderClinic(){const v=cv();if(!v)return;const C=clinicCalc(v);
  $('cl-th5').innerHTML='Net Amount<br>('+C.pct+'% of MRP)';
  $('cl-pl').innerHTML=(v.products||[]).map(p=>`<option value="${esc(p.name)}">`).join('');
  let sn=0,st=0,sa=0;C.rows.forEach(r=>{sn+=r.net;st+=r.total;sa+=r.na});
-<td>${r.total}</td><td>${r.na}<div class="row-btns"><button class="clib e" onclick="editProd('${r.p.id}')">✎</button><button class="clib d" onclick="delProd('${r.p.id}')">${pendDel===r.p.id?'OK?':'✕'}</button></div></td></tr>
+$('cl-body').innerHTML=(C.rows.map((r,i)=>`<tr class="${i%2?'g':''}"><td class="pn"><span>${esc(r.p.name)}</span></td><td class="${r.net<0?'neg':''}">${r.net}</td><td>${r.p.mrp}</td><td>${r.total}</td><td>${r.na}<div class="row-btns"><button class="clib e" onclick="editProd('${r.p.id}')">✎</button><button class="clib d" onclick="delProd('${r.p.id}')">${pendDel===r.p.id?'OK?':'✕'}</button></div></td></tr>`).join('')||'<tr><td colspan="5" style="padding:18px;color:#64748b">Abhi koi product nahi.</td></tr>')
   +(C.rows.length?`<tr class="tt"><td class="pn">Total</td><td>${rd2(sn)}</td><td></td><td>${rd2(st)}</td><td>${rd2(sa)}</td></tr>`:'')}
 function clHint(){const v=cv(),n=kv($('cl-p').value);const r=n?clinicCalc(v).rows.find(x=>kv(x.p.name)===n):null;
  $('cl-m').placeholder=r?String(r.p.mrp):'MRP/tab';$('cl-l').placeholder=r?String(r.last):'Last';$('cl-r').placeholder=r?String(r.rem):'Remain'}
@@ -891,7 +886,7 @@ function clImg(){
   document.body.classList.add('shooting');
   toast('Screenshot le raha hai...');
   setTimeout(()=>{
-    window.print(); // Mobile me Print/PDF dialog aayega jisse image save ho sakti hai
+    window.print();
     document.body.classList.remove('shooting');
   }, 500);
 }
@@ -913,7 +908,6 @@ function runImport(){
   lines.forEach(line=>{
    const p=line.split(/[\t,]/).map(s=>s.trim());
    if(p.length<3)return;
-   // expect: Product, Qty, MRP, Rate  (or Product, Rate, MRP, Qty — try smart)
    let name=p[0],qty=0,mrp=0,rate=0;
    if(p.length>=4){qty=parseFloat(p[1])||0;mrp=parseFloat(p[2])||0;rate=parseFloat(p[3])||0}
    else{rate=parseFloat(p[1])||0;mrp=parseFloat(p[2])||0}
