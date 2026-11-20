@@ -185,7 +185,7 @@ tr.b1{background:#e8f0fe}tr.b0{background:#fff}tr.sep{height:18px}
 #pg-l3 .sc,#pg-l4 .sc,#pg-cash .sc{overflow:auto;max-height:calc(100vh - var(--nav-h) - var(--ban-h,90px) - 70px);max-height:calc(100dvh - var(--nav-h) - var(--ban-h,90px) - 70px)}
 #pg-l3 th,#pg-l4 th,#pg-cash th{position:sticky;top:0;z-index:30;background:#1e3a8a;color:#fff}
 .ai[readonly]{background:#eef2ff;color:#1e3a8a}
-#pg-ud .st table{width:155%;table-layout:fixed}
+function udRow(e,i){return `<tr class="${i%2?'':'o'}"><td class="sv">${esc(e.name)}</td><td class="ua">${e.amount||''}</td><td class="up">${e.paid||''}</td><td class="sr ${e.net<0?'neg':''}">${e.net}</td><td class="sv ud">${esc(e.desc)}</td><td class="sd">${fmtShort(e.at)}</td><td class="sd"><button class="ra ed" onclick="openUdEdit('${e.id}')">✎</button><button class="ra" onclick="delUd('${e.id}')">${pendDel===e.id?'OK?':'✕'}</button></td></tr>`}#pg-ud .st table{width:170%;table-layout:fixed}
 #pg-sh.rate .st th,#pg-sh.rate .st td{padding-left:6px;padding-right:6px}
 @media print{body{background:#fff}.nav,.tb,.ep,.ca,.no-print,.more{display:none!important}.ban{position:static;-webkit-print-color-adjust:exact;print-color-adjust:exact}tr.b1{-webkit-print-color-adjust:exact;print-color-adjust:exact}.sc{overflow:visible}#pg-l3 .sc,#pg-l4 .sc,#pg-cred .sc{max-height:none!important;overflow:visible!important}}
 @keyframes bootshow{to{opacity:1}}
@@ -269,7 +269,7 @@ tr.b1{background:#e8f0fe}tr.b0{background:#fff}tr.sep{height:18px}
  <div class="srch"><input id="ud-q" list="ud-nl" placeholder="🔍 Naam search karein" oninput="udInput()" autocomplete="off"/></div>
  <div id="ud-sug" class="chips hidden" style="grid-template-columns:1fr;max-height:50vh;overflow:auto"></div>
  <div class="sinfo" id="ud-info" style="margin-top:4px"></div>
-<div class="st" id="ud-st"><div class="sc"><table><colgroup><col style="width:27%"><col style="width:10.5%"><col style="width:10.5%"><col style="width:10.5%"><col style="width:27%"><col style="width:8.5%"><col style="width:6%"></colgroup><thead><tr><th class="h1">Name</th><th class="h2">Amount</th><th class="h3">Paid<br>Amount</th><th class="h1">Net<br>amount</th><th class="h1">Description</th><th class="h1">Date</th><th class="h1"></th></tr></thead><tbody id="ud-body"></tbody></table></div></div>
+<colgroup><col style="width:24.5%"><col style="width:9.8%"><col style="width:9.8%"><col style="width:9.8%"><col style="width:24.5%"><col style="width:9.8%"><col style="width:11.8%"></colgroup>
  <form class="addbar" style="grid-template-columns:repeat(6,1fr)" onsubmit="addUd(event)">
   <input id="ud-n" class="ai" list="ud-nl" placeholder="Name" autocomplete="off" style="grid-column:span 3"/>
   <input id="ud-d" class="ai" placeholder="Description" style="grid-column:span 3"/>
@@ -383,21 +383,13 @@ tr.b1{background:#e8f0fe}tr.b0{background:#fff}tr.sep{height:18px}
 <div class="lf"><label>Date</label><input id="se-date" class="li" type="date" required/></div>
 <button class="btn-p" style="width:100%;padding:12px">Update Entry</button></form></div></div>
 
-<div id="m-cper" class="mb hidden"><div class="mc"><div class="mh"><h3>Period Set</h3><button class="x" onclick="closeModal('m-cper')">✕</button></div>
-<form onsubmit="saveCper(event)">
-<div class="g2"><div class="lf"><label>From</label><input id="cp-from" class="li" type="date" required/></div>
-<div class="lf"><label>To</label><input id="cp-to" class="li" type="date" required/></div></div>
-<div class="lf"><label>Net % of MRP</label><input id="cp-pct" class="li mono" type="number" step="0.01" value="30"/></div>
-<div class="g2"><button type="button" class="btn-d" onclick="resetCper()">Auto Reset</button><button class="btn-p">Save</button></div></form></div></div>
-
-<div id="m-udedit" class="mb hidden"><div class="mc"><div class="mh"><h3>Edit Udhaar Entry</h3><button class="x" onclick="closeModal('m-udedit')">✕</button></div>
+<div id="m-udedit" class="mb hidden"><div class="mc"><div class="mh"><h3>Edit Entry</h3><button class="x" onclick="closeModal('m-udedit')">✕</button></div>
 <form onsubmit="saveUdEdit(event)"><input type="hidden" id="ue-id"/>
 <div class="lf"><label>Name</label><input id="ue-n" class="li" list="ud-nl" required/></div>
 <div class="lf"><label>Description</label><input id="ue-d" class="li"/></div>
-<div class="g2"><div class="lf"><label>Amount ₹</label><input id="ue-a" class="li mono" type="number" step="0.01"/></div>
-<div class="lf"><label>Paid ₹</label><input id="ue-p" class="li mono" type="number" step="0.01"/></div></div>
-<div class="lf"><label>Date</label><input id="ue-at" class="li" type="date" required/></div>
-<button class="btn-p" style="width:100%;padding:12px">Update Entry</button></form></div></div>
+<div class="g2"><div class="lf"><label>Amount ₹</label><input id="ue-a" class="li mono" type="number" step="0.01"/></div><div class="lf"><label>Paid ₹</label><input id="ue-p" class="li mono" type="number" step="0.01"/></div></div>
+<div class="lf"><label>Date</label><input id="ue-t" class="li" type="date"/></div>
+<button class="btn-p" style="width:100%;padding:12px">Update Entry</button></form></div></div><div id="m-cper" class="mb hidden"><div class="mc"><div class="mh"><h3>Period Set</h3><button class="x" onclick="closeModal('m-cper')">✕</button></div>
 <form onsubmit="saveCper(event)">
 <div class="g2"><div class="lf"><label>From</label><input id="cp-from" class="li" type="date" required/></div>
 <div class="lf"><label>To</label><input id="cp-to" class="li" type="date" required/></div></div>
@@ -730,7 +722,7 @@ function udTotal(id){let t=0;Object.values(udCalc(id).run).forEach(v=>t+=v);retu
 function openUd(k){udId=k;cashKey=k;$('ud-q').value='';show('pg-ud');renderUd();udScrollEnd()}
 function udScrollEnd(){const t=$('ud-st');if(t)setTimeout(()=>{t.scrollTop=t.scrollHeight},30)}
 function udInput(){renderUd()}
-function udRow(e,i){return `<tr class="${i%2?'':'o'}"><td class="sv">${esc(e.name)}</td><td class="ua">${e.amount||''}</td><td class="up">${e.paid||''}</td><td class="sr ${e.net<0?'neg':''}">${e.net}</td><td class="sv ud">${esc(e.desc)}</td><td class="sd">${fmtShort(e.at)}</td><td class="sd"><button class="ra ed" onclick="openUdEdit('${e.id}')">✎</button><button class="ra" onclick="delUd('${e.id}')">${pendDel===e.id?'OK?':'✕'}</button></td></tr>`}
+function udRow(e,i){return `<tr class="${i%2?'':'o'}"><td class="sv">${esc(e.name)}</td><td class="ua">${e.amount||''}</td><td class="up">${e.paid||''}</td><td class="sr ${e.net<0?'neg':''}">${e.net}</td><td class="sv ud">${esc(e.desc)}</td><td class="sd">${fmtShort(e.at)}</td><td class="sd"><button class="ra" onclick="delUd('${e.id}')">${pendDel===e.id?'OK?':'✕'}</button></td></tr>`}
 function renderUd(){
  const a=state.custom.find(x=>x.id===udId);if(!a)return;
  const{rows,run}=udCalc(udId);const udNm={};rows.forEach(r=>{if(!udNm[r.k])udNm[r.k]=r.name});
@@ -751,14 +743,12 @@ function addUd(e){e.preventDefault();let name=$('ud-n').value.trim();if(!name)re
  state.accounts[udId].push({id:uid('u_'),name,amount,desc:$('ud-d').value.trim(),paid,at:today()});
  ['ud-n','ud-d','ud-a','ud-p'].forEach(i=>$(i).value='');
  save();renderUd();udScrollEnd();toast('Entry saved')}
-function delUd(id){if(pendDel!==id){pendDel=id;renderUd();return toast('Delete ke liye dubara "OK?" dabayein')}
- state.accounts[udId]=state.accounts[udId].filter(x=>x.id!==id);pendDel=null;save();renderUd();toast('Entry deleted')}
-function openUdEdit(id){const e=(state.accounts[udId]||[]).find(x=>x.id===id);if(!e)return;
- $('ue-id').value=e.id;$('ue-n').value=e.name||'';$('ue-d').value=e.desc||'';$('ue-a').value=e.amount||'';$('ue-p').value=e.paid||'';$('ue-at').value=e.at||today();
- openModal('m-udedit')}
+function delUd(id){if(pendDel!==id){pendDel=id;renderUd();return toast('Delete ke liye dubara "OK?" dabayein')}function openUdEdit(id){const e=(state.accounts[udId]||[]).find(x=>x.id===id);if(!e)return;
+ $('ue-id').value=id;$('ue-n').value=e.name;$('ue-d').value=e.desc||'';$('ue-a').value=e.amount||'';$('ue-p').value=e.paid||'';$('ue-t').value=e.at||today();openModal('m-udedit')}
 function saveUdEdit(ev){ev.preventDefault();const e=(state.accounts[udId]||[]).find(x=>x.id===$('ue-id').value);if(!e)return;
- const name=$('ue-n').value.trim();if(!name)return toast('Naam bharein');
- e.name=name;e.desc=$('ue-d').value.trim();e.amount=parseFloat($('ue-a').value)||0;e.paid=parseFloat($('ue-p').value)||0;e.at=$('ue-at').value||today();
+ let n=$('ue-n').value.trim();if(!n)return toast('Naam bharein');
+ const ex=state.accounts[udId].find(x=>x.id!==e.id&&x.name!==undefined&&kv(x.name)===kv(n));if(ex)n=ex.name;
+ e.name=n;e.desc=$('ue-d').value.trim();e.amount=parseFloat($('ue-a').value)||0;e.paid=parseFloat($('ue-p').value)||0;e.at=$('ue-t').value||e.at;
  save();closeModal('m-udedit');renderUd();toast('Entry updated!')}
  state.accounts[udId]=state.accounts[udId].filter(x=>x.id!==id);pendDel=null;save();renderUd();toast('Entry deleted')}
 
@@ -990,65 +980,4 @@ async function retryShare(){if(!pendShare)return;try{const res=await fetch(pendS
 function saveJpg(){if(!pendShare)return;const a=document.createElement('a');a.href=pendShare.url;a.download=pendShare.name;a.click();toast('JPG Saved!')}
 
 function openImport(mode){impMode=mode;let help='';
- if(mode==='sheet'&&shId&&fmtOf(shId)==='rate'){
-  help='<b>Rate sheet Import</b><br>Sirf 4 columns copy karein (header ke bina):<br><b>Product | Qty | MRP | Rate</b><br>GST auto 5% lagega. Date aaj ki lagegi.';
- }else if(mode==='ud'){help='Name | Amount | Description | Paid (tab separated)'}
- else if(mode==='shop'){help='Vendor | Bill | Paid | Date'}
- else help='Excel cells copy-paste karein (tab / comma separated)';
- $('imp-help').innerHTML=help;$('imp-text').value='';openModal('m-imp')}
-function impFile(ev){const f=ev.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{$('imp-text').value=r.result};r.readAsText(f)}
-function runImport(){
- const txt=$('imp-text').value.trim();if(!txt)return toast('Kuch paste karein');
- const lines=txt.split(/\r?\n/).map(l=>l.trim()).filter(Boolean);
- let n=0;
- if(impMode==='sheet'&&shId&&fmtOf(shId)==='rate'){
-  lines.forEach(line=>{
-   const p=line.split(/[\t,]/).map(s=>s.trim());
-   if(p.length<3)return;
-   let name=p[0],qty=0,mrp=0,rate=0;
-   if(p.length>=4){qty=parseFloat(p[1])||0;mrp=parseFloat(p[2])||0;rate=parseFloat(p[3])||0}
-   else{rate=parseFloat(p[1])||0;mrp=parseFloat(p[2])||0}
-   if(!name||isNaN(rate))return;
-   const {net,price}=calcNetPrice(rate,5,state.rf.add,state.rf.mp);
-   (state.accounts[shId]||(state.accounts[shId]=[])).push({id:uid('h_'),v:[name,net,price,mrp,rate,5,qty],at:today()});
-   n++;
-  });
-  save();closeModal('m-imp');renderSheet();shScrollEnd();toast(n+' rows import ho gayi (GST 5%)');
-  return;
- }
- if(impMode==='ud'&&udId){
-  lines.forEach(line=>{
-   const p=line.split(/[\t,]/).map(s=>s.trim());
-   if(p.length<2)return;
-   const name=p[0],amount=parseFloat(p[1])||0,desc=p[2]||'',paid=parseFloat(p[3])||0;
-   if(!name)return;
-   state.accounts[udId].push({id:uid('u_'),name,amount,desc,paid,at:today()});n++;
-  });
-  save();closeModal('m-imp');renderUd();toast(n+' rows import');
-  return;
- }
- if(impMode==='shop'){
-  lines.forEach(line=>{
-   const p=line.split(/[\t,]/).map(s=>s.trim());
-   if(p.length<2)return;
-   const vendor=p[0],bill=parseFloat(p[1])||0,paid=parseFloat(p[2])||0,date=p[3]&&p[3].includes('-')?p[3]:today();
-   if(!vendor)return;
-   state.shop.entries.push({id:'s_'+Date.now()+n,vendor,bill,paid,date});n++;
-  });
-  save();closeModal('m-imp');renderShopAll();toast(n+' shop rows import');
-  return;
- }
- toast('Is mode ke liye import abhi limited hai');closeModal('m-imp')}
-
-function dlBackup(){const blob=new Blob([JSON.stringify(state,null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='ledger_backup_'+today()+'.json';a.click();toast('Backup downloaded')}
-function copyBackup(){navigator.clipboard.writeText(JSON.stringify(state)).then(()=>toast('Backup text copied')).catch(()=>toast('Copy fail'))}
-function restoreFile(ev){const f=ev.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{state=normShop(JSON.parse(r.result));save();renderHome();closeModal('m-backup');toast('Restored!')}catch(e){toast('Invalid JSON')}};r.readAsText(f)}
-function restoreText(){try{state=normShop(JSON.parse($('rs-text').value));save();renderHome();closeModal('m-backup');toast('Restored!')}catch(e){toast('Invalid JSON')}}
-function toggleTheme(){document.body.classList.toggle('dk');toast(document.body.classList.contains('dk')?'Dark':'Light')}
-function resetDemo(){if(!confirm('Sample data se reset?'))return;localStorage.removeItem(KEY);state=load();renderHome();closeModal('m-backup');toast('Reset done')}
-
-document.getElementById('boot').style.display='none';
-renderHome();
-</script>
-</body>
-</html>
+ if(mode==='sheet'&&s
