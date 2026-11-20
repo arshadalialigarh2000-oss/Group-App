@@ -613,6 +613,8 @@ function saveEdit(e){e.preventDefault();const v=state.vendors.find(x=>x.id===act
 
 /* ---------- SHARE / PRINT / CSV (simplified) ---------- */
 function curRoot(){return $('pg-l4').classList.contains('hidden')?$('pg-l3'):$('pg-l4')}
+function retryShare(){toast('Image ke liye 📷 Image button use karein')}
+function saveJpg(){toast('Image ke liye 📷 Image button use karein')}
 async function shareWA(){toast('Image feature simplified — use PDF / Print for now')}
 function printPDF(){const v=state.vendors.find(x=>x.id===activeV);if(v&&curRoot().id==='pg-l3'){$('p3-body').innerHTML=rowsHTML(buildLedger(v).rows,0);window.onafterprint=()=>{window.onafterprint=null;renderLedger()}}
  toast('Opening Print / Save as PDF...');setTimeout(()=>window.print(),250)}
@@ -980,7 +982,4 @@ function runImport(){
   save();closeModal('m-imp');renderShopAll();toast(n+' shop rows import');
   return;
  }
- toast('Is mode ke liye import abhi limited hai');closeModal('m-imp')}
-
-/* ---------- BACKUP / THEME / RESET ---------- */
-function dlBackup(){const blob=new Blob([JSON.
+ toast('Is mode ke liye im
