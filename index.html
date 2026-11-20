@@ -883,12 +883,51 @@ function saveCper(e){e.preventDefault();const v=cv();if(!v)return;v.from=$('cp-f
 function resetCper(){const v=cv();if(!v)return;delete v.from;delete v.to;save();closeModal('m-cper');renderClinic()}
 function openClog(){toast('Entries log — period filter available in full version')}
 function clImg(){
-  document.body.classList.add('shooting');
-  toast('Screenshot le raha hai...');
-  setTimeout(()=>{
-    window.print();
-    document.body.classList.remove('shooting');
-  }, 500);
+ const v=cv();if(!v)return;const C=clinicCalc(v),S=2,W=540,P=14,TW=W-2*P,n=C.rows.length;
+ const BH=190,HH=100,RH=44,TH=48,H=P+BH+14+HH+n*RH+(n?TH:0)+P;
+ const cv2=document.createElement('canvas');cv2.width=W*S;cv2.height=H*S;
+ const g=cv2.getContext('2d');g.scale(S,S);
+ const F='-apple-system,"Segoe UI",Roboto,Arial,sans-serif';
+ const rr=(x,y,w,h,r)=>{g.beginPath();g.moveTo(x+r,y);g.arcTo(x+w,y,x+w,y+h,r);g.arcTo(x+w,y+h,x,y+h,r);g.arcTo(x,y+h,x,y,r);g.arcTo(x,y,x+w,y,r);g.closePath()};
+ const tx=(t,x,y,sz,col,al)=>{g.font='800 '+sz+'px '+F;g.fillStyle=col;g.textAlign=al||'left';g.textBaseline='middle';g.fillText(String(t),x,y)};
+ g.fillStyle='#ffffff';g.fillRect(0,0,W,H);
+ // banner
+ let y=P;const gr=g.createLinearGradient(P,y,P+TW,y+BH);gr.addColorStop(0,'#020617');gr.addColorStop(1,'#1f2937');
+ rr(P,y,TW,BH,18);g.fillStyle=gr;g.fill();
+ const LW=TW*7/12;let fs=26;g.font='900 '+fs+'px '+F;while(g.measureText(v.name).width>LW-20&&fs>12){fs--;g.font='900 '+fs+'px '+F}
+ tx(v.name,P+LW/2,y+38,fs,'#fff','center');
+ tx('IS PERIOD KA NET AMOUNT',P+LW/2,y+80,13,'#94a3b8','center');
+ const per=fmtDate(C.P.from)+' se '+fmtDate(C.P.to);let pf=17;g.font='900 '+pf+'px '+F;while(g.measureText(per).width>LW-50&&pf>10){pf--;g.font='900 '+pf+'px '+F}
+ const pw=Math.min(LW-20,g.measureText(per).width+36),px=P+LW/2-pw/2;
+ rr(px,y+104,pw,38,19);const pg=g.createLinearGradient(0,y+104,0,y+142);pg.addColorStop(0,'#fde047');pg.addColorStop(1,'#facc15');g.fillStyle=pg;g.fill();
+ tx(per,P+LW/2,y+123,pf,'#111827','center');
+ const bx=P+LW+8,bw=TW-LW-16;rr(bx,y+14,bw,BH-28,14);g.fillStyle='#0b1220';g.fill();g.lineWidth=3;g.strokeStyle='#facc15';g.stroke();
+ const tot='₹'+fn(Math.round(C.total));let tf=34;g.font='900 '+tf+'px '+F;while(g.measureText(tot).width>bw-20&&tf>14){tf--;g.font='900 '+tf+'px '+F}
+ tx(tot,bx+bw/2,y+BH/2,tf,'#facc15','center');
+ // table
+ y+=BH+14;const cw=[.37,.15,.13,.175,.175].map(x=>x*TW),cx=[];let a=P;cw.forEach(w=>{cx.push(a);a+=w});
+ const tbH=HH+n*RH+(n?TH:0);
+ g.save();rr(P,y,TW,tbH,14);g.clip();
+ g.fillStyle='#1e3a8a';g.fillRect(P,y,TW,HH);
+ const hd=[['Products'],['Net Qty','in (tab)'],['MRP','per tab'],['Total','Amount'],['Net Amount','('+C.pct+'% of','MRP)']];
+ hd.forEach((ls,i)=>{const c=cx[i]+cw[i]/2,lh=22,st=y+HH/2-(ls.length-1)*lh/2;ls.forEach((l,k)=>tx(l,c,st+k*lh,i===4?14:15,'#fff','center'))});
+ let ry=y+HH,sn=0,st2=0,sa=0;
+ C.rows.forEach((r,i)=>{g.fillStyle=i%2?'#f1f5f9':'#ffffff';g.fillRect(P,ry,TW,RH);
+  const vals=[r.p.name,r.net,r.p.mrp,r.total,r.na];
+  vals.forEach((t,j)=>{if(j===0){let f=17;g.font='800 '+f+'px '+F;while(g.measureText(t).width>cw[0]-16&&f>9){f--;g.font='800 '+f+'px '+F}tx(t,cx[0]+10,ry+RH/2,f,'#0f172a','left')}else tx(t,cx[j]+cw[j]/2,ry+RH/2,16,(j===1&&r.net<0)?'#e11d48':'#0f172a','center')});
+  sn+=r.net;st2+=r.total;sa+=r.na;ry+=RH});
+ if(n){g.fillStyle='#1e3a8a';g.fillRect(P,ry,TW,TH);tx('Total',cx[0]+10,ry+TH/2,18,'#fff','left');tx(rd2(sn),cx[1]+cw[1]/2,ry+TH/2,16,'#fff','center');tx(rd2(st2),cx[3]+cw[3]/2,ry+TH/2,16,'#fff','center');tx(rd2(sa),cx[4]+cw[4]/2,ry+TH/2,16,'#fff','center')}
+ // grid lines
+ g.strokeStyle='#cbd5e1';g.lineWidth=1;
+ for(let i=1;i<5;i++){g.beginPath();g.moveTo(cx[i],y+HH);g.lineTo(cx[i],y+tbH);g.stroke()}
+ for(let i=1;i<=n;i++){g.beginPath();g.moveTo(P,y+HH+i*RH);g.lineTo(P+TW,y+HH+i*RH);g.stroke()}
+ g.strokeStyle='#334e9b';for(let i=1;i<5;i++){g.beginPath();g.moveTo(cx[i],y);g.lineTo(cx[i],y+HH);g.stroke()}
+ g.restore();rr(P,y,TW,tbH,14);g.lineWidth=2;g.strokeStyle='#1e3a8a';g.stroke();
+ cv2.toBlob(b=>{if(!b)return toast('Image ban nahi payi');
+  const el=document.createElement('a');el.href=URL.createObjectURL(b);
+  el.download=v.name.replace(/[^a-z0-9]/gi,'_')+'_'+today()+'.png';
+  document.body.appendChild(el);el.click();el.remove();
+  toast('Image save ho gayi (Gallery / Downloads)')},'image/png')
 }
 
 /* ---------- IMPORT (Rate sheet aware) ---------- */
@@ -944,16 +983,4 @@ function runImport(){
  toast('Is mode ke liye import abhi limited hai');closeModal('m-imp')}
 
 /* ---------- BACKUP / THEME / RESET ---------- */
-function dlBackup(){const blob=new Blob([JSON.stringify(state,null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='ledger_backup_'+today()+'.json';a.click();toast('Backup downloaded')}
-function copyBackup(){navigator.clipboard.writeText(JSON.stringify(state)).then(()=>toast('Backup text copied')).catch(()=>toast('Copy fail'))}
-function restoreFile(ev){const f=ev.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{state=normShop(JSON.parse(r.result));save();renderHome();closeModal('m-backup');toast('Restored!')}catch(e){toast('Invalid JSON')}};r.readAsText(f)}
-function restoreText(){try{state=normShop(JSON.parse($('rs-text').value));save();renderHome();closeModal('m-backup');toast('Restored!')}catch(e){toast('Invalid JSON')}}
-function toggleTheme(){document.body.classList.toggle('dk');toast(document.body.classList.contains('dk')?'Dark':'Light')}
-function resetDemo(){if(!confirm('Sample data se reset?'))return;localStorage.removeItem(KEY);state=load();renderHome();closeModal('m-backup');toast('Reset done')}
-
-/* ---------- BOOT ---------- */
-document.getElementById('boot').style.display='none';
-renderHome();
-</script>
-</body>
-</html>
+function dlBackup(){const blob=new Blob([JSON.
