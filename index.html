@@ -958,4 +958,62 @@ function openImport(mode){impMode=mode;let help='';
  else if(mode==='shop'){help='Vendor | Bill | Paid | Date'}
  else help='Excel cells copy-paste karein (tab / comma separated)';
  $('imp-help').innerHTML=help;$('imp-text').value='';openModal('m-imp')}
-function impFile(ev){const f=ev.target.files[0];if(!f)return;const r=new Fi
+function impFile(ev){const f=ev.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{$('imp-text').value=r.result};r.readAsText(f)}
+function runImport(){
+ const txt=$('imp-text').value.trim();if(!txt)return toast('Kuch paste karein');
+ const lines=txt.split(/\r?\n/).map(l=>l.trim()).filter(Boolean);
+ let n=0;
+ if(impMode==='sheet'&&shId&&fmtOf(shId)==='rate'){
+  lines.forEach(line=>{
+   const p=line.split(/[\t,]/).map(s=>s.trim());
+   if(p.length<3)return;
+   let name=p[0],qty=0,mrp=0,rate=0;
+   if(p.length>=4){qty=parseFloat(p[1])||0;mrp=parseFloat(p[2])||0;rate=parseFloat(p[3])||0}
+   else{rate=parseFloat(p[1])||0;mrp=parseFloat(p[2])||0}
+   if(!name||isNaN(rate))return;
+   const {net,price}=calcNetPrice(rate,5,state.rf.add,state.rf.mp);
+   (state.accounts[shId]||(state.accounts[shId]=[])).push({id:uid('h_'),v:[name,net,price,mrp,rate,5,qty],at:today()});
+   n++;
+  });
+  save();closeModal('m-imp');renderSheet();shScrollEnd();toast(n+' rows import ho gayi (GST 5%)');
+  return;
+ }
+ if(impMode==='ud'&&udId){
+  lines.forEach(line=>{
+   const p=line.split(/[\t,]/).map(s=>s.trim());
+   if(p.length<2)return;
+   const name=p[0],amount=parseFloat(p[1])||0,desc=p[2]||'',paid=parseFloat(p[3])||0;
+   if(!name)return;
+   state.accounts[udId].push({id:uid('u_'),name,amount,desc,paid,at:today()});n++;
+  });
+  save();closeModal('m-imp');renderUd();toast(n+' rows import');
+  return;
+ }
+ if(impMode==='shop'){
+  lines.forEach(line=>{
+   const p=line.split(/[\t,]/).map(s=>s.trim());
+   if(p.length<2)return;
+   const vendor=p[0],bill=parseFloat(p[1])||0,paid=parseFloat(p[2])||0,date=p[3]&&p[3].includes('-')?p[3]:today();
+   if(!vendor)return;
+   state.shop.entries.push({id:'s_'+Date.now()+n,vendor,bill,paid,date});n++;
+  });
+  save();closeModal('m-imp');renderShopAll();toast(n+' shop rows import');
+  return;
+ }
+ toast('Is mode ke liye import abhi limited hai');closeModal('m-imp')}
+
+/* ---------- BACKUP / THEME / RESET ---------- */
+function dlBackup(){const blob=new Blob([JSON.stringify(state,null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='ledger_backup_'+today()+'.json';a.click();toast('Backup downloaded')}
+function copyBackup(){navigator.clipboard.writeText(JSON.stringify(state)).then(()=>toast('Backup text copied')).catch(()=>toast('Copy fail'))}
+function restoreFile(ev){const f=ev.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{state=normShop(JSON.parse(r.result));save();renderHome();closeModal('m-backup');toast('Restored!')}catch(e){toast('Invalid JSON')}};r.readAsText(f)}
+function restoreText(){try{state=normShop(JSON.parse($('rs-text').value));save();renderHome();closeModal('m-backup');toast('Restored!')}catch(e){toast('Invalid JSON')}}
+function toggleTheme(){document.body.classList.toggle('dk');toast(document.body.classList.contains('dk')?'Dark':'Light')}
+function resetDemo(){if(!confirm('Sample data se reset?'))return;localStorage.removeItem(KEY);state=load();renderHome();closeModal('m-backup');toast('Reset done')}
+
+/* ---------- BOOT ---------- */
+document.getElementById('boot').style.display='none';
+renderHome();
+</script>
+</body>
+</html>
+
