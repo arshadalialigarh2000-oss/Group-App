@@ -113,7 +113,7 @@ tr.b1{background:#e8f0fe}tr.b0{background:#fff}tr.sep{height:18px}
 .ai{padding:8px 6px;font-size:12px;border-radius:9px}
 .adb{padding:0 12px;font-size:13px}
 .sd .ra{padding:0 3px;color:#9aa8ad;font-size:11px}
-.oi{width:92px;text-align:center;border:1px dashed #93c5fd;border-radius:6px;padding:3px;font-weight:800;font-size:13px;background:#fff;color:#0f172a}
+.oi{width:100%;min-width:0;text-align:center;border:1px dashed #93c5fd;border-radius:6px;padding:3px 1px;font-weight:800;font-size:13px;background:#fff;color:#0f172a}
 .st table{table-layout:fixed;width:100%}
 .st td.sv{white-space:normal;word-break:break-word;text-align:left}
 .st .sd{font-size:12px!important}
@@ -186,7 +186,18 @@ th.ca,td.ca{width:0!important;min-width:0!important;padding:0!important;border:n
 .shooting .row-btns,.shooting .ra,.shooting .clib{display:none!important}
 .shooting .st,.shooting .clt,.shooting .sc{overflow:visible!important;max-height:none!important}
 
-@media print{body{background:#fff}.nav,.tb,.ep,.ca,.no-print,.more{display:none!important}.row-btns,.ra,.clib{display:none!important}.ban{position:static;-webkit-print-color-adjust:exact;print-color-adjust:exact}tr.b1{-webkit-print-color-adjust:exact;print-color-adjust:exact}.sc{overflow:visible}#pg-l3 .sc,#pg-l4 .sc,#pg-cash .sc{max-height:none!important;overflow:visible!important}}
+/* ---- v19: har row me dikhne wale Edit / Delete buttons ---- */
+.act{display:flex;gap:3px;justify-content:center;align-items:center}
+.act button{width:24px;height:24px;border-radius:50%;font-size:12px;font-weight:800;padding:0;background:#dbeafe;color:#1d4ed8;line-height:24px}
+.act button.d{background:#fee2e2;color:#dc2626;width:auto;min-width:24px;padding:0 4px;border-radius:12px}
+.st td.sa{padding:6px 2px!important}
+#pg-ud .st th:last-child{position:sticky;right:0;z-index:7}
+#pg-ud .st td.sa{position:sticky;right:0;z-index:3;background:#fff!important}
+#pg-ud .st tr.o td.sa{background:#f1f5f9!important}
+/* ---- v19: doctor ledger ka upar wala banner (clinic page jaisa) ---- */
+.ws .clban{margin:0 0 8px;position:sticky;top:var(--nav-h);z-index:40}
+
+@media print{body{background:#fff}.nav,.tb,.ep,.ca,.no-print,.more{display:none!important}.row-btns,.ra,.clib{display:none!important}.ban{position:static;-webkit-print-color-adjust:exact;print-color-adjust:exact}.clban{position:static!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}tr.b1{-webkit-print-color-adjust:exact;print-color-adjust:exact}.sc{overflow:visible}#pg-l3 .sc,#pg-l4 .sc,#pg-cash .sc{max-height:none!important;overflow:visible!important}}
 @keyframes bootshow{to{opacity:1}}
 </style>
 <script>window.onerror=function(m,u,l){var b=document.getElementById('boot');if(b){b.innerHTML='⚠ App chali nahi — error: '+m+' (line '+l+').';b.style.animation='none';b.style.opacity=1}};</script>
@@ -197,7 +208,7 @@ th.ca,td.ca{width:0!important;min-width:0!important;padding:0!important;border:n
 <div id="toast" class="toast hidden"></div>
 <!-- HOME -->
 <div id="pg-home" class="pg">
- <header class="hdr"><div class="row"><div><h1>Billing & Ledger</h1><p>Shop • Personal • Doctors • v18</p></div>
+ <header class="hdr"><div class="row"><div><h1>Billing & Ledger</h1><p>Shop • Personal • Doctors • v19</p></div>
  <button class="btn-glass" onclick="openModal('m-backup')">⬇ Backup</button></div></header>
  <div class="body">
   <div class="big" onclick="openShop()"><div class="left"><button type="button" class="pen" onpointerdown="penDown(event,'shop')" onpointerup="penUp()" onpointercancel="penUp()" onpointerleave="penUp()" onclick="penTap(event)" oncontextmenu="return false">✎</button><div class="ic">🏪</div><div><h3 id="h-n-shop">Shop Vendors Account</h3><small>Vendors ka baaki</small></div></div><div class="amt mono"><small>Total Baaki</small><span id="h-shop">₹0</span></div></div>
@@ -247,7 +258,7 @@ th.ca,td.ca{width:0!important;min-width:0!important;padding:0!important;border:n
  <div id="s-srow" class="srch hidden"><input id="s-q" placeholder="Amount (349) ya date (5, 7, 12 / 05-11) ya naam" oninput="renderShopAll()"/></div>
  <div id="s-chips" class="chips"></div><div id="s-sum"></div>
  <div class="sinfo" id="s-info"></div>
- <div class="st"><div class="sc"><table><colgroup><col style="width:26%"><col style="width:14%"><col style="width:14%"><col style="width:17%"><col style="width:29%"></colgroup><thead><tr><th>Vendor</th><th>Bills</th><th>Paid</th><th>Net Amount</th><th>Date</th></tr></thead><tbody id="s-body"></tbody></table></div></div>
+ <div class="st"><div class="sc"><table><colgroup><col style="width:27%"><col style="width:13%"><col style="width:12%"><col style="width:15%"><col style="width:16%"><col style="width:17%"></colgroup><thead><tr><th>Vendor</th><th>Bills</th><th>Paid</th><th>Net</th><th>Date</th><th>Edit</th></tr></thead><tbody id="s-body"></tbody></table></div></div>
  <button class="more" style="width:auto;margin:0 12px 10px" id="s-more" onclick="openShopFull()"></button>
  <form class="addbar" onsubmit="addShop(event)">
   <input id="s-v" class="ai" list="s-vlist" placeholder="Vendor ▼" autocomplete="off"/><input id="s-bill" class="ai" type="number" step="0.01" placeholder="Bill (₹)"/><input id="s-paid" class="ai" type="number" step="0.01" placeholder="Paid (₹)"/>
@@ -258,13 +269,13 @@ th.ca,td.ca{width:0!important;min-width:0!important;padding:0!important;border:n
  <div class="gh"><button class="gb" onclick="show('pg-shop');renderShopAll()">←</button><b id="sv-name"></b></div>
  <div class="sumr" style="margin-top:12px"><div class="l">Remaining</div><div class="v mono" id="sv-bal"></div></div>
  <div class="sinfo" id="sv-info"></div>
- <div class="st"><div class="sc"><table><colgroup><col style="width:26%"><col style="width:14%"><col style="width:14%"><col style="width:17%"><col style="width:29%"></colgroup><thead><tr><th>Vendor</th><th>Bills</th><th>Paid</th><th>Net Amount</th><th>Date</th></tr></thead><tbody id="sv-body"></tbody></table></div></div>
+ <div class="st"><div class="sc"><table><colgroup><col style="width:27%"><col style="width:13%"><col style="width:12%"><col style="width:15%"><col style="width:16%"><col style="width:17%"></colgroup><thead><tr><th>Vendor</th><th>Bills</th><th>Paid</th><th>Net</th><th>Date</th><th>Edit</th></tr></thead><tbody id="sv-body"></tbody></table></div></div>
 </div>
 <div id="pg-shopfull" class="pg hidden">
  <div class="gh"><button class="gb" onclick="show('pg-shop');renderShopAll()">←</button><b>Full Entries (sab months)</b></div>
  <div class="srch"><input id="sf-q" placeholder="Amount (349) ya date (5, 7, 12 / 05-11) ya naam" oninput="renderShopAll()"/></div>
  <div class="sinfo" id="sf-info" style="margin-top:6px"></div>
- <div class="st"><div class="sc"><table><colgroup><col style="width:26%"><col style="width:14%"><col style="width:14%"><col style="width:17%"><col style="width:29%"></colgroup><thead><tr><th>Vendor</th><th>Bills</th><th>Paid</th><th>Net Amount</th><th>Date</th></tr></thead><tbody id="sf-body"></tbody></table></div></div>
+ <div class="st"><div class="sc"><table><colgroup><col style="width:27%"><col style="width:13%"><col style="width:12%"><col style="width:15%"><col style="width:16%"><col style="width:17%"></colgroup><thead><tr><th>Vendor</th><th>Bills</th><th>Paid</th><th>Net</th><th>Date</th><th>Edit</th></tr></thead><tbody id="sf-body"></tbody></table></div></div>
 </div>
 
 <!-- UDHAAR -->
@@ -273,7 +284,7 @@ th.ca,td.ca{width:0!important;min-width:0!important;padding:0!important;border:n
  <div class="srch"><input id="ud-q" list="ud-nl" placeholder="🔍 Naam search karein" oninput="udInput()" autocomplete="off"/></div>
  <div id="ud-sug" class="chips hidden" style="grid-template-columns:1fr;max-height:50vh;overflow:auto"></div>
  <div class="sinfo" id="ud-info" style="margin-top:4px"></div>
- <div class="st" id="ud-st"><div class="sc"><table><colgroup><col style="width:19%"><col style="width:10%"><col style="width:25%"><col style="width:10%"><col style="width:10%"><col style="width:16%"><col style="width:10%"></colgroup><thead><tr><th class="h1">Name</th><th class="h2">Amount</th><th class="h1">Description</th><th class="h3">Paid<br>Amount</th><th class="h1">Net<br>amount</th><th class="h1">Date</th><th class="h1"></th></tr></thead><tbody id="ud-body"></tbody></table></div></div>
+ <div class="st" id="ud-st"><div class="sc"><table><colgroup><col style="width:17%"><col style="width:10%"><col style="width:22%"><col style="width:9%"><col style="width:10%"><col style="width:15%"><col style="width:17%"></colgroup><thead><tr><th class="h1">Name</th><th class="h2">Amount</th><th class="h1">Description</th><th class="h3">Paid<br>Amount</th><th class="h1">Net<br>amount</th><th class="h1">Date</th><th class="h1">Edit</th></tr></thead><tbody id="ud-body"></tbody></table></div></div>
  <form class="addbar" style="grid-template-columns:repeat(6,1fr)" onsubmit="addUd(event)">
   <input id="ud-n" class="ai" list="ud-nl" placeholder="Name" autocomplete="off" style="grid-column:span 3"/>
   <input id="ud-d" class="ai" placeholder="Description" style="grid-column:span 3"/>
@@ -381,6 +392,33 @@ th.ca,td.ca{width:0!important;min-width:0!important;padding:0!important;border:n
 <div class="lf"><label>Qty</label><input id="re-q" class="li mono" type="number" step="0.01"/></div></div>
 <div class="lf"><label>Date</label><input id="re-d" class="li" type="date"/></div>
 <button class="btn-p" style="width:100%;padding:12px">Update</button></form></div></div>
+
+<!-- NEW v19: Udhaar entry edit -->
+<div id="m-uedit" class="mb hidden"><div class="mc"><div class="mh"><h3>Udhaar Entry Edit</h3><button class="x" onclick="closeModal('m-uedit')">✕</button></div>
+<form onsubmit="saveUdEdit(event)"><input type="hidden" id="ue-id"/>
+<div class="lf"><label>Naam</label><input id="ue-n" class="li" list="ud-nl" autocomplete="off" required/></div>
+<div class="lf"><label>Description</label><input id="ue-d" class="li"/></div>
+<div class="g2"><div class="lf"><label>Amount ₹</label><input id="ue-a" class="li mono" type="number" step="0.01"/></div>
+<div class="lf"><label>Paid ₹</label><input id="ue-p" class="li mono" type="number" step="0.01"/></div></div>
+<div class="lf"><label>Date</label><input id="ue-t" class="li" type="date"/></div>
+<button class="btn-p" style="width:100%;padding:12px">Update</button></form></div></div>
+
+<!-- NEW v19: Shop vendor entry edit -->
+<div id="m-sedit" class="mb hidden"><div class="mc"><div class="mh"><h3>Vendor Entry Edit</h3><button class="x" onclick="closeModal('m-sedit')">✕</button></div>
+<form onsubmit="saveShopEdit(event)"><input type="hidden" id="se-id"/>
+<div class="lf"><label>Vendor</label><input id="se-v" class="li" list="s-vlist" autocomplete="off" required/></div>
+<div class="g2"><div class="lf"><label>Bill ₹</label><input id="se-b" class="li mono" type="number" step="0.01"/></div>
+<div class="lf"><label>Paid ₹</label><input id="se-p" class="li mono" type="number" step="0.01"/></div></div>
+<div class="lf"><label>Date</label><input id="se-d" class="li" type="date"/></div>
+<button class="btn-p" style="width:100%;padding:12px">Update & Recalculate</button></form></div></div>
+
+<!-- Clinic period modal (pehle missing tha) -->
+<div id="m-cper" class="mb hidden"><div class="mc"><div class="mh"><h3>Period & Percentage</h3><button class="x" onclick="closeModal('m-cper')">✕</button></div>
+<form onsubmit="saveCper(event)">
+<div class="g2"><div class="lf"><label>Se (From)</label><input id="cp-from" class="li" type="date" required/></div><div class="lf"><label>Tak (To)</label><input id="cp-to" class="li" type="date" required/></div></div>
+<div class="lf"><label>Net Amount % of MRP</label><input id="cp-pct" class="li mono" type="number" step="0.01"/></div>
+<button class="btn-p" style="width:100%;padding:12px;margin-bottom:8px">Save</button>
+<button type="button" class="btn-d" style="width:100%" onclick="resetCper()">Is mahine par reset</button></form></div></div>
 </div>
 
 <script>
@@ -533,11 +571,11 @@ function addCash(e){e.preventDefault();const amt=parseFloat($('c-amt').value);if
 function delCash(id){if(pendDel!==id){pendDel=id;renderCash();return toast('Delete ke liye dubara "OK?" dabayein')}
  state.accounts[cashKey]=state.accounts[cashKey].filter(x=>x.id!==id);pendDel=null;save();renderCash();toast('Entry deleted')}
 
-/* ---------- VENDOR LEDGER PAGES ---------- */
+/* ---------- VENDOR LEDGER PAGES (Doctors) ---------- */
 function ledgerPage(n,full){
  return `<div class="nav no-print"><div class="l"><button class="nb" onclick="${full?'backToL3()':'backToVendors()'}">${full?'← Last 30':'← Doctors'}</button><div style="min-width:0"><small>${full?'Page 4 • Full Ledger':'Page 3 • Last '+LIMIT+' Rows'}</small><div class="t" id="p${n}-nm"></div></div></div>
  <div style="display:flex;gap:6px"><button class="nb" onclick="openImport('doc')">📥</button><button class="nb wa" onclick="shareWA()">📷 Image</button><button class="nb pdf" onclick="printPDF()">PDF</button></div></div>
- <div class="ws"><div class="ban"><div class="a"><h2 id="p${n}-tt"></h2></div><div class="b mono" id="p${n}-bal"></div></div>
+ <div class="ws"><div class="clban"><div class="cla"><div class="cln" id="p${n}-tt"></div><div class="cll">LEDGER FINAL BALANCE</div></div><div class="clb mono" id="p${n}-bal"></div></div>
  <div class="tb no-print"><span id="p${n}-info"></span><button class="nb" style="background:#e2e8f0;color:#1e293b;padding:4px 8px" onclick="dlCSV()">Export CSV</button></div>
  <div class="sc"><table><thead><tr><th>Date</th><th class="tl">Particular</th><th>Qty</th><th>Rate</th><th>Total</th><th>Received<br/>Amount</th><th>Final<br/>Amount</th><th class="ca no-print">Edit</th></tr></thead><tbody id="p${n}-body"></tbody></table></div>
  ${full?'':`<button class="more no-print" id="p3-more" onclick="openFull()"></button>
@@ -576,7 +614,7 @@ function renderLedger(){
  const L=buildLedger(vendor),total=L.rows.length,old=Math.max(0,total-LIMIT);
  [[3,LIMIT],[4,0]].forEach(([n,lim])=>{
   $('p'+n+'-nm').textContent=vendor.name;
-  $('p'+n+'-tt').innerHTML=esc(vendor.name)+',<br/>ledger final balance';
+  $('p'+n+'-tt').textContent=vendor.name;
   $('p'+n+'-bal').textContent=L.finalBalance;
   $('p'+n+'-body').innerHTML=rowsHTML(L.rows,lim);
   $('p'+n+'-info').textContent=n===3?(old?`Latest ${LIMIT} rows (kul ${total})`:`Kul ${total} rows`):`Poora data: ${total} rows`});
@@ -635,15 +673,15 @@ function matchQ(e,q){q=(q||'').trim().toLowerCase();if(!q)return true;
    if(pt.length===3){let yy=pt[2];if(yy<100)yy+=2000;return pt[0]===d&&pt[1]===m&&yy===y}
    if(pt.length===2)return pt[1]>=100?(pt[0]===m&&pt[1]===y):(pt[0]===d&&pt[1]===m);return false}
   return kv(e.vendor).includes(t)})}
-function shopRow(e,i){return `<tr class="${i%2?'':'o'}"><td class="sv">${esc(e.vendor)}</td><td class="sb">${e.bill}</td><td class="sp">${e.paid}</td><td class="sr ${e.rem<0?'neg':''}">${e.rem}</td><td class="sd">${fmtDate(e.date)} <div class="row-btns"><button class="ra" onclick="delShop('${e.id}')">${pendDel===e.id?'OK?':'✕'}</button></div></td></tr>`}
+function shopRow(e,i){return `<tr class="${i%2?'':'o'}"><td class="sv">${esc(e.vendor)}</td><td class="sb">${e.bill}</td><td class="sp">${e.paid}</td><td class="sr ${e.rem<0?'neg':''}">${e.rem}</td><td class="sd">${fmtShort(e.date)}</td><td class="sa"><div class="act"><button type="button" onclick="openShopEdit('${e.id}')">✎</button><button type="button" class="d" onclick="delShop('${e.id}')">${pendDel===e.id?'OK?':'✕'}</button></div></td></tr>`}
 function vTotals(vl,prev){
- const ym=today().slice(0,7),y=Number(ym.slice(0,4)),m=Number(ym.slice(5)),mm=ym.slice(5),last=String(new Date(y,m,0).getDate()).padStart(2,'0');
+ const ym=today().slice(0,7),y=Number(ym.slice(0,4)),m=Number(ym.slice(5)),mm=ym.slice(5),yy=ym.slice(2,4),last=String(new Date(y,m,0).getDate()).padStart(2,'0');
  let mb=0,mp=0,ab=0,ap=0;vl.forEach(e=>{const b=Number(e.bill||0),p=Number(e.paid||0);ab+=b;ap+=p;if(e.date.startsWith(ym)){mb+=b;mp+=p}});
  const r=n=>Math.round(n*100)/100,mn=r(mb-mp),an=r(Number(prev||0)+ab-ap);
- const f=vl.length?fmtDate(vl[0].date):'-',l=vl.length?fmtDate(vl[vl.length-1].date):'-';
- return `<tr class="tr1"><td class="sv">Month Total<br><small>${MN[m-1]} ${y}</small></td><td>${r(mb)}</td><td>${r(mp)}</td><td class="${mn<0?'neg':''}">${mn}</td><td class="sd">01-${mm}-${y}<br>se ${last}-${mm}-${y}</td></tr><tr class="tr2"><td class="sv">Kul Total<br><small>Previous sahit</small></td><td>${r(ab)}</td><td>${r(ap)}</td><td class="${an<0?'neg':''}">${an}</td><td class="sd">${f}<br>se ${l}</td></tr>`}
+ const f=vl.length?fmtShort(vl[0].date):'-',l=vl.length?fmtShort(vl[vl.length-1].date):'-';
+ return `<tr class="tr1"><td class="sv">Month Total<br><small>${MN[m-1]} ${y}</small></td><td>${r(mb)}</td><td>${r(mp)}</td><td class="${mn<0?'neg':''}">${mn}</td><td class="sd">01-${mm}-${yy}<br>se ${last}-${mm}-${yy}</td><td></td></tr><tr class="tr2"><td class="sv">Kul Total<br><small>Previous sahit</small></td><td>${r(ab)}</td><td>${r(ap)}</td><td class="${an<0?'neg':''}">${an}</td><td class="sd">${f}<br>se ${l}</td><td></td></tr>`}
 function openRow(i,label){const v=i<0?(state.shop.openOthers||0):(state.shop.open[kv(state.shop.chips[i])]||0);
- return `<tr class="${(i<0?state.shop.chips.length:i)%2?'':'o'}"><td class="sv">${esc(label)}</td><td class="sb">—</td><td class="sp">—</td><td class="sr"><input class="oi mono" type="number" step="any" value="${v}" onchange="setOpen(${i},this.value)"/></td><td class="sd">Previous</td></tr>`}
+ return `<tr class="${(i<0?state.shop.chips.length:i)%2?'':'o'}"><td class="sv">${esc(label)}</td><td class="sb">—</td><td class="sp">—</td><td class="sr"><input class="oi mono" type="number" step="any" value="${v}" onchange="setOpen(${i},this.value)"/></td><td class="sd">Previous</td><td class="sa"></td></tr>`}
 function openRowsHTML(){return state.shop.chips.map((c,i)=>openRow(i,c)).join('')+openRow(-1,'Others')}
 function setOpen(i,val){const n=parseFloat(val)||0;if(i<0)state.shop.openOthers=n;else state.shop.open[kv(state.shop.chips[i])]=n;save();renderShopAll();toast('Previous amount saved')}
 function openShop(){show('pg-shop');renderShopAll();scrollShopEnd()}
@@ -667,7 +705,7 @@ function renderShopAll(){
  const un=Math.round((mb-mp)*100)/100,mn=MN[Number(ym.slice(5))-1]+' '+ym.slice(0,4);
  $('s-sum').innerHTML=`<div class="sumr"><div class="l">Total Month Bills</div><div class="v mono">${fn(mb)}</div></div><div class="sumr"><div class="l">Total Month Paid</div><div class="v mono">${fn(mp)}</div></div><div class="sumr"><div class="l">This Month Unpaid</div><div class="v mono ${un>0?'neg':''}">${fn(un)}</div></div>`;
  const q=$('s-q').value.trim();let list=E.filter(e=>matchQ(e,q)),shown=q?list:list.slice(-SHOP_LIMIT);
- $('s-body').innerHTML=(q?'':openRowsHTML())+(shown.map(shopRow).join('')||(q?'<tr><td colspan="5" style="padding:18px;color:#64748b">Koi entry nahi mili</td></tr>':''));
+ $('s-body').innerHTML=(q?'':openRowsHTML())+(shown.map(shopRow).join('')||(q?'<tr><td colspan="6" style="padding:18px;color:#64748b">Koi entry nahi mili</td></tr>':''));
  $('s-info').textContent=q?`${list.length} entries mili`:`${mn} • Latest ${shown.length} entries (kul ${E.length})`;
  const more=$('s-more');more.textContent=`📂 Full Entries dekhein (kul ${E.length})`;more.classList.toggle('hidden',!!q||E.length<=SHOP_LIMIT);
  if(shopV!==null){const isO=shopV<0,ck=isO?null:kv(state.shop.chips[shopV]),vl=E.filter(e=>isO?!chipKeys.includes(e.k):e.k===ck);
@@ -677,9 +715,9 @@ function renderShopAll(){
   $('sv-body').innerHTML=openRow(shopV,nm)+vl.map(shopRow).join('')+vTotals(vl,isO?(state.shop.openOthers||0):(state.shop.open[ck]||0))}
  const fq=$('sf-q').value.trim(),fl=E.filter(e=>matchQ(e,fq));let fh='',cm='',idx=0;
  fl.forEach(e=>{const m=e.date.slice(0,7);if(m!==cm){cm=m;let b=0,p=0;fl.forEach(x=>{if(x.date.startsWith(m)){b+=Number(x.bill||0);p+=Number(x.paid||0)}});
-  fh+=`<tr class="mh"><td colspan="5">${MN[Number(m.slice(5))-1]} ${m.slice(0,4)} — Bills ${fn(b)} • Paid ${fn(p)} • Unpaid ${fn(Math.round((b-p)*100)/100)}</td></tr>`;idx=0}
+  fh+=`<tr class="mh"><td colspan="6">${MN[Number(m.slice(5))-1]} ${m.slice(0,4)} — Bills ${fn(b)} • Paid ${fn(p)} • Unpaid ${fn(Math.round((b-p)*100)/100)}</td></tr>`;idx=0}
   fh+=shopRow(e,idx++)});
- $('sf-body').innerHTML=(fq?'':openRowsHTML())+(fh||(fq?'<tr><td colspan="5" style="padding:18px;color:#64748b">Koi entry nahi mili</td></tr>':''));
+ $('sf-body').innerHTML=(fq?'':openRowsHTML())+(fh||(fq?'<tr><td colspan="6" style="padding:18px;color:#64748b">Koi entry nahi mili</td></tr>':''));
  $('sf-info').textContent=`${fl.length} entries (kul ${E.length})`}
 function addShop(e){e.preventDefault();let name=$('s-v').value.trim();if(!name)return toast('Vendor ka naam bharein');
  const bill=parseFloat($('s-bill').value)||0,paid=parseFloat($('s-paid').value)||0;if(!bill&&!paid)return toast('Bill ya Paid amount bharein');
@@ -691,6 +729,17 @@ function addShop(e){e.preventDefault();let name=$('s-v').value.trim();if(!name)r
  save();renderShopAll();scrollShopEnd();toast('Entry saved • '+fmtDate(date))}
 function delShop(id){if(pendDel!==id){pendDel=id;renderShopAll();return toast('Delete ke liye dubara "OK?" dabayein')}
  state.shop.entries=state.shop.entries.filter(x=>x.id!==id);pendDel=null;save();renderShopAll();toast('Entry deleted')}
+/* NEW v19: shop entry edit */
+function openShopEdit(id){const e=state.shop.entries.find(x=>x.id===id);if(!e)return;pendDel=null;
+ $('se-id').value=id;$('se-v').value=e.vendor||'';$('se-b').value=e.bill||'';$('se-p').value=e.paid||'';$('se-d').value=e.date||today();
+ openModal('m-sedit')}
+function saveShopEdit(ev){ev.preventDefault();const e=state.shop.entries.find(x=>x.id===$('se-id').value);if(!e)return;
+ let name=$('se-v').value.trim();if(!name)return toast('Vendor ka naam bharein');
+ const bill=parseFloat($('se-b').value)||0,paid=parseFloat($('se-p').value)||0;if(!bill&&!paid)return toast('Bill ya Paid amount bharein');
+ const ch=state.shop.chips.find(c=>kv(c)===kv(name));
+ if(ch)name=ch;else{const ex=state.shop.entries.find(x=>x.id!==e.id&&kv(x.vendor)===kv(name));if(ex)name=ex.vendor}
+ e.vendor=name;e.bill=bill;e.paid=paid;e.date=$('se-d').value||e.date;
+ save();closeModal('m-sedit');renderShopAll();toast('Entry updated')}
 function openChipModal(){renderChips();openModal('m-chip')}
 function renderChips(){$('chip-list').innerHTML=state.shop.chips.map((c,i)=>`<div class="rr"><b>${esc(c)}</b><button class="ml" style="background:none;color:#94a3b8" onclick="delChip(${i})">✕</button></div>`).join('')}
 function addChip(e){e.preventDefault();const n=$('chip-name').value.trim();if(!n)return;if(!state.shop.chips.some(c=>kv(c)===kv(n)))state.shop.chips.push(n);$('chip-name').value='';save();renderChips();renderShopAll()}
@@ -702,7 +751,7 @@ function udTotal(id){let t=0;Object.values(udCalc(id).run).forEach(v=>t+=v);retu
 function openUd(k){udId=k;cashKey=k;$('ud-q').value='';show('pg-ud');renderUd();udScrollEnd()}
 function udScrollEnd(){const t=$('ud-st');if(t)setTimeout(()=>{t.scrollTop=t.scrollHeight},30)}
 function udInput(){renderUd()}
-function udRow(e,i){return `<tr class="${i%2?'':'o'}"><td class="sv">${esc(e.name)}</td><td class="ua">${e.amount||''}</td><td class="sv ud">${esc(e.desc)}</td><td class="up">${e.paid||''}</td><td class="sr ${e.net<0?'neg':''}">${e.net}</td><td class="sd">${fmtShort(e.at)}</td><td class="sd"><div class="row-btns"><button class="ra" onclick="delUd('${e.id}')">${pendDel===e.id?'OK?':'✕'}</button></div></td></tr>`}
+function udRow(e,i){return `<tr class="${i%2?'':'o'}"><td class="sv">${esc(e.name)}</td><td class="ua">${e.amount||''}</td><td class="sv ud">${esc(e.desc)}</td><td class="up">${e.paid||''}</td><td class="sr ${e.net<0?'neg':''}">${e.net}</td><td class="sd">${fmtShort(e.at)}</td><td class="sa"><div class="act"><button type="button" onclick="openUdEdit('${e.id}')">✎</button><button type="button" class="d" onclick="delUd('${e.id}')">${pendDel===e.id?'OK?':'✕'}</button></div></td></tr>`}
 function renderUd(){
  const a=state.custom.find(x=>x.id===udId);if(!a)return;
  const{rows,run}=udCalc(udId);const udNm={};rows.forEach(r=>{if(!udNm[r.k])udNm[r.k]=r.name});
@@ -725,6 +774,16 @@ function addUd(e){e.preventDefault();let name=$('ud-n').value.trim();if(!name)re
  save();renderUd();udScrollEnd();toast('Entry saved')}
 function delUd(id){if(pendDel!==id){pendDel=id;renderUd();return toast('Delete ke liye dubara "OK?" dabayein')}
  state.accounts[udId]=state.accounts[udId].filter(x=>x.id!==id);pendDel=null;save();renderUd();toast('Entry deleted')}
+/* NEW v19: udhaar entry edit */
+function openUdEdit(id){const e=(state.accounts[udId]||[]).find(x=>x.id===id);if(!e)return;pendDel=null;
+ $('ue-id').value=id;$('ue-n').value=e.name||'';$('ue-d').value=e.desc||'';$('ue-a').value=e.amount||'';$('ue-p').value=e.paid||'';$('ue-t').value=e.at||today();
+ openModal('m-uedit')}
+function saveUdEdit(ev){ev.preventDefault();const e=(state.accounts[udId]||[]).find(x=>x.id===$('ue-id').value);if(!e)return;
+ let name=$('ue-n').value.trim();if(!name)return toast('Naam bharein');
+ const amount=parseFloat($('ue-a').value)||0,paid=parseFloat($('ue-p').value)||0;if(!amount&&!paid)return toast('Amount ya Paid bharein');
+ const ex=(state.accounts[udId]||[]).find(x=>x.id!==e.id&&x.name!==undefined&&kv(x.name)===kv(name));if(ex)name=ex.name;
+ e.name=name;e.desc=$('ue-d').value.trim();e.amount=amount;e.paid=paid;e.at=$('ue-t').value||e.at;
+ save();closeModal('m-uedit');renderUd();toast('Entry updated')}
 
 /* ---------- SHEET + RATE SHEET ---------- */
 const PERS_COLS=[{n:'Name',t:'text'},{n:'Amount Given',t:'num'},{n:'Description',t:'text'},{n:'Amount Received',t:'num'}];
@@ -839,7 +898,7 @@ function saveRedit(e){e.preventDefault();const row=(state.accounts[shId]||[]).fi
  save();closeModal('m-redit');renderSheet();toast('Updated')}
 function saveRf(e){e.preventDefault();state.rf.add=parseFloat($('rf-add').value)||3;state.rf.mp=parseFloat($('rf-mp').value)||20;save();closeModal('m-rf');if(shId&&fmtOf(shId)==='rate')renderSheet();toast('Formula saved')}
 
-function setBanH(){const b=document.querySelector('.pg:not(.hidden) .ban');if(b)document.documentElement.style.setProperty('--ban-h',b.offsetHeight+'px')}
+function setBanH(){const b=document.querySelector('.pg:not(.hidden) .ban, .pg:not(.hidden) .clban');if(b)document.documentElement.style.setProperty('--ban-h',b.offsetHeight+'px')}
 
 /* ---------- CLINIC ---------- */
 const isClinic=v=>v.fmt==='clinic'||/rehman|रहमान/i.test(v.name||'');
@@ -899,61 +958,4 @@ function openImport(mode){impMode=mode;let help='';
  else if(mode==='shop'){help='Vendor | Bill | Paid | Date'}
  else help='Excel cells copy-paste karein (tab / comma separated)';
  $('imp-help').innerHTML=help;$('imp-text').value='';openModal('m-imp')}
-function impFile(ev){const f=ev.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{$('imp-text').value=r.result};r.readAsText(f)}
-function runImport(){
- const txt=$('imp-text').value.trim();if(!txt)return toast('Kuch paste karein');
- const lines=txt.split(/\r?\n/).map(l=>l.trim()).filter(Boolean);
- let n=0;
- if(impMode==='sheet'&&shId&&fmtOf(shId)==='rate'){
-  lines.forEach(line=>{
-   const p=line.split(/[\t,]/).map(s=>s.trim());
-   if(p.length<3)return;
-   let name=p[0],qty=0,mrp=0,rate=0;
-   if(p.length>=4){qty=parseFloat(p[1])||0;mrp=parseFloat(p[2])||0;rate=parseFloat(p[3])||0}
-   else{rate=parseFloat(p[1])||0;mrp=parseFloat(p[2])||0}
-   if(!name||isNaN(rate))return;
-   const {net,price}=calcNetPrice(rate,5,state.rf.add,state.rf.mp);
-   (state.accounts[shId]||(state.accounts[shId]=[])).push({id:uid('h_'),v:[name,net,price,mrp,rate,5,qty],at:today()});
-   n++;
-  });
-  save();closeModal('m-imp');renderSheet();shScrollEnd();toast(n+' rows import ho gayi (GST 5%)');
-  return;
- }
- if(impMode==='ud'&&udId){
-  lines.forEach(line=>{
-   const p=line.split(/[\t,]/).map(s=>s.trim());
-   if(p.length<2)return;
-   const name=p[0],amount=parseFloat(p[1])||0,desc=p[2]||'',paid=parseFloat(p[3])||0;
-   if(!name)return;
-   state.accounts[udId].push({id:uid('u_'),name,amount,desc,paid,at:today()});n++;
-  });
-  save();closeModal('m-imp');renderUd();toast(n+' rows import');
-  return;
- }
- if(impMode==='shop'){
-  lines.forEach(line=>{
-   const p=line.split(/[\t,]/).map(s=>s.trim());
-   if(p.length<2)return;
-   const vendor=p[0],bill=parseFloat(p[1])||0,paid=parseFloat(p[2])||0,date=p[3]&&p[3].includes('-')?p[3]:today();
-   if(!vendor)return;
-   state.shop.entries.push({id:'s_'+Date.now()+n,vendor,bill,paid,date});n++;
-  });
-  save();closeModal('m-imp');renderShopAll();toast(n+' shop rows import');
-  return;
- }
- toast('Is mode ke liye import abhi limited hai');closeModal('m-imp')}
-
-/* ---------- BACKUP / THEME / RESET ---------- */
-function dlBackup(){const blob=new Blob([JSON.stringify(state,null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='ledger_backup_'+today()+'.json';a.click();toast('Backup downloaded')}
-function copyBackup(){navigator.clipboard.writeText(JSON.stringify(state)).then(()=>toast('Backup text copied')).catch(()=>toast('Copy fail'))}
-function restoreFile(ev){const f=ev.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{state=normShop(JSON.parse(r.result));save();renderHome();closeModal('m-backup');toast('Restored!')}catch(e){toast('Invalid JSON')}};r.readAsText(f)}
-function restoreText(){try{state=normShop(JSON.parse($('rs-text').value));save();renderHome();closeModal('m-backup');toast('Restored!')}catch(e){toast('Invalid JSON')}}
-function toggleTheme(){document.body.classList.toggle('dk');toast(document.body.classList.contains('dk')?'Dark':'Light')}
-function resetDemo(){if(!confirm('Sample data se reset?'))return;localStorage.removeItem(KEY);state=load();renderHome();closeModal('m-backup');toast('Reset done')}
-
-/* ---------- BOOT ---------- */
-document.getElementById('boot').style.display='none';
-renderHome();
-</script>
-</body>
-</html>
+function impFile(ev){const f=ev.target.files[0];if(!f)return;const r=new Fi
