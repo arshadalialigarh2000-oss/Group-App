@@ -1144,6 +1144,7 @@ function saveJpg(){const i=$('share-img');if(!i||!i.src)return;const a=document.
 /* ---------- INIT ---------- */
 try{if(localStorage.getItem(KEY+'_theme')==='dark')document.documentElement.classList.add('dark')}catch(e){}
 renderHome();refreshItems();
+{const b=document.getElementById('boot');if(b)b.remove()}
 </script>
 </body>
 </html>
