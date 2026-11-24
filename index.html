@@ -118,6 +118,9 @@ tr.b1{background:#e8f0fe}tr.b0{background:#fff}tr.sep{height:18px}
 .st td.sv{white-space:normal;word-break:break-word;text-align:left}
 .st .sd{font-size:12px!important}
 .st .sd .ra{margin-left:6px;min-width:22px;height:22px;padding:0 5px;border-radius:10px;background:#fee2e2;color:#dc2626;font-size:11px;line-height:22px;vertical-align:middle}
+.st .sd .ra.ed{background:#dbeafe;color:#1d4ed8;margin-left:0}
+.shpt th{white-space:normal;line-height:1.15;font-size:12px!important;padding:7px 3px!important}
+.shpt td.sd{white-space:nowrap}
 .st tr.tr1 td{background:#dbeafe!important;font-weight:800;border-top:2px solid #1e3a8a}
 .st tr.tr2 td{background:#1e3a8a!important;color:#fff!important;font-weight:800}
 .st tr.tr2 td.neg{color:#fecaca!important}
@@ -196,7 +199,7 @@ html.dark .app{filter:invert(1) hue-rotate(180deg)}
 
 <!-- HOME -->
 <div id="pg-home" class="pg">
- <header class="hdr"><div class="row"><div><h1>Billing & Ledger</h1><p>Shop • Personal • Doctors • v19</p></div>
+ <header class="hdr"><div class="row"><div><h1>Billing & Ledger</h1><p>Shop • Personal • Doctors • v20</p></div>
  <button class="btn-glass" onclick="openModal('m-backup')">⬇ Backup</button></div></header>
  <div class="body">
   <div class="big" onclick="openShop()"><div class="left"><button type="button" class="pen" onpointerdown="penDown(event,'shop')" onpointerup="penUp()" onpointercancel="penUp()" onpointerleave="penUp()" onclick="penTap(event)" oncontextmenu="return false">✎</button><div class="ic">🏪</div><div><h3 id="h-n-shop">Shop Vendors Account</h3><small>Vendors ka baaki</small></div></div><div class="amt mono"><small>Total Baaki</small><span id="h-shop">₹0</span></div></div>
@@ -246,7 +249,7 @@ html.dark .app{filter:invert(1) hue-rotate(180deg)}
  <div id="s-srow" class="srch hidden"><input id="s-q" placeholder="Amount (349) ya date (5, 7, 12 / 05-11) ya naam" oninput="renderShopAll()"/></div>
  <div id="s-chips" class="chips"></div><div id="s-sum"></div>
  <div class="sinfo" id="s-info"></div>
- <div class="st"><div class="sc"><table><colgroup><col style="width:26%"><col style="width:14%"><col style="width:14%"><col style="width:17%"><col style="width:29%"></colgroup><thead><tr><th>Vendor</th><th>Bills</th><th>Paid</th><th>Net Amount</th><th>Date</th></tr></thead><tbody id="s-body"></tbody></table></div></div>
+ <div class="st"><div class="sc"><table class="shpt"><colgroup id="s-cg"></colgroup><thead><tr><th>Vendor</th><th>Bills</th><th>Paid</th><th>Net<br>Amount</th><th>Date</th><th>Edit /<br>Delete</th></tr></thead><tbody id="s-body"></tbody></table></div></div>
  <button class="more" style="width:auto;margin:0 12px 10px" id="s-more" onclick="openShopFull()"></button>
  <form class="addbar" onsubmit="addShop(event)">
   <input id="s-v" class="ai" list="s-vlist" placeholder="Vendor ▼" autocomplete="off"/><input id="s-bill" class="ai" type="number" step="0.01" placeholder="Bill (₹)"/><input id="s-paid" class="ai" type="number" step="0.01" placeholder="Paid (₹)"/>
@@ -257,13 +260,13 @@ html.dark .app{filter:invert(1) hue-rotate(180deg)}
  <div class="gh"><button class="gb" onclick="show('pg-shop');renderShopAll()">←</button><b id="sv-name"></b></div>
  <div class="sumr" style="margin-top:12px"><div class="l">Remaining</div><div class="v mono" id="sv-bal"></div></div>
  <div class="sinfo" id="sv-info"></div>
- <div class="st"><div class="sc"><table><colgroup><col style="width:26%"><col style="width:14%"><col style="width:14%"><col style="width:17%"><col style="width:29%"></colgroup><thead><tr><th>Vendor</th><th>Bills</th><th>Paid</th><th>Net Amount</th><th>Date</th></tr></thead><tbody id="sv-body"></tbody></table></div></div>
+ <div class="st"><div class="sc"><table class="shpt"><colgroup id="sv-cg"></colgroup><thead><tr><th>Vendor</th><th>Bills</th><th>Paid</th><th>Net<br>Amount</th><th>Date</th><th>Edit /<br>Delete</th></tr></thead><tbody id="sv-body"></tbody></table></div></div>
 </div>
 <div id="pg-shopfull" class="pg hidden">
  <div class="gh"><button class="gb" onclick="show('pg-shop');renderShopAll()">←</button><b>Full Entries (sab months)</b></div>
  <div class="srch"><input id="sf-q" placeholder="Amount (349) ya date (5, 7, 12 / 05-11) ya naam" oninput="renderShopAll()"/></div>
  <div class="sinfo" id="sf-info" style="margin-top:6px"></div>
- <div class="st"><div class="sc"><table><colgroup><col style="width:26%"><col style="width:14%"><col style="width:14%"><col style="width:17%"><col style="width:29%"></colgroup><thead><tr><th>Vendor</th><th>Bills</th><th>Paid</th><th>Net Amount</th><th>Date</th></tr></thead><tbody id="sf-body"></tbody></table></div></div>
+ <div class="st"><div class="sc"><table class="shpt"><colgroup id="sf-cg"></colgroup><thead><tr><th>Vendor</th><th>Bills</th><th>Paid</th><th>Net<br>Amount</th><th>Date</th><th>Edit /<br>Delete</th></tr></thead><tbody id="sf-body"></tbody></table></div></div>
 </div>
 
 <!-- UDHAAR -->
@@ -381,6 +384,13 @@ html.dark .app{filter:invert(1) hue-rotate(180deg)}
 <div class="lf"><label>Date</label><input id="re-d" class="li" type="date"/></div>
 <button class="btn-p" style="width:100%;padding:12px">Update</button></form></div></div>
 
+<div id="m-sedit" class="mb hidden"><div class="mc"><div class="mh"><h3>Edit Entry</h3><button class="x" onclick="closeModal('m-sedit')">✕</button></div>
+<form onsubmit="saveShopEdit(event)"><input type="hidden" id="se-id"/>
+<div class="lf"><label>Vendor</label><input id="se-v" class="li" list="s-vlist" autocomplete="off" required/></div>
+<div class="g2"><div class="lf"><label>Bill ₹</label><input id="se-bill" class="li mono" type="number" step="0.01"/></div><div class="lf"><label>Paid ₹</label><input id="se-paid" class="li mono" type="number" step="0.01"/></div></div>
+<div class="lf"><label>Date</label><input id="se-date" class="li" type="date" required/></div>
+<button class="btn-p" style="width:100%;padding:12px">Update & Recalculate</button></form></div></div>
+
 <!-- CLINIC MODALS (new) -->
 <div id="m-cper" class="mb hidden"><div class="mc"><div class="mh"><h3>Period & Percent</h3><button class="x" onclick="closeModal('m-cper')">✕</button></div>
 <form onsubmit="saveCper(event)">
@@ -456,7 +466,7 @@ function fmtShort(i){if(!i||!i.includes('-'))return i||'';const[y,m,d]=i.split('
 let tt=null;function toast(m){const e=$('toast');e.textContent=m;e.classList.remove('hidden');clearTimeout(tt);tt=setTimeout(()=>e.classList.add('hidden'),2600)}
 function openModal(id){if(id==='m-vendor')$('vn-date').value=today();if(id==='m-rf'){$('rf-add').value=state.rf.add; $('rf-mp').value=state.rf.mp}pendReset=false;$(id).classList.remove('hidden')}
 function closeModal(id){$(id).classList.add('hidden')}
-function show(id){document.querySelectorAll('.pg').forEach(p=>p.classList.toggle('hidden',p.id!==id));setTimeout(()=>{const n=$(id).querySelector('.nav');if(n)document.documentElement.style.setProperty('--nav-h',n.offsetHeight+'px');setBanH()},0);window.scrollTo(0,0)}
+function show(id){document.querySelectorAll('.pg').forEach(p=>p.classList.toggle('hidden',p.id!==id));setTimeout(()=>{const n=$(id).querySelector('.nav');if(n)document.documentElement.style.setProperty('--nav-h',n.offsetHeight+'px');setBanH();shopCols()},0);window.scrollTo(0,0)}
 function uid(p){return p+Date.now()+'_'+(++uidN)}
 
 function normShop(s){if(!Array.isArray(s.custom))s.custom=[];if(!s.names||typeof s.names!=='object')s.names={};if(!s.accounts)s.accounts={};s.custom.forEach(c=>{if(!Array.isArray(s.accounts[c.id]))s.accounts[c.id]=[]});
@@ -724,15 +734,15 @@ function matchQ(e,q){q=(q||'').trim().toLowerCase();if(!q)return true;
    if(pt.length===3){let yy=pt[2];if(yy<100)yy+=2000;return pt[0]===d&&pt[1]===m&&yy===y}
    if(pt.length===2)return pt[1]>=100?(pt[0]===m&&pt[1]===y):(pt[0]===d&&pt[1]===m);return false}
   return kv(e.vendor).includes(t)})}
-function shopRow(e,i){return `<tr class="${i%2?'':'o'}"><td class="sv">${esc(e.vendor)}</td><td class="sb">${e.bill}</td><td class="sp">${e.paid}</td><td class="sr ${e.rem<0?'neg':''}">${e.rem}</td><td class="sd">${fmtDate(e.date)} <button class="ra" onclick="delShop('${e.id}')">${pendDel===e.id?'OK?':'✕'}</button></td></tr>`}
+function shopRow(e,i){return `<tr class="${i%2?'':'o'}"><td class="sv">${esc(e.vendor)}</td><td class="sb">${e.bill}</td><td class="sp">${e.paid}</td><td class="sr ${e.rem<0?'neg':''}">${e.rem}</td><td class="sd">${fmtDate(e.date)}</td><td class="sd"><button class="ra ed" onclick="editShop('${e.id}')">✎</button><button class="ra" onclick="delShop('${e.id}')">${pendDel===e.id?'OK?':'✕'}</button></td></tr>`}
 function vTotals(vl,prev){
  const ym=today().slice(0,7),y=Number(ym.slice(0,4)),m=Number(ym.slice(5)),mm=ym.slice(5),last=String(new Date(y,m,0).getDate()).padStart(2,'0');
  let mb=0,mp=0,ab=0,ap=0;vl.forEach(e=>{const b=Number(e.bill||0),p=Number(e.paid||0);ab+=b;ap+=p;if(e.date.startsWith(ym)){mb+=b;mp+=p}});
  const r=n=>Math.round(n*100)/100,mn=r(mb-mp),an=r(Number(prev||0)+ab-ap);
  const f=vl.length?fmtDate(vl[0].date):'-',l=vl.length?fmtDate(vl[vl.length-1].date):'-';
- return `<tr class="tr1"><td class="sv">Month Total<br><small>${MN[m-1]} ${y}</small></td><td>${r(mb)}</td><td>${r(mp)}</td><td class="${mn<0?'neg':''}">${mn}</td><td class="sd">01-${mm}-${y}<br>se ${last}-${mm}-${y}</td></tr><tr class="tr2"><td class="sv">Kul Total<br><small>Previous sahit</small></td><td>${r(ab)}</td><td>${r(ap)}</td><td class="${an<0?'neg':''}">${an}</td><td class="sd">${f}<br>se ${l}</td></tr>`}
+ return `<tr class="tr1"><td class="sv">Month Total<br><small>${MN[m-1]} ${y}</small></td><td>${r(mb)}</td><td>${r(mp)}</td><td class="${mn<0?'neg':''}">${mn}</td><td class="sd">01-${mm}-${y}<br>se ${last}-${mm}-${y}</td><td></td></tr><tr class="tr2"><td class="sv">Kul Total<br><small>Previous sahit</small></td><td>${r(ab)}</td><td>${r(ap)}</td><td class="${an<0?'neg':''}">${an}</td><td class="sd">${f}<br>se ${l}</td><td></td></tr>`}
 function openRow(i,label){const v=i<0?(state.shop.openOthers||0):(state.shop.open[kv(state.shop.chips[i])]||0);
- return `<tr class="${(i<0?state.shop.chips.length:i)%2?'':'o'}"><td class="sv">${esc(label)}</td><td class="sb">—</td><td class="sp">—</td><td class="sr"><input class="oi mono" type="number" step="any" value="${v}" onchange="setOpen(${i},this.value)"/></td><td class="sd">Previous</td></tr>`}
+ return `<tr class="${(i<0?state.shop.chips.length:i)%2?'':'o'}"><td class="sv">${esc(label)}</td><td class="sb">—</td><td class="sp">—</td><td class="sr"><input class="oi mono" type="number" step="any" value="${v}" onchange="setOpen(${i},this.value)"/></td><td class="sd">Previous</td><td class="sd"></td></tr>`}
 function openRowsHTML(){return state.shop.chips.map((c,i)=>openRow(i,c)).join('')+openRow(-1,'Others')}
 function setOpen(i,val){const n=parseFloat(val)||0;if(i<0)state.shop.openOthers=n;else state.shop.open[kv(state.shop.chips[i])]=n;save();renderShopAll();toast('Previous amount saved')}
 function openShop(){show('pg-shop');renderShopAll();scrollShopEnd()}
@@ -756,7 +766,7 @@ function renderShopAll(){
  const un=Math.round((mb-mp)*100)/100,mn=MN[Number(ym.slice(5))-1]+' '+ym.slice(0,4);
  $('s-sum').innerHTML=`<div class="sumr"><div class="l">Total Month Bills</div><div class="v mono">${fn(mb)}</div></div><div class="sumr"><div class="l">Total Month Paid</div><div class="v mono">${fn(mp)}</div></div><div class="sumr"><div class="l">This Month Unpaid</div><div class="v mono ${un>0?'neg':''}">${fn(un)}</div></div>`;
  const q=$('s-q').value.trim();let list=E.filter(e=>matchQ(e,q)),shown=q?list:list.slice(-SHOP_LIMIT);
- $('s-body').innerHTML=(q?'':openRowsHTML())+(shown.map(shopRow).join('')||(q?'<tr><td colspan="5" style="padding:18px;color:#64748b">Koi entry nahi mili</td></tr>':''));
+ $('s-body').innerHTML=(q?'':openRowsHTML())+(shown.map(shopRow).join('')||(q?'<tr><td colspan="6" style="padding:18px;color:#64748b">Koi entry nahi mili</td></tr>':''));
  $('s-info').textContent=q?`${list.length} entries mili`:`${mn} • Latest ${shown.length} entries (kul ${E.length})`;
  const more=$('s-more');more.textContent=`📂 Full Entries dekhein (kul ${E.length})`;more.classList.toggle('hidden',!!q||E.length<=SHOP_LIMIT);
  if(shopV!==null){const isO=shopV<0,ck=isO?null:kv(state.shop.chips[shopV]),vl=E.filter(e=>isO?!chipKeys.includes(e.k):e.k===ck);
@@ -766,10 +776,10 @@ function renderShopAll(){
   $('sv-body').innerHTML=openRow(shopV,nm)+vl.map(shopRow).join('')+vTotals(vl,isO?(state.shop.openOthers||0):(state.shop.open[ck]||0))}
  const fq=$('sf-q').value.trim(),fl=E.filter(e=>matchQ(e,fq));let fh='',cm='',idx=0;
  fl.forEach(e=>{const m=e.date.slice(0,7);if(m!==cm){cm=m;let b=0,p=0;fl.forEach(x=>{if(x.date.startsWith(m)){b+=Number(x.bill||0);p+=Number(x.paid||0)}});
-  fh+=`<tr class="mh"><td colspan="5">${MN[Number(m.slice(5))-1]} ${m.slice(0,4)} — Bills ${fn(b)} • Paid ${fn(p)} • Unpaid ${fn(Math.round((b-p)*100)/100)}</td></tr>`;idx=0}
+  fh+=`<tr class="mh"><td colspan="6">${MN[Number(m.slice(5))-1]} ${m.slice(0,4)} — Bills ${fn(b)} • Paid ${fn(p)} • Unpaid ${fn(Math.round((b-p)*100)/100)}</td></tr>`;idx=0}
   fh+=shopRow(e,idx++)});
- $('sf-body').innerHTML=(fq?'':openRowsHTML())+(fh||(fq?'<tr><td colspan="5" style="padding:18px;color:#64748b">Koi entry nahi mili</td></tr>':''));
- $('sf-info').textContent=`${fl.length} entries (kul ${E.length})`}
+ $('sf-body').innerHTML=(fq?'':openRowsHTML())+(fh||(fq?'<tr><td colspan="6" style="padding:18px;color:#64748b">Koi entry nahi mili</td></tr>':''));
+ $('sf-info').textContent=`${fl.length} entries (kul ${E.length})`;shopCols()}
 function addShop(e){e.preventDefault();let name=$('s-v').value.trim();if(!name)return toast('Vendor ka naam bharein');
  const bill=parseFloat($('s-bill').value)||0,paid=parseFloat($('s-paid').value)||0;if(!bill&&!paid)return toast('Bill ya Paid amount bharein');
  const ch=state.shop.chips.find(c=>kv(c)===kv(name));
@@ -778,6 +788,12 @@ function addShop(e){e.preventDefault();let name=$('s-v').value.trim();if(!name)r
  state.shop.entries.push({id:'s_'+Date.now(),vendor:name,bill,paid,date});
  $('s-v').value='';$('s-bill').value='';$('s-paid').value='';$('s-date').value='';$('s-date').type='text';
  save();renderShopAll();scrollShopEnd();toast('Entry saved • '+fmtDate(date))}
+function shopCols(){['s','sv','sf'].forEach(p=>{const b=$(p+'-body'),cg=$(p+'-cg');if(!b||!cg)return;const W=b.closest('.sc').clientWidth;if(!W)return;const n=Math.round(W*.34),m=Math.round(W*.22),px=[n,m,m,m,112,100];cg.innerHTML=px.map(w=>`<col style="width:${w}px">`).join('');b.closest('table').style.width=px.reduce((a,c)=>a+c,0)+'px'})}
+function editShop(id){const e=state.shop.entries.find(x=>x.id===id);if(!e)return;$('se-id').value=id;$('se-v').value=e.vendor;$('se-bill').value=e.bill||'';$('se-paid').value=e.paid||'';$('se-date').value=e.date;openModal('m-sedit')}
+function saveShopEdit(ev){ev.preventDefault();const e=state.shop.entries.find(x=>x.id===$('se-id').value);if(!e)return;let name=$('se-v').value.trim();if(!name)return toast('Vendor ka naam bharein');
+ const bill=parseFloat($('se-bill').value)||0,paid=parseFloat($('se-paid').value)||0;if(!bill&&!paid)return toast('Bill ya Paid amount bharein');
+ const ch=state.shop.chips.find(c=>kv(c)===kv(name));if(ch)name=ch;else{const ex=state.shop.entries.find(x=>x.id!==e.id&&kv(x.vendor)===kv(name));if(ex)name=ex.vendor}
+ e.vendor=name;e.bill=bill;e.paid=paid;e.date=$('se-date').value||e.date;save();closeModal('m-sedit');renderShopAll();toast('Entry updated')}
 function delShop(id){if(pendDel!==id){pendDel=id;renderShopAll();return toast('Delete ke liye dubara "OK?" dabayein')}
  state.shop.entries=state.shop.entries.filter(x=>x.id!==id);pendDel=null;save();renderShopAll();toast('Entry deleted')}
 function openChipModal(){renderChips();openModal('m-chip')}
