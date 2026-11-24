@@ -151,12 +151,14 @@ tr.b1{background:#e8f0fe}tr.b0{background:#fff}tr.sep{height:18px}
 #cl-per{background:linear-gradient(180deg,#fde047,#facc15);color:#111827;padding:5px 12px;border-radius:999px;font-size:13px;font-weight:900;box-shadow:0 3px 0 #a16207,inset 0 1px 0 rgba(255,255,255,.7)}
 .clpen{background:#facc15;color:#111827;border-radius:50%;width:28px;height:28px;font-size:14px;font-weight:900;box-shadow:0 2px 0 #a16207}
 .clb{display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:900;margin:8px;border-radius:12px;background:linear-gradient(180deg,#1e293b,#020617);color:#facc15;text-shadow:0 2px 3px rgba(0,0,0,.6);box-shadow:0 0 0 2px #facc15,0 4px 0 #a16207,inset 0 2px 0 rgba(255,255,255,.16)}
-#pg-cl .clt{flex:1;min-height:0;overflow:auto;margin:4px 10px;border:1.5px solid #1e3a8a;border-radius:12px;background:#fff}
+#pg-cl .clt{flex:1;min-height:0;overflow:auto;margin:4px 10px;border:1.5px solid #1e3a8a;border-radius:12px;background:#fff;-webkit-overflow-scrolling:touch}
 #pg-cl table{table-layout:fixed}
 #pg-cl th{position:sticky;top:0;z-index:5;background:#1e3a8a;color:#fff;font-size:12px;padding:8px 4px;white-space:normal;line-height:1.2;border-color:#334e9b}
 #pg-cl td{font-size:13px;padding:6px 4px;text-align:center;font-weight:700;color:#0f172a;white-space:normal;border-color:#cbd5e1}
 #pg-cl td.pn{text-align:left}
+#pg-cl td.act{background:#f8fafc}
 #pg-cl tr.g td{background:#f1f5f9}
+#pg-cl tr.g td.act{background:#e8eef7}
 #pg-cl tr.tt td{background:#1e3a8a;color:#fff;font-weight:900}
 .clbot{background:#fff;border:2px solid #1e3a8a;border-radius:16px;margin:6px 8px 8px;padding:8px;display:flex;flex-direction:column;gap:6px}
 .clcap{font-size:10px;color:#64748b;text-align:center}
@@ -166,16 +168,22 @@ tr.b1{background:#e8f0fe}tr.b0{background:#fff}tr.sep{height:18px}
 #pg-cl .clbot input{padding:8px 4px;border:1.5px solid #93c5fd;border-radius:9px;background:#fff;width:100%;min-width:0;font-size:12px;text-align:center}
 #pg-cl .clin1 input{text-align:left;padding-left:8px}
 .cladd{background:#1e3a8a;color:#fff;border-radius:12px;padding:10px;font-weight:800;font-size:14px;width:100%}
-.clogt th{background:#1e3a8a;color:#fff;font-size:11px;padding:6px 3px}
-.clogt td{font-size:12px;text-align:center;font-weight:700;padding:5px 3px}
-.pnw{display:flex;align-items:center;gap:6px}.pnb{display:flex;gap:3px;flex-shrink:0}
-.clib{width:24px;height:24px;border-radius:50%;font-size:12px;font-weight:900;display:flex;align-items:center;justify-content:center;padding:0}
-.clib.e{background:#dbeafe;color:#1d4ed8}.clib.d{background:#fee2e2;color:#dc2626;width:auto;min-width:24px;padding:0 4px;border-radius:12px}
+.clogt{table-layout:auto;min-width:100%}
+.clogt th{background:#1e3a8a;color:#fff;font-size:11px;padding:6px 3px;position:sticky;top:0}
+.clogt td{font-size:12px;text-align:center;font-weight:700;padding:5px 3px;white-space:nowrap}
+.clogt td.pn{text-align:left;white-space:normal}
+.clogt tr.g td{background:#f1f5f9}
+.clogt tr.tt td{background:#1e3a8a;color:#fff}
+.clogt .pl{color:#059669}.clogt .mi{color:#e11d48}
+.pnw{display:flex;align-items:center;gap:6px}.pnb{display:flex;gap:6px;justify-content:center}
+.clib{width:34px;height:34px;border-radius:50%;font-size:15px;font-weight:900;display:flex;align-items:center;justify-content:center;padding:0}
+.clib.e{background:#dbeafe;color:#1d4ed8}.clib.d{background:#fee2e2;color:#dc2626;width:auto;min-width:34px;padding:0 6px;border-radius:17px}
 #pg-l3 .sc,#pg-l4 .sc,#pg-cash .sc{overflow:auto;max-height:calc(100vh - var(--nav-h) - var(--ban-h,90px) - 70px);max-height:calc(100dvh - var(--nav-h) - var(--ban-h,90px) - 70px)}
 #pg-l3 th,#pg-l4 th,#pg-cash th{position:sticky;top:0;z-index:30;background:#1e3a8a;color:#fff}
 .ai[readonly]{background:#eef2ff;color:#1e3a8a}
 #pg-ud .st table{width:135%}
 #pg-sh.rate .st th,#pg-sh.rate .st td{padding-left:6px;padding-right:6px}
+html.dark .app{filter:invert(1) hue-rotate(180deg)}
 @media print{body{background:#fff}.nav,.tb,.ep,.ca,.no-print,.more{display:none!important}.ban{position:static;-webkit-print-color-adjust:exact;print-color-adjust:exact}tr.b1{-webkit-print-color-adjust:exact;print-color-adjust:exact}.sc{overflow:visible}#pg-l3 .sc,#pg-l4 .sc,#pg-cash .sc{max-height:none!important;overflow:visible!important}}
 @keyframes bootshow{to{opacity:1}}
 </style>
@@ -188,7 +196,7 @@ tr.b1{background:#e8f0fe}tr.b0{background:#fff}tr.sep{height:18px}
 
 <!-- HOME -->
 <div id="pg-home" class="pg">
- <header class="hdr"><div class="row"><div><h1>Billing & Ledger</h1><p>Shop • Personal • Doctors • v18</p></div>
+ <header class="hdr"><div class="row"><div><h1>Billing & Ledger</h1><p>Shop • Personal • Doctors • v19</p></div>
  <button class="btn-glass" onclick="openModal('m-backup')">⬇ Backup</button></div></header>
  <div class="body">
   <div class="big" onclick="openShop()"><div class="left"><button type="button" class="pen" onpointerdown="penDown(event,'shop')" onpointerup="penUp()" onpointercancel="penUp()" onpointerleave="penUp()" onclick="penTap(event)" oncontextmenu="return false">✎</button><div class="ic">🏪</div><div><h3 id="h-n-shop">Shop Vendors Account</h3><small>Vendors ka baaki</small></div></div><div class="amt mono"><small>Total Baaki</small><span id="h-shop">₹0</span></div></div>
@@ -288,7 +296,7 @@ tr.b1{background:#e8f0fe}tr.b0{background:#fff}tr.sep{height:18px}
 <div id="pg-cl" class="pg hidden">
  <div class="nav"><div class="l"><button class="nb" onclick="backToVendors()">← Doctors</button><div style="min-width:0"><small>Clinic Sheet</small><div class="t" id="cl-nt"></div></div></div><button class="nb wa" onclick="clImg()">📷 Image</button></div>
  <div class="clban"><div class="cla"><div class="cln" id="cl-name"></div><div class="cll">IS PERIOD KA NET AMOUNT</div><div class="clp"><span id="cl-per"></span><button class="clpen" onclick="openCper()">✎</button></div></div><div class="clb mono" id="cl-tot"></div></div>
- <div class="clt"><table><colgroup><col style="width:37%"><col style="width:15%"><col style="width:13%"><col style="width:17.5%"><col style="width:17.5%"></colgroup><thead><tr><th>Products</th><th>Net Qty<br>in (tab)</th><th>MRP<br>per tab</th><th>Total<br>Amount</th><th id="cl-th5"></th></tr></thead><tbody id="cl-body"></tbody></table></div>
+ <div class="clt" id="cl-t"><table id="cl-tbl"><colgroup id="cl-cg"></colgroup><thead><tr><th>Products</th><th>Net Qty<br>in (tab)</th><th>MRP<br>per tab</th><th>Total<br>Amount</th><th id="cl-th5"></th><th>Edit /<br>Delete</th></tr></thead><tbody id="cl-body"></tbody></table></div>
  <div class="clbot">
   <form id="cl-form" onsubmit="addClinic(event)" style="display:flex;flex-direction:column;gap:6px">
    <div class="clin1"><input id="cl-p" list="cl-pl" placeholder="Product naam" autocomplete="off" oninput="clHint()"/><input id="cl-m" type="number" step="0.01" placeholder="MRP/tab"/></div>
@@ -372,6 +380,25 @@ tr.b1{background:#e8f0fe}tr.b0{background:#fff}tr.sep{height:18px}
 <div class="lf"><label>Qty</label><input id="re-q" class="li mono" type="number" step="0.01"/></div></div>
 <div class="lf"><label>Date</label><input id="re-d" class="li" type="date"/></div>
 <button class="btn-p" style="width:100%;padding:12px">Update</button></form></div></div>
+
+<!-- CLINIC MODALS (new) -->
+<div id="m-cper" class="mb hidden"><div class="mc"><div class="mh"><h3>Period & Percent</h3><button class="x" onclick="closeModal('m-cper')">✕</button></div>
+<form onsubmit="saveCper(event)">
+<div class="g2"><div class="lf"><label>From</label><input id="cp-from" class="li" type="date" required/></div><div class="lf"><label>To</label><input id="cp-to" class="li" type="date" required/></div></div>
+<div class="lf"><label>Net Amount % of MRP</label><input id="cp-pct" class="li mono" type="number" step="0.01" required/></div>
+<button class="btn-p" style="width:100%;padding:12px">Save</button>
+<button type="button" class="btn-d" style="width:100%;margin-top:8px" onclick="resetCper()">Auto Month Par Reset</button></form></div></div>
+
+<div id="m-pedit" class="mb hidden"><div class="mc"><div class="mh"><h3>Edit Product</h3><button class="x" onclick="closeModal('m-pedit')">✕</button></div>
+<form onsubmit="savePedit(event)"><input type="hidden" id="pe-id"/>
+<div class="lf"><label>Product naam</label><input id="pe-name" class="li" required/></div>
+<div class="lf"><label>MRP per tab ₹</label><input id="pe-mrp" class="li mono" type="number" step="0.01" required/></div>
+<button class="btn-p" style="width:100%;padding:12px">Update</button></form></div></div>
+
+<div id="m-clog" class="mb hidden"><div class="mc" style="max-width:600px"><div class="mh"><h3>📋 Entries Log</h3><button class="x" onclick="closeModal('m-clog')">✕</button></div>
+<div class="sinfo" id="clog-info" style="padding:0 0 8px"></div>
+<button type="button" class="btn-d" id="clog-tg" style="margin-bottom:8px;width:100%" onclick="clogToggle()"></button>
+<div class="sc" style="max-height:60vh;overflow:auto"><table class="clogt"><thead><tr><th>Date</th><th>Product</th><th>Added<br>(+)</th><th>Minus<br>(−)</th><th>Last<br>month</th><th>Remain<br>at shop</th><th></th></tr></thead><tbody id="clog-body"></tbody></table></div></div></div>
 </div>
 
 <script>
@@ -608,14 +635,12 @@ async function shareWA(){
  const v=state.vendors.find(x=>x.id===activeV);if(!v)return;
  const full=!$('pg-l4').classList.contains('hidden');
  const L=buildLedger(v);
- const rows=full?L.rows:L.rows.slice(-LIMIT); // jitni screen pe dikh rahi hain utni hi
+ const rows=full?L.rows:L.rows.slice(-LIMIT);
  toast('Image ban rahi hai...');
  const W=1080,X0=20,CW=[150,270,90,100,130,150,150],BAN=190,HDR=84,RH=56,SH=22,MAXH=1900,BASE=BAN+HDR+20;
  const HEAD=['Date','Particular','Qty','Rate','Total','Received\nAmount','Final\nAmount'];
- // items (rows + separators)
  const items=[];let prevG=null;
  rows.forEach((r,i)=>{if(i>0&&r.gi!==prevG)items.push({sep:true});prevG=r.gi;items.push({r})});
- // pages
  const pages=[];let cur=[],h=BASE;
  items.forEach(it=>{const ih=it.sep?SH:RH;
   if(h+ih>MAXH&&cur.length){pages.push(cur);cur=[];h=BASE}
@@ -630,7 +655,6 @@ async function shareWA(){
   let H=BASE;its.forEach(it=>H+=it.sep?SH:RH);H+=20;
   const cv=document.createElement('canvas');cv.width=W;cv.height=H;const c=cv.getContext('2d');
   c.fillStyle='#fff';c.fillRect(0,0,W,H);
-  // ---- fixed top banner (har image me) ----
   const bw=W-40,lw=Math.round(bw*7/12);
   let g=c.createLinearGradient(0,10,0,10+BAN-20);g.addColorStop(0,'#2563eb');g.addColorStop(1,'#1e3a8a');
   c.fillStyle=g;rr(c,20,10,bw,BAN-20,24);c.fill();
@@ -641,12 +665,10 @@ async function shareWA(){
   g=c.createLinearGradient(0,25,0,BAN-25);g.addColorStop(0,'#fde68a');g.addColorStop(1,'#f59e0b');
   c.fillStyle=g;rr(c,bx,25,bwid,BAN-50,18);c.fill();
   c.fillStyle='#1e293b';const bt=String(L.finalBalance);fit(c,bt,bwid-20,72);c.fillText(bt,bx+bwid/2,BAN/2);
-  // ---- table header ----
   let y=BAN;c.fillStyle='#1e3a8a';c.fillRect(X0,y,W-2*X0,HDR);
   let x=X0;c.fillStyle='#fff';c.font='800 26px sans-serif';
   HEAD.forEach((t,i)=>{const ls=t.split('\n');ls.forEach((l,k)=>c.fillText(l,x+CW[i]/2,y+HDR/2+(k-(ls.length-1)/2)*30));x+=CW[i]});
   y+=HDR;
-  // ---- rows ----
   let vi=0;
   its.forEach((it,idx)=>{
    if(it.sep){vi++;c.fillStyle=vi%2?'#e8f0fe':'#fff';c.fillRect(X0,y,W-2*X0,SH);
@@ -671,7 +693,6 @@ async function shareWA(){
   if(pages.length>1){c.fillStyle='#64748b';c.font='700 20px sans-serif';c.textAlign='right';c.fillText((p+1)+' / '+pages.length,W-24,H-10)}
   blobs.push(await new Promise(res=>cv.toBlob(res,'image/jpeg',0.92)));
  }
- // ---- gallery me save (download) ----
  const base=v.name.replace(/[^a-z0-9]/gi,'_')+'_'+today();
  for(let i=0;i<blobs.length;i++){
   const a=document.createElement('a');a.href=URL.createObjectURL(blobs[i]);
@@ -794,7 +815,7 @@ function addUd(e){e.preventDefault();let name=$('ud-n').value.trim();if(!name)re
 function delUd(id){if(pendDel!==id){pendDel=id;renderUd();return toast('Delete ke liye dubara "OK?" dabayein')}
  state.accounts[udId]=state.accounts[udId].filter(x=>x.id!==id);pendDel=null;save();renderUd();toast('Entry deleted')}
 
-/* ---------- SHEET + RATE SHEET (main fixes) ---------- */
+/* ---------- SHEET + RATE SHEET ---------- */
 const PERS_COLS=[{n:'Name',t:'text'},{n:'Amount Given',t:'num'},{n:'Description',t:'text'},{n:'Amount Received',t:'num'}];
 const RATE_COLS=[{n:'Products',t:'text'},{n:'Net rate',t:'num'},{n:'Price',t:'num'},{n:'MRP',t:'num'},{n:'Rate',t:'num'},{n:'GST %',t:'num'},{n:'Qty.',t:'num'}];
 const RATE_FORM=`<input id="sh-f0" class="ai" type="text" list="sh-nl" placeholder="Product" autocomplete="off" style="grid-column:span 3"/>
@@ -817,7 +838,7 @@ function calcNetPrice(rate,gst,extra,mp){
  const price=rd2((net+Number(extra||0))*(1+Number(mp||0)/100));
  return{net,price,gst:g}}
 function plItems(k){return shRows(k)}
-function renderPl(){/* optional product list summary - kept simple */ $('sh-pl').classList.add('hidden')}
+function renderPl(){$('sh-pl').classList.add('hidden')}
 function plToggle(){}
 
 function accInfo(k){const f=fmtOf(k);
@@ -851,7 +872,6 @@ function renderSheet(){const k=shId,cs=colsOf(k);if(!cs.length)return;
  const rows=q?all.filter(e=>cs.some((c,i)=>c.t!=='num'&&kv(String(e.v[i]||'')).includes(q))||fmtShort(e.at).includes(q)):all;
  const tbl=$('sh-st').querySelector('table'),isR=fmtOf(k)==='rate';$('pg-sh').classList.toggle('rate',isR);
  if(isR){
-  // Products | Net rate | Price | MRP | Rate | GST % | Qty | Date | Edit
   const W=Math.max(320,$('sh-st').clientWidth-4);
   const px=[.34,.22,.22,.22,.18,.14,.14,.22,.20].map(x=>Math.round(x*W));
   $('sh-cg').innerHTML=px.map(w=>`<col style="width:${w}px">`).join('');
@@ -870,7 +890,6 @@ function renderSheet(){const k=shId,cs=colsOf(k);if(!cs.length)return;
   $('sh-body').innerHTML=(rows.map((e,i)=>{
    const rate=Number(e.v[4]||0),gst=e.v[5]==null||e.v[5]===''?5:Number(e.v[5]);
    const {net,price}=calcNetPrice(rate,gst,state.rf.add,state.rf.mp);
-   // keep stored net/price in sync for display
    return `<tr class="${i%2?'':'o'}"><td class="sv">${esc(e.v[0])}</td><td>${net}</td><td>${price}</td><td>${e.v[3]||''}</td><td>${rate||''}</td><td>${gst}</td><td>${e.v[6]||''}</td><td class="sd">${fmtShort(e.at)}</td><td class="sd"><button class="ra" onclick="openRedit('${e.id}')">✎</button> <button class="ra" onclick="delSheet('${e.id}')">${pendDel===e.id?'OK?':'✕'}</button></td></tr>`
   }).join('')||`<tr><td colspan="9" style="padding:18px;color:#64748b">Abhi koi entry nahi. Neeche se Product + Rate + (GST optional) + MRP + Qty add karein.</td></tr>`);
  }else{
@@ -892,7 +911,6 @@ function addRateEntry(e){e.preventDefault();
  const mrp=parseFloat($('sh-f3').value)||0;
  const qty=parseFloat($('sh-f4').value)||0;
  const {net,price}=calcNetPrice(rate,gst,state.rf.add,state.rf.mp);
- // v order matches RATE_COLS: Products, Net rate, Price, MRP, Rate, GST %, Qty
  const v=[name,net,price,mrp,rate,gst,qty];
  (state.accounts[shId]||(state.accounts[shId]=[])).push({id:uid('h_'),v,at:today()});
  ['sh-f0','sh-f1','sh-f2','sh-f3','sh-f4'].forEach(i=>$(i).value='');
@@ -912,7 +930,7 @@ function saveRf(e){e.preventDefault();state.rf.add=parseFloat($('rf-add').value)
 
 function setBanH(){const b=document.querySelector('.pg:not(.hidden) .ban');if(b)document.documentElement.style.setProperty('--ban-h',b.offsetHeight+'px')}
 
-/* ---------- CLINIC (kept) ---------- */
+/* ---------- CLINIC ---------- */
 const isClinic=v=>v.fmt==='clinic'||/rehman|रहमान/i.test(v.name||'');
 const cv=()=>state.vendors.find(x=>x.id===activeV);
 function clinicPeriod(v){const t=today(),y=t.slice(0,4),m=t.slice(5,7),last=new Date(+y,+m,0).getDate();
@@ -926,14 +944,20 @@ function clinicCalc(v){const P=clinicPeriod(v),pct=v.pct==null?30:Number(v.pct);
   const net=rd2(last+add-mi-rem),total=rd2(net*Number(p.mrp||0)),na=rd2(total*pct/100);
   return{p,add,mi,last,rem,net,total,na}});
  return{P,pct,rows,total:rd2(rows.reduce((s,r)=>s+r.na,0))}}
+const CL_PCT=[.37,.15,.13,.175,.175], CL_ACT=108;
 function renderClinic(){const v=cv();if(!v)return;const C=clinicCalc(v);
  $('cl-nt').textContent=v.name;$('cl-name').textContent=v.name;$('cl-tot').textContent='₹'+fn(Math.round(C.total));
  $('cl-per').textContent=fmtDate(C.P.from)+' se '+fmtDate(C.P.to);
  $('cl-th5').innerHTML='Net Amount<br>('+C.pct+'% of MRP)';
  $('cl-pl').innerHTML=(v.products||[]).map(p=>`<option value="${esc(p.name)}">`).join('');
+ // 5 columns = screen width; Edit/Delete column screen ke bahar (right)
+ const W=Math.max(300,($('cl-t').clientWidth||window.innerWidth-20)-3);
+ const px=CL_PCT.map(x=>Math.round(x*W));px.push(CL_ACT);
+ $('cl-cg').innerHTML=px.map(w=>`<col style="width:${w}px">`).join('');
+ $('cl-tbl').style.width=px.reduce((a,b)=>a+b,0)+'px';
  let sn=0,st=0,sa=0;C.rows.forEach(r=>{sn+=r.net;st+=r.total;sa+=r.na});
- $('cl-body').innerHTML=(C.rows.map((r,i)=>`<tr class="${i%2?'g':''}"><td class="pn"><div class="pnw"><span class="pnb"><button class="clib e" onclick="editProd('${r.p.id}')">✎</button><button class="clib d" onclick="delProd('${r.p.id}')">${pendDel===r.p.id?'OK?':'✕'}</button></span><span>${esc(r.p.name)}</span></div></td><td class="${r.net<0?'neg':''}">${r.net}</td><td>${r.p.mrp}</td><td>${r.total}</td><td>${r.na}</td></tr>`).join('')||'<tr><td colspan="5" style="padding:18px;color:#64748b">Abhi koi product nahi.</td></tr>')
-  +(C.rows.length?`<tr class="tt"><td class="pn">Total</td><td>${rd2(sn)}</td><td></td><td>${rd2(st)}</td><td>${rd2(sa)}</td></tr>`:'')}
+ $('cl-body').innerHTML=(C.rows.map((r,i)=>`<tr class="${i%2?'g':''}"><td class="pn">${esc(r.p.name)}</td><td class="${r.net<0?'neg':''}">${r.net}</td><td>${r.p.mrp}</td><td>${r.total}</td><td>${r.na}</td><td class="act"><span class="pnb"><button class="clib e" onclick="editProd('${r.p.id}')">✎</button><button class="clib d" onclick="delProd('${r.p.id}')">${pendDel===r.p.id?'OK?':'✕'}</button></span></td></tr>`).join('')||'<tr><td colspan="6" style="padding:18px;color:#64748b">Abhi koi product nahi.</td></tr>')
+  +(C.rows.length?`<tr class="tt"><td class="pn">Total</td><td>${rd2(sn)}</td><td></td><td>${rd2(st)}</td><td>${rd2(sa)}</td><td></td></tr>`:'')}
 function clHint(){const v=cv(),n=kv($('cl-p').value);const r=n?clinicCalc(v).rows.find(x=>kv(x.p.name)===n):null;
  $('cl-m').placeholder=r?String(r.p.mrp):'MRP/tab';$('cl-l').placeholder=r?String(r.last):'Last';$('cl-r').placeholder=r?String(r.rem):'Remain'}
 function addClinic(e){e.preventDefault();const v=cv();if(!v)return;const name=$('cl-p').value.trim();if(!name)return toast('Product ka naam bharein');
@@ -948,14 +972,89 @@ function addClinic(e){e.preventDefault();const v=cv();if(!v)return;const name=$(
  save();renderClinic();toast('Entry saved')}
 function delProd(id){if(pendDel!==id){pendDel=id;renderClinic();return toast('Delete ke liye dubara "OK?" dabayein')}
  const v=cv();v.products=(v.products||[]).filter(p=>p.id!==id);v.moves=(v.moves||[]).filter(m=>m.pid!==id);pendDel=null;save();renderClinic();toast('Product deleted')}
-function editProd(id){const v=cv(),p=(v.products||[]).find(x=>x.id===id);if(!p)return;toast('Product edit: name/MRP change via re-add for now')}
+function editProd(id){const v=cv(),p=(v.products||[]).find(x=>x.id===id);if(!p)return;
+ $('pe-id').value=id;$('pe-name').value=p.name;$('pe-mrp').value=p.mrp;openModal('m-pedit')}
+function savePedit(e){e.preventDefault();const v=cv(),p=(v.products||[]).find(x=>x.id===$('pe-id').value);if(!p)return;
+ const n=$('pe-name').value.trim(),m=parseFloat($('pe-mrp').value);if(!n||isNaN(m))return toast('Naam aur MRP bharein');
+ if(v.products.some(x=>x.id!==p.id&&kv(x.name)===kv(n)))return toast('Ye naam pehle se hai');
+ p.name=n;p.mrp=m;save();closeModal('m-pedit');renderClinic();toast('Product updated')}
 function openCper(){const v=cv();if(!v)return;const P=clinicPeriod(v);$('cp-from').value=P.from;$('cp-to').value=P.to;$('cp-pct').value=v.pct==null?30:v.pct;openModal('m-cper')}
 function saveCper(e){e.preventDefault();const v=cv();if(!v)return;v.from=$('cp-from').value;v.to=$('cp-to').value;v.pct=parseFloat($('cp-pct').value)||30;save();closeModal('m-cper');renderClinic();toast('Period saved')}
 function resetCper(){const v=cv();if(!v)return;delete v.from;delete v.to;save();closeModal('m-cper');renderClinic()}
-function openClog(){toast('Entries log — period filter available in full version')}
-function clImg(){toast('Image share — use browser print for now')}
 
-/* ---------- IMPORT (Rate sheet aware) ---------- */
+/* ---- Entries log (history) ---- */
+function openClog(){clAll=false;renderClog();openModal('m-clog')}
+function clogToggle(){clAll=!clAll;renderClog()}
+function renderClog(){const v=cv();if(!v)return;const P=clinicPeriod(v);
+ const nm={};(v.products||[]).forEach(p=>nm[p.id]=p.name);
+ let mv=(v.moves||[]).map((m,i)=>({...m,_o:i})).filter(m=>nm[m.pid]!==undefined);
+ if(!clAll)mv=mv.filter(m=>m.date>=P.from&&m.date<=P.to);
+ mv.sort((a,b)=>a.date===b.date?a._o-b._o:a.date.localeCompare(b.date));
+ let sa=0,sm=0;mv.forEach(m=>{sa+=Number(m.add||0);sm+=Number(m.minus||0)});
+ const f=x=>x==null?'':x;
+ $('clog-info').textContent=(clAll?'Sab entries':'Period: '+fmtDate(P.from)+' se '+fmtDate(P.to))+' • '+mv.length+' entries';
+ $('clog-tg').textContent=clAll?'Sirf is period ki entries dikhao':'Sab entries dikhao (purani bhi)';
+ $('clog-body').innerHTML=(mv.map((m,i)=>`<tr class="${i%2?'g':''}"><td>${fmtShort(m.date)}</td><td class="pn">${esc(nm[m.pid])}</td><td class="pl">${f(m.add)}</td><td class="mi">${f(m.minus)}</td><td>${f(m.last)}</td><td>${f(m.rem)}</td><td><button class="ra" style="background:#fee2e2;color:#dc2626;border-radius:10px;padding:2px 8px" onclick="delMove('${m.id}')">${pendDel===m.id?'OK?':'✕'}</button></td></tr>`).join('')||'<tr><td colspan="7" style="padding:18px;color:#64748b">Is period me koi entry nahi.</td></tr>')
+  +(mv.length?`<tr class="tt"><td colspan="2" style="text-align:left">Total</td><td>${rd2(sa)}</td><td>${rd2(sm)}</td><td></td><td></td><td></td></tr>`:'')}
+function delMove(id){if(pendDel!==id){pendDel=id;renderClog();return toast('Delete ke liye dubara "OK?" dabayein')}
+ const v=cv();v.moves=(v.moves||[]).filter(m=>m.id!==id);pendDel=null;save();renderClog();renderClinic();toast('Entry deleted')}
+
+/* ---- Clinic image: sirf banner + table (Edit/Delete column ke bina), gallery me auto save ---- */
+async function clImg(){const v=cv();if(!v)return;const C=clinicCalc(v);toast('Image ban rahi hai...');
+ const W=1080,M=20,TW=W-2*M,BH=250,GAP=20,HH=120,TH=84;
+ const cw=CL_PCT.map(x=>x*TW),cx=[M];cw.forEach((w,i)=>cx.push(cx[i]+w));
+ const cvs=document.createElement('canvas'),c=cvs.getContext('2d');
+ const wrap=(t,max)=>{c.font='800 30px sans-serif';const ws=String(t).split(' '),out=[];let cur='';
+  ws.forEach(w=>{const tr=cur?cur+' '+w:w;if(c.measureText(tr).width>max&&cur){out.push(cur);cur=w}else cur=tr});if(cur)out.push(cur);return out};
+ const lines=C.rows.map(r=>wrap(r.p.name,cw[0]-28)),rh=lines.map(l=>Math.max(76,l.length*38+26));
+ const H=M+BH+GAP+HH+rh.reduce((a,b)=>a+b,0)+(C.rows.length?TH:0)+M;
+ cvs.width=W;cvs.height=H;
+ const rr=(x,y,w,h,r)=>{c.beginPath();c.moveTo(x+r,y);c.arcTo(x+w,y,x+w,y+h,r);c.arcTo(x+w,y+h,x,y+h,r);c.arcTo(x,y+h,x,y,r);c.arcTo(x,y,x+w,y,r);c.closePath()};
+ const fit=(t,max,size)=>{do{c.font='900 '+size+'px sans-serif';size-=2}while(c.measureText(t).width>max&&size>16)};
+ c.fillStyle='#f8fafc';c.fillRect(0,0,W,H);
+ // banner
+ let g=c.createLinearGradient(0,M,TW,M+BH);g.addColorStop(0,'#020617');g.addColorStop(1,'#1f2937');
+ c.fillStyle=g;rr(M,M,TW,BH,34);c.fill();
+ const lw=Math.round(TW*7/12),lc=M+lw/2;
+ c.textAlign='center';c.textBaseline='middle';c.fillStyle='#fff';fit(v.name,lw-50,54);c.fillText(v.name,lc,M+62);
+ c.fillStyle='#94a3b8';c.font='700 26px sans-serif';c.fillText('IS PERIOD KA NET AMOUNT',lc,M+122);
+ const per=fmtDate(C.P.from)+' se '+fmtDate(C.P.to);c.font='900 34px sans-serif';
+ const pw=Math.min(lw-40,c.measureText(per).width+56);
+ g=c.createLinearGradient(0,M+148,0,M+210);g.addColorStop(0,'#fde047');g.addColorStop(1,'#facc15');
+ c.fillStyle=g;rr(lc-pw/2,M+150,pw,60,30);c.fill();
+ c.fillStyle='#111827';c.font='900 34px sans-serif';c.fillText(per,lc,M+181);
+ const bx=M+lw+14,bw=TW-lw-28,by=M+22,bh=BH-44;
+ g=c.createLinearGradient(0,by,0,by+bh);g.addColorStop(0,'#1e293b');g.addColorStop(1,'#020617');
+ c.fillStyle=g;rr(bx,by,bw,bh,22);c.fill();c.strokeStyle='#facc15';c.lineWidth=5;rr(bx,by,bw,bh,22);c.stroke();
+ c.fillStyle='#facc15';const tt='₹'+fn(Math.round(C.total));fit(tt,bw-30,62);c.fillText(tt,bx+bw/2,by+bh/2);
+ // header
+ let y=M+BH+GAP;
+ c.fillStyle='#1e3a8a';c.fillRect(M,y,TW,HH);
+ const heads=[['Products'],['Net Qty','in (tab)'],['MRP','per tab'],['Total','Amount'],['Net Amount','('+C.pct+'% of','MRP)']];
+ c.fillStyle='#fff';c.font='800 28px sans-serif';
+ heads.forEach((ls,i)=>{ls.forEach((l,k)=>c.fillText(l,cx[i]+cw[i]/2,y+HH/2+(k-(ls.length-1)/2)*36)); if(i){c.strokeStyle='#334e9b';c.lineWidth=2;c.beginPath();c.moveTo(cx[i],y);c.lineTo(cx[i],y+HH);c.stroke()}});
+ y+=HH;
+ C.rows.forEach((r,i)=>{const h=rh[i];c.fillStyle=i%2?'#f1f5f9':'#fff';c.fillRect(M,y,TW,h);
+  const vals=[null,r.net,r.p.mrp,r.total,r.na];
+  for(let j=0;j<5;j++){c.strokeStyle='#cbd5e1';c.lineWidth=2;c.strokeRect(cx[j],y,cw[j],h);
+   c.font='800 30px sans-serif';c.fillStyle=(j===1&&r.net<0)?'#e11d48':'#0f172a';
+   if(j===0){c.textAlign='left';const L=lines[i];L.forEach((l,k)=>c.fillText(l,cx[0]+14,y+h/2+(k-(L.length-1)/2)*38));c.textAlign='center'}
+   else c.fillText(String(vals[j]),cx[j]+cw[j]/2,y+h/2)}
+  y+=h});
+ if(C.rows.length){let sn=0,st=0,sa=0;C.rows.forEach(r=>{sn+=r.net;st+=r.total;sa+=r.na});
+  c.fillStyle='#1e3a8a';c.fillRect(M,y,TW,TH);c.fillStyle='#fff';c.font='900 32px sans-serif';
+  c.textAlign='left';c.fillText('Total',cx[0]+14,y+TH/2);c.textAlign='center';
+  [[1,sn],[3,st],[4,sa]].forEach(([j,val])=>c.fillText(String(rd2(val)),cx[j]+cw[j]/2,y+TH/2));
+  for(let j=1;j<5;j++){c.strokeStyle='#334e9b';c.lineWidth=2;c.beginPath();c.moveTo(cx[j],y);c.lineTo(cx[j],y+TH);c.stroke()}}
+ // outer border
+ c.strokeStyle='#1e3a8a';c.lineWidth=4;c.strokeRect(M,M+BH+GAP,TW,H-M-(M+BH+GAP));
+ const blob=await new Promise(res=>cvs.toBlob(res,'image/jpeg',0.93));
+ const a=document.createElement('a');a.href=URL.createObjectURL(blob);
+ a.download=v.name.replace(/[^a-z0-9]/gi,'_')+'_'+today()+'.jpg';
+ document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),4000);
+ toast('Image gallery me save ho gayi')}
+
+/* ---------- IMPORT ---------- */
 function openImport(mode){impMode=mode;let help='';
  if(mode==='sheet'&&shId&&fmtOf(shId)==='rate'){
   help='<b>Rate sheet Import</b><br>Sirf 4 columns copy karein (header ke bina):<br><b>Product | Qty | MRP | Rate</b><br>GST auto 5% lagega. Date aaj ki lagegi.';
@@ -972,7 +1071,6 @@ function runImport(){
   lines.forEach(line=>{
    const p=line.split(/[\t,]/).map(s=>s.trim());
    if(p.length<3)return;
-   // expect: Product, Qty, MRP, Rate  (or Product, Rate, MRP, Qty — try smart)
    let name=p[0],qty=0,mrp=0,rate=0;
    if(p.length>=4){qty=parseFloat(p[1])||0;mrp=parseFloat(p[2])||0;rate=parseFloat(p[3])||0}
    else{rate=parseFloat(p[1])||0;mrp=parseFloat(p[2])||0}
@@ -1009,17 +1107,27 @@ function runImport(){
  toast('Is mode ke liye import abhi limited hai');closeModal('m-imp')}
 
 /* ---------- BACKUP / THEME / RESET ---------- */
-function dlBackup(){const blob=new Blob([JSON.stringify(state,null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='ledger_backup_'+today()+'.json';a.click();toast('Backup downloaded')}
-function copyBackup(){navigator.clipboard.writeText(JSON.stringify(state)).then(()=>toast('Backup text copied')).catch(()=>toast('Copy fail'))}
-function restoreFile(ev){const f=ev.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{state=normShop(JSON.parse(r.result));save();renderHome();closeModal('m-backup');toast('Restored!')}catch(e){toast('Invalid JSON')}};r.readAsText(f)}
-function restoreText(){try{state=normShop(JSON.parse($('rs-text').value));save();renderHome();closeModal('m-backup');toast('Restored!')}catch(e){toast('Invalid JSON')}}
-function toggleTheme(){document.body.classList.toggle('dk');toast(document.body.classList.contains('dk')?'Dark':'Light')}
-function resetDemo(){if(!confirm('Sample data se reset?'))return;localStorage.removeItem(KEY);state=load();renderHome();closeModal('m-backup');toast('Reset done')}
+function dlBackup(){const blob=new Blob([JSON.stringify(state,null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);
+ a.download='ledger_backup_'+today()+'.json';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),4000);toast('Backup download ho gaya')}
+function copyBackup(){const t=JSON.stringify(state);
+ const fb=()=>{const ta=$('rs-text');ta.value=t;ta.select();try{document.execCommand('copy');toast('Backup text copy ho gaya')}catch(e){toast('Box se text manually copy karein')}};
+ if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(t).then(()=>toast('Backup text copy ho gaya')).catch(fb);else fb()}
+function applyRestore(txt){let o;try{o=JSON.parse(txt)}catch(e){return toast('Backup text sahi nahi hai')}
+ if(!o||typeof o!=='object'||!Array.isArray(o.vendors))return toast('Ye valid backup nahi hai');
+ if(!Array.isArray(o.rates))o.rates=clone(D_RATES);if(!o.accounts)o.accounts={};
+ try{localStorage.setItem(KEY+'_prev',JSON.stringify(state))}catch(e){}
+ window.__noSave=false;state=normShop(o);save();closeModal('m-backup');$('rs-text').value='';renderHome();toast('Restore ho gaya')}
+function restoreFile(ev){const f=ev.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>applyRestore(r.result);r.readAsText(f)}
+function restoreText(){const t=$('rs-text').value.trim();if(!t)return toast('Pehle backup text paste karein');applyRestore(t)}
+function resetDemo(){if(!pendReset){pendReset=true;return toast('Sab data hat jayega! Confirm ke liye dubara dabayein')}
+ pendReset=false;window.__noSave=false;state=normShop({vendors:clone(D_VENDORS),rates:clone(D_RATES),accounts:{}});save();closeModal('m-backup');renderHome();toast('Sample data lag gaya')}
+function toggleTheme(){const d=document.documentElement.classList.toggle('dark');try{localStorage.setItem(KEY+'_theme',d?'dark':'light')}catch(e){}}
+function retryShare(){if(pendShare&&navigator.share){navigator.share({files:[pendShare]}).catch(()=>{})}else toast('Share is device par available nahi')}
+function saveJpg(){const i=$('share-img');if(!i||!i.src)return;const a=document.createElement('a');a.href=i.src;a.download='bill_'+today()+'.jpg';a.click()}
 
-/* ---------- BOOT ---------- */
-document.getElementById('boot').style.display='none';
-renderHome();
+/* ---------- INIT ---------- */
+try{if(localStorage.getItem(KEY+'_theme')==='dark')document.documentElement.classList.add('dark')}catch(e){}
+renderHome();refreshItems();
 </script>
 </body>
 </html>
-
