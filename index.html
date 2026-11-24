@@ -1009,4 +1009,17 @@ function runImport(){
  toast('Is mode ke liye import abhi limited hai');closeModal('m-imp')}
 
 /* ---------- BACKUP / THEME / RESET ---------- */
-function dlBackup(){const blob=new Blob([JSON.stringify(state,null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);
+function dlBackup(){const blob=new Blob([JSON.stringify(state,null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='ledger_backup_'+today()+'.json';a.click();toast('Backup downloaded')}
+function copyBackup(){navigator.clipboard.writeText(JSON.stringify(state)).then(()=>toast('Backup text copied')).catch(()=>toast('Copy fail'))}
+function restoreFile(ev){const f=ev.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{state=normShop(JSON.parse(r.result));save();renderHome();closeModal('m-backup');toast('Restored!')}catch(e){toast('Invalid JSON')}};r.readAsText(f)}
+function restoreText(){try{state=normShop(JSON.parse($('rs-text').value));save();renderHome();closeModal('m-backup');toast('Restored!')}catch(e){toast('Invalid JSON')}}
+function toggleTheme(){document.body.classList.toggle('dk');toast(document.body.classList.contains('dk')?'Dark':'Light')}
+function resetDemo(){if(!confirm('Sample data se reset?'))return;localStorage.removeItem(KEY);state=load();renderHome();closeModal('m-backup');toast('Reset done')}
+
+/* ---------- BOOT ---------- */
+document.getElementById('boot').style.display='none';
+renderHome();
+</script>
+</body>
+</html>
+
