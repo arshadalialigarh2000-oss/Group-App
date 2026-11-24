@@ -113,7 +113,7 @@ tr.b1{background:#e8f0fe}tr.b0{background:#fff}tr.sep{height:18px}
 .ai{padding:8px 6px;font-size:12px;border-radius:9px}
 .adb{padding:0 12px;font-size:13px}
 .sd .ra{padding:0 3px;color:#9aa8ad;font-size:11px}
-.oi{width:100%;min-width:0;text-align:center;border:1px dashed #93c5fd;border-radius:6px;padding:3px 1px;font-weight:800;font-size:13px;background:#fff;color:#0f172a}
+.oi{width:92px;text-align:center;border:1px dashed #93c5fd;border-radius:6px;padding:3px;font-weight:800;font-size:13px;background:#fff;color:#0f172a}
 .st table{table-layout:fixed;width:100%}
 .st td.sv{white-space:normal;word-break:break-word;text-align:left}
 .st .sd{font-size:12px!important}
@@ -176,28 +176,7 @@ tr.b1{background:#e8f0fe}tr.b0{background:#fff}tr.sep{height:18px}
 .ai[readonly]{background:#eef2ff;color:#1e3a8a}
 #pg-ud .st table{width:135%}
 #pg-sh.rate .st th,#pg-sh.rate .st td{padding-left:6px;padding-right:6px}
-
-/* ---- Edit / Delete buttons: sabse right me, screen ke bahar (left swipe par dikhenge) ---- */
-td{position:relative}
-.row-btns{position:absolute;left:100%;top:50%;transform:translateY(-50%);margin-left:8px;display:flex;gap:6px;white-space:nowrap;z-index:10}
-.row-btns .ra,.row-btns .clib{background:#e2e8f0;color:#334155;border-radius:8px;padding:4px 9px;font-size:13px;min-width:28px;height:26px;line-height:18px}
-.row-btns .ra:last-child,.row-btns .clib.d{background:#fee2e2;color:#dc2626}
-th.ca,td.ca{width:0!important;min-width:0!important;padding:0!important;border:none!important}
-.shooting .row-btns,.shooting .ra,.shooting .clib{display:none!important}
-.shooting .st,.shooting .clt,.shooting .sc{overflow:visible!important;max-height:none!important}
-
-/* ---- v19: har row me dikhne wale Edit / Delete buttons ---- */
-.act{display:flex;gap:3px;justify-content:center;align-items:center}
-.act button{width:24px;height:24px;border-radius:50%;font-size:12px;font-weight:800;padding:0;background:#dbeafe;color:#1d4ed8;line-height:24px}
-.act button.d{background:#fee2e2;color:#dc2626;width:auto;min-width:24px;padding:0 4px;border-radius:12px}
-.st td.sa{padding:6px 2px!important}
-#pg-ud .st th:last-child{position:sticky;right:0;z-index:7}
-#pg-ud .st td.sa{position:sticky;right:0;z-index:3;background:#fff!important}
-#pg-ud .st tr.o td.sa{background:#f1f5f9!important}
-/* ---- v19: doctor ledger ka upar wala banner (clinic page jaisa) ---- */
-.ws .clban{margin:0 0 8px;position:sticky;top:var(--nav-h);z-index:40}
-
-@media print{body{background:#fff}.nav,.tb,.ep,.ca,.no-print,.more{display:none!important}.row-btns,.ra,.clib{display:none!important}.ban{position:static;-webkit-print-color-adjust:exact;print-color-adjust:exact}.clban{position:static!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}tr.b1{-webkit-print-color-adjust:exact;print-color-adjust:exact}.sc{overflow:visible}#pg-l3 .sc,#pg-l4 .sc,#pg-cash .sc{max-height:none!important;overflow:visible!important}}
+@media print{body{background:#fff}.nav,.tb,.ep,.ca,.no-print,.more{display:none!important}.ban{position:static;-webkit-print-color-adjust:exact;print-color-adjust:exact}tr.b1{-webkit-print-color-adjust:exact;print-color-adjust:exact}.sc{overflow:visible}#pg-l3 .sc,#pg-l4 .sc,#pg-cash .sc{max-height:none!important;overflow:visible!important}}
 @keyframes bootshow{to{opacity:1}}
 </style>
 <script>window.onerror=function(m,u,l){var b=document.getElementById('boot');if(b){b.innerHTML='⚠ App chali nahi — error: '+m+' (line '+l+').';b.style.animation='none';b.style.opacity=1}};</script>
@@ -206,9 +185,10 @@ th.ca,td.ca{width:0!important;min-width:0!important;padding:0!important;border:n
 <div id="boot" style="position:fixed;left:0;right:0;top:0;z-index:99999;background:#e11d48;color:#fff;padding:10px 12px;font:700 13px sans-serif;text-align:center;opacity:0;animation:bootshow .01s 3s forwards">⚠ App poori load nahi hui. File dobara open karein.</div>
 <div class="app">
 <div id="toast" class="toast hidden"></div>
+
 <!-- HOME -->
 <div id="pg-home" class="pg">
- <header class="hdr"><div class="row"><div><h1>Billing & Ledger</h1><p>Shop • Personal • Doctors • v19</p></div>
+ <header class="hdr"><div class="row"><div><h1>Billing & Ledger</h1><p>Shop • Personal • Doctors • v18</p></div>
  <button class="btn-glass" onclick="openModal('m-backup')">⬇ Backup</button></div></header>
  <div class="body">
   <div class="big" onclick="openShop()"><div class="left"><button type="button" class="pen" onpointerdown="penDown(event,'shop')" onpointerup="penUp()" onpointercancel="penUp()" onpointerleave="penUp()" onclick="penTap(event)" oncontextmenu="return false">✎</button><div class="ic">🏪</div><div><h3 id="h-n-shop">Shop Vendors Account</h3><small>Vendors ka baaki</small></div></div><div class="amt mono"><small>Total Baaki</small><span id="h-shop">₹0</span></div></div>
@@ -258,7 +238,7 @@ th.ca,td.ca{width:0!important;min-width:0!important;padding:0!important;border:n
  <div id="s-srow" class="srch hidden"><input id="s-q" placeholder="Amount (349) ya date (5, 7, 12 / 05-11) ya naam" oninput="renderShopAll()"/></div>
  <div id="s-chips" class="chips"></div><div id="s-sum"></div>
  <div class="sinfo" id="s-info"></div>
- <div class="st"><div class="sc"><table><colgroup><col style="width:27%"><col style="width:13%"><col style="width:12%"><col style="width:15%"><col style="width:16%"><col style="width:17%"></colgroup><thead><tr><th>Vendor</th><th>Bills</th><th>Paid</th><th>Net</th><th>Date</th><th>Edit</th></tr></thead><tbody id="s-body"></tbody></table></div></div>
+ <div class="st"><div class="sc"><table><colgroup><col style="width:26%"><col style="width:14%"><col style="width:14%"><col style="width:17%"><col style="width:29%"></colgroup><thead><tr><th>Vendor</th><th>Bills</th><th>Paid</th><th>Net Amount</th><th>Date</th></tr></thead><tbody id="s-body"></tbody></table></div></div>
  <button class="more" style="width:auto;margin:0 12px 10px" id="s-more" onclick="openShopFull()"></button>
  <form class="addbar" onsubmit="addShop(event)">
   <input id="s-v" class="ai" list="s-vlist" placeholder="Vendor ▼" autocomplete="off"/><input id="s-bill" class="ai" type="number" step="0.01" placeholder="Bill (₹)"/><input id="s-paid" class="ai" type="number" step="0.01" placeholder="Paid (₹)"/>
@@ -269,13 +249,13 @@ th.ca,td.ca{width:0!important;min-width:0!important;padding:0!important;border:n
  <div class="gh"><button class="gb" onclick="show('pg-shop');renderShopAll()">←</button><b id="sv-name"></b></div>
  <div class="sumr" style="margin-top:12px"><div class="l">Remaining</div><div class="v mono" id="sv-bal"></div></div>
  <div class="sinfo" id="sv-info"></div>
- <div class="st"><div class="sc"><table><colgroup><col style="width:27%"><col style="width:13%"><col style="width:12%"><col style="width:15%"><col style="width:16%"><col style="width:17%"></colgroup><thead><tr><th>Vendor</th><th>Bills</th><th>Paid</th><th>Net</th><th>Date</th><th>Edit</th></tr></thead><tbody id="sv-body"></tbody></table></div></div>
+ <div class="st"><div class="sc"><table><colgroup><col style="width:26%"><col style="width:14%"><col style="width:14%"><col style="width:17%"><col style="width:29%"></colgroup><thead><tr><th>Vendor</th><th>Bills</th><th>Paid</th><th>Net Amount</th><th>Date</th></tr></thead><tbody id="sv-body"></tbody></table></div></div>
 </div>
 <div id="pg-shopfull" class="pg hidden">
  <div class="gh"><button class="gb" onclick="show('pg-shop');renderShopAll()">←</button><b>Full Entries (sab months)</b></div>
  <div class="srch"><input id="sf-q" placeholder="Amount (349) ya date (5, 7, 12 / 05-11) ya naam" oninput="renderShopAll()"/></div>
  <div class="sinfo" id="sf-info" style="margin-top:6px"></div>
- <div class="st"><div class="sc"><table><colgroup><col style="width:27%"><col style="width:13%"><col style="width:12%"><col style="width:15%"><col style="width:16%"><col style="width:17%"></colgroup><thead><tr><th>Vendor</th><th>Bills</th><th>Paid</th><th>Net</th><th>Date</th><th>Edit</th></tr></thead><tbody id="sf-body"></tbody></table></div></div>
+ <div class="st"><div class="sc"><table><colgroup><col style="width:26%"><col style="width:14%"><col style="width:14%"><col style="width:17%"><col style="width:29%"></colgroup><thead><tr><th>Vendor</th><th>Bills</th><th>Paid</th><th>Net Amount</th><th>Date</th></tr></thead><tbody id="sf-body"></tbody></table></div></div>
 </div>
 
 <!-- UDHAAR -->
@@ -284,7 +264,7 @@ th.ca,td.ca{width:0!important;min-width:0!important;padding:0!important;border:n
  <div class="srch"><input id="ud-q" list="ud-nl" placeholder="🔍 Naam search karein" oninput="udInput()" autocomplete="off"/></div>
  <div id="ud-sug" class="chips hidden" style="grid-template-columns:1fr;max-height:50vh;overflow:auto"></div>
  <div class="sinfo" id="ud-info" style="margin-top:4px"></div>
- <div class="st" id="ud-st"><div class="sc"><table><colgroup><col style="width:17%"><col style="width:10%"><col style="width:22%"><col style="width:9%"><col style="width:10%"><col style="width:15%"><col style="width:17%"></colgroup><thead><tr><th class="h1">Name</th><th class="h2">Amount</th><th class="h1">Description</th><th class="h3">Paid<br>Amount</th><th class="h1">Net<br>amount</th><th class="h1">Date</th><th class="h1">Edit</th></tr></thead><tbody id="ud-body"></tbody></table></div></div>
+ <div class="st" id="ud-st"><div class="sc"><table><colgroup><col style="width:19%"><col style="width:10%"><col style="width:25%"><col style="width:10%"><col style="width:10%"><col style="width:16%"><col style="width:10%"></colgroup><thead><tr><th class="h1">Name</th><th class="h2">Amount</th><th class="h1">Description</th><th class="h3">Paid<br>Amount</th><th class="h1">Net<br>amount</th><th class="h1">Date</th><th class="h1"></th></tr></thead><tbody id="ud-body"></tbody></table></div></div>
  <form class="addbar" style="grid-template-columns:repeat(6,1fr)" onsubmit="addUd(event)">
   <input id="ud-n" class="ai" list="ud-nl" placeholder="Name" autocomplete="off" style="grid-column:span 3"/>
   <input id="ud-d" class="ai" placeholder="Description" style="grid-column:span 3"/>
@@ -392,33 +372,6 @@ th.ca,td.ca{width:0!important;min-width:0!important;padding:0!important;border:n
 <div class="lf"><label>Qty</label><input id="re-q" class="li mono" type="number" step="0.01"/></div></div>
 <div class="lf"><label>Date</label><input id="re-d" class="li" type="date"/></div>
 <button class="btn-p" style="width:100%;padding:12px">Update</button></form></div></div>
-
-<!-- NEW v19: Udhaar entry edit -->
-<div id="m-uedit" class="mb hidden"><div class="mc"><div class="mh"><h3>Udhaar Entry Edit</h3><button class="x" onclick="closeModal('m-uedit')">✕</button></div>
-<form onsubmit="saveUdEdit(event)"><input type="hidden" id="ue-id"/>
-<div class="lf"><label>Naam</label><input id="ue-n" class="li" list="ud-nl" autocomplete="off" required/></div>
-<div class="lf"><label>Description</label><input id="ue-d" class="li"/></div>
-<div class="g2"><div class="lf"><label>Amount ₹</label><input id="ue-a" class="li mono" type="number" step="0.01"/></div>
-<div class="lf"><label>Paid ₹</label><input id="ue-p" class="li mono" type="number" step="0.01"/></div></div>
-<div class="lf"><label>Date</label><input id="ue-t" class="li" type="date"/></div>
-<button class="btn-p" style="width:100%;padding:12px">Update</button></form></div></div>
-
-<!-- NEW v19: Shop vendor entry edit -->
-<div id="m-sedit" class="mb hidden"><div class="mc"><div class="mh"><h3>Vendor Entry Edit</h3><button class="x" onclick="closeModal('m-sedit')">✕</button></div>
-<form onsubmit="saveShopEdit(event)"><input type="hidden" id="se-id"/>
-<div class="lf"><label>Vendor</label><input id="se-v" class="li" list="s-vlist" autocomplete="off" required/></div>
-<div class="g2"><div class="lf"><label>Bill ₹</label><input id="se-b" class="li mono" type="number" step="0.01"/></div>
-<div class="lf"><label>Paid ₹</label><input id="se-p" class="li mono" type="number" step="0.01"/></div></div>
-<div class="lf"><label>Date</label><input id="se-d" class="li" type="date"/></div>
-<button class="btn-p" style="width:100%;padding:12px">Update & Recalculate</button></form></div></div>
-
-<!-- Clinic period modal (pehle missing tha) -->
-<div id="m-cper" class="mb hidden"><div class="mc"><div class="mh"><h3>Period & Percentage</h3><button class="x" onclick="closeModal('m-cper')">✕</button></div>
-<form onsubmit="saveCper(event)">
-<div class="g2"><div class="lf"><label>Se (From)</label><input id="cp-from" class="li" type="date" required/></div><div class="lf"><label>Tak (To)</label><input id="cp-to" class="li" type="date" required/></div></div>
-<div class="lf"><label>Net Amount % of MRP</label><input id="cp-pct" class="li mono" type="number" step="0.01"/></div>
-<button class="btn-p" style="width:100%;padding:12px;margin-bottom:8px">Save</button>
-<button type="button" class="btn-d" style="width:100%" onclick="resetCper()">Is mahine par reset</button></form></div></div>
 </div>
 
 <script>
@@ -562,7 +515,7 @@ function renderCash(){
  let run=0,html='',i=0;
  list.forEach((e,idx)=>{run+=(e.type==='in'?1:-1)*Number(e.amount);run=Math.round(run*100)/100;i++;
   const dt=idx===0||list[idx-1].date!==e.date?fmtDate(e.date):'';
-  html+=`<tr class="${i%2?'b1':'b0'}"><td class="cd">${dt}</td><td class="cp">${esc(e.particular)}</td><td class="cn mono">${e.type==='in'?e.amount:''}</td><td class="cn mono">${e.type==='out'?e.amount:''}</td><td class="cf mono">${run}</td><td class="ca no-print"><div class="row-btns"><button class="ra" onclick="delCash('${e.id}')">${pendDel===e.id?'OK?':'✕'}</button></div></td></tr>`});
+  html+=`<tr class="${i%2?'b1':'b0'}"><td class="cd">${dt}</td><td class="cp">${esc(e.particular)}</td><td class="cn mono">${e.type==='in'?e.amount:''}</td><td class="cn mono">${e.type==='out'?e.amount:''}</td><td class="cf mono">${run}</td><td class="ca no-print"><button class="ra" onclick="delCash('${e.id}')">${pendDel===e.id?'OK?':'✕'}</button></td></tr>`});
  for(let k=0;k<3;k++)html+=`<tr class="sep ${(i+k)%2?'b1':'b0'}"><td></td><td></td><td></td><td></td><td></td><td class="no-print"></td></tr>`;
  $('c-body').innerHTML=html;$('c-bal').textContent=run;$('c-title').innerHTML=esc(nm)+',<br/>final balance';setBanH()}
 function addCash(e){e.preventDefault();const amt=parseFloat($('c-amt').value);if(isNaN(amt)||amt<=0)return toast('Sahi amount bharein');
@@ -571,11 +524,11 @@ function addCash(e){e.preventDefault();const amt=parseFloat($('c-amt').value);if
 function delCash(id){if(pendDel!==id){pendDel=id;renderCash();return toast('Delete ke liye dubara "OK?" dabayein')}
  state.accounts[cashKey]=state.accounts[cashKey].filter(x=>x.id!==id);pendDel=null;save();renderCash();toast('Entry deleted')}
 
-/* ---------- VENDOR LEDGER PAGES (Doctors) ---------- */
+/* ---------- VENDOR LEDGER PAGES ---------- */
 function ledgerPage(n,full){
  return `<div class="nav no-print"><div class="l"><button class="nb" onclick="${full?'backToL3()':'backToVendors()'}">${full?'← Last 30':'← Doctors'}</button><div style="min-width:0"><small>${full?'Page 4 • Full Ledger':'Page 3 • Last '+LIMIT+' Rows'}</small><div class="t" id="p${n}-nm"></div></div></div>
  <div style="display:flex;gap:6px"><button class="nb" onclick="openImport('doc')">📥</button><button class="nb wa" onclick="shareWA()">📷 Image</button><button class="nb pdf" onclick="printPDF()">PDF</button></div></div>
- <div class="ws"><div class="clban"><div class="cla"><div class="cln" id="p${n}-tt"></div><div class="cll">LEDGER FINAL BALANCE</div></div><div class="clb mono" id="p${n}-bal"></div></div>
+ <div class="ws"><div class="ban"><div class="a"><h2 id="p${n}-tt"></h2></div><div class="b mono" id="p${n}-bal"></div></div>
  <div class="tb no-print"><span id="p${n}-info"></span><button class="nb" style="background:#e2e8f0;color:#1e293b;padding:4px 8px" onclick="dlCSV()">Export CSV</button></div>
  <div class="sc"><table><thead><tr><th>Date</th><th class="tl">Particular</th><th>Qty</th><th>Rate</th><th>Total</th><th>Received<br/>Amount</th><th>Final<br/>Amount</th><th class="ca no-print">Edit</th></tr></thead><tbody id="p${n}-body"></tbody></table></div>
  ${full?'':`<button class="more no-print" id="p3-more" onclick="openFull()"></button>
@@ -606,7 +559,7 @@ function rowsHTML(rows,limit){
   if(r.type==='opening')p='Previous Balance';
   else if(r.type==='item'){p=esc(r.particular);q=r.qty;rt=r.rate;t=r.totalVal}
   else{p=esc(r.particular||'Received Amt');q=esc(r.mode||'cash');rc=r.recVal}
-html+=`<tr class="${v%2?'b1':'b0'}"><td class="cd">${showDate?fmtDate(r.date):''}</td><td class="cp">${p}</td><td class="cn mono">${q}</td><td class="cn mono">${rt}</td><td class="cn mono">${t}</td><td class="cn mono">${rc}</td><td class="cf mono">${r.isLast?r.finalVal:''}</td><td class="ca no-print"><div class="row-btns"><button class="ra" onclick="openEdit('${r.id}')">✎</button><button class="ra" onclick="delRow('${r.id}')">${pendDel===r.id?'OK?':'✕'}</button></div></td></tr>`});
+  html+=`<tr class="${v%2?'b1':'b0'}"><td class="cd">${showDate?fmtDate(r.date):''}</td><td class="cp">${p}</td><td class="cn mono">${q}</td><td class="cn mono">${rt}</td><td class="cn mono">${t}</td><td class="cn mono">${rc}</td><td class="cf mono">${r.isLast?r.finalVal:''}</td><td class="ca no-print"><button class="ra" onclick="openEdit('${r.id}')">✎</button><button class="ra" onclick="delRow('${r.id}')">${pendDel===r.id?'OK?':'✕'}</button></td></tr>`});
  for(let k=0;k<3;k++){v++;html+=`<tr class="sep ${v%2?'b1':'b0'}"><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td class="no-print"></td></tr>`}
  return html}
 function renderLedger(){
@@ -614,7 +567,7 @@ function renderLedger(){
  const L=buildLedger(vendor),total=L.rows.length,old=Math.max(0,total-LIMIT);
  [[3,LIMIT],[4,0]].forEach(([n,lim])=>{
   $('p'+n+'-nm').textContent=vendor.name;
-  $('p'+n+'-tt').textContent=vendor.name;
+  $('p'+n+'-tt').innerHTML=esc(vendor.name)+',<br/>ledger final balance';
   $('p'+n+'-bal').textContent=L.finalBalance;
   $('p'+n+'-body').innerHTML=rowsHTML(L.rows,lim);
   $('p'+n+'-info').textContent=n===3?(old?`Latest ${LIMIT} rows (kul ${total})`:`Kul ${total} rows`):`Poora data: ${total} rows`});
@@ -649,9 +602,86 @@ function saveEdit(e){e.preventDefault();const v=state.vendors.find(x=>x.id===act
  else{r.mode=$('ed-mode').value;r.received=parseFloat($('ed-rec').value)||0}
  save();closeModal('m-edit');renderLedger();toast('Row updated!')}
 
-/* ---------- SHARE / PRINT / CSV (simplified) ---------- */
+/* ---------- SHARE IMAGE (gallery me save) / PRINT / CSV ---------- */
 function curRoot(){return $('pg-l4').classList.contains('hidden')?$('pg-l3'):$('pg-l4')}
-async function shareWA(){toast('Image feature simplified — use PDF / Print for now')}
+async function shareWA(){
+ const v=state.vendors.find(x=>x.id===activeV);if(!v)return;
+ const full=!$('pg-l4').classList.contains('hidden');
+ const L=buildLedger(v);
+ const rows=full?L.rows:L.rows.slice(-LIMIT); // jitni screen pe dikh rahi hain utni hi
+ toast('Image ban rahi hai...');
+ const W=1080,X0=20,CW=[150,270,90,100,130,150,150],BAN=190,HDR=84,RH=56,SH=22,MAXH=1900,BASE=BAN+HDR+20;
+ const HEAD=['Date','Particular','Qty','Rate','Total','Received\nAmount','Final\nAmount'];
+ // items (rows + separators)
+ const items=[];let prevG=null;
+ rows.forEach((r,i)=>{if(i>0&&r.gi!==prevG)items.push({sep:true});prevG=r.gi;items.push({r})});
+ // pages
+ const pages=[];let cur=[],h=BASE;
+ items.forEach(it=>{const ih=it.sep?SH:RH;
+  if(h+ih>MAXH&&cur.length){pages.push(cur);cur=[];h=BASE}
+  if(it.sep&&!cur.length)return;cur.push(it);h+=ih});
+ if(cur.length)pages.push(cur);
+ if(!pages.length)pages.push([]);
+ const fit=(c,t,max,size)=>{do{c.font='800 '+size+'px sans-serif';size-=2}while(c.measureText(t).width>max&&size>14)};
+ const rr=(c,x,y,w,h,r)=>{c.beginPath();c.moveTo(x+r,y);c.arcTo(x+w,y,x+w,y+h,r);c.arcTo(x+w,y+h,x,y+h,r);c.arcTo(x,y+h,x,y,r);c.arcTo(x,y,x+w,y,r);c.closePath()};
+ const blobs=[];
+ for(let p=0;p<pages.length;p++){
+  const its=pages[p];
+  let H=BASE;its.forEach(it=>H+=it.sep?SH:RH);H+=20;
+  const cv=document.createElement('canvas');cv.width=W;cv.height=H;const c=cv.getContext('2d');
+  c.fillStyle='#fff';c.fillRect(0,0,W,H);
+  // ---- fixed top banner (har image me) ----
+  const bw=W-40,lw=Math.round(bw*7/12);
+  let g=c.createLinearGradient(0,10,0,10+BAN-20);g.addColorStop(0,'#2563eb');g.addColorStop(1,'#1e3a8a');
+  c.fillStyle=g;rr(c,20,10,bw,BAN-20,24);c.fill();
+  c.textAlign='center';c.textBaseline='middle';c.fillStyle='#fff';
+  fit(c,v.name+',',lw-30,44);c.fillText(v.name+',',20+lw/2,BAN/2-22);
+  c.font='800 40px sans-serif';c.fillText('ledger final balance',20+lw/2,BAN/2+26);
+  const bx=20+lw+10,bwid=bw-lw-20;
+  g=c.createLinearGradient(0,25,0,BAN-25);g.addColorStop(0,'#fde68a');g.addColorStop(1,'#f59e0b');
+  c.fillStyle=g;rr(c,bx,25,bwid,BAN-50,18);c.fill();
+  c.fillStyle='#1e293b';const bt=String(L.finalBalance);fit(c,bt,bwid-20,72);c.fillText(bt,bx+bwid/2,BAN/2);
+  // ---- table header ----
+  let y=BAN;c.fillStyle='#1e3a8a';c.fillRect(X0,y,W-2*X0,HDR);
+  let x=X0;c.fillStyle='#fff';c.font='800 26px sans-serif';
+  HEAD.forEach((t,i)=>{const ls=t.split('\n');ls.forEach((l,k)=>c.fillText(l,x+CW[i]/2,y+HDR/2+(k-(ls.length-1)/2)*30));x+=CW[i]});
+  y+=HDR;
+  // ---- rows ----
+  let vi=0;
+  its.forEach((it,idx)=>{
+   if(it.sep){vi++;c.fillStyle=vi%2?'#e8f0fe':'#fff';c.fillRect(X0,y,W-2*X0,SH);
+    c.strokeStyle='#7c8b9e';c.lineWidth=1.5;c.strokeRect(X0,y,W-2*X0,SH);y+=SH;return}
+   const r=it.r;vi++;
+   c.fillStyle=vi%2?'#e8f0fe':'#fff';c.fillRect(X0,y,W-2*X0,RH);
+   let pt='',q='',rt='',t='',rc='';
+   if(r.type==='opening')pt='Previous Balance';
+   else if(r.type==='item'){pt=r.particular||'';q=r.qty;rt=r.rate;t=r.totalVal}
+   else{pt=r.particular||'Received Amt';q=r.mode||'cash';rc=r.recVal}
+   const showDate=r.isFirst||idx===0||its[idx-1].sep;
+   const cells=[showDate?fmtDate(r.date):'',pt,q,rt,t,rc,r.isLast?r.finalVal:''];
+   x=X0;
+   cells.forEach((tx,i)=>{
+    c.strokeStyle='#7c8b9e';c.lineWidth=1.5;c.strokeRect(x,y,CW[i],RH);
+    c.fillStyle='#000';c.font=(i===6?'900':'800')+' 25px sans-serif';
+    tx=String(tx);
+    if(i===1){c.textAlign='left';let s=tx;while(c.measureText(s).width>CW[i]-14&&s.length>1)s=s.slice(0,-1);if(s!==tx)s=s.slice(0,-1)+'…';c.fillText(s,x+8,y+RH/2)}
+    else{c.textAlign='center';c.fillText(tx,x+CW[i]/2,y+RH/2)}
+    x+=CW[i]});
+   c.textAlign='center';y+=RH});
+  if(pages.length>1){c.fillStyle='#64748b';c.font='700 20px sans-serif';c.textAlign='right';c.fillText((p+1)+' / '+pages.length,W-24,H-10)}
+  blobs.push(await new Promise(res=>cv.toBlob(res,'image/jpeg',0.92)));
+ }
+ // ---- gallery me save (download) ----
+ const base=v.name.replace(/[^a-z0-9]/gi,'_')+'_'+today();
+ for(let i=0;i<blobs.length;i++){
+  const a=document.createElement('a');a.href=URL.createObjectURL(blobs[i]);
+  a.download=base+(blobs.length>1?'_'+(i+1):'')+'.jpg';
+  document.body.appendChild(a);a.click();a.remove();
+  setTimeout(()=>URL.revokeObjectURL(a.href),4000);
+  await new Promise(r=>setTimeout(r,600));
+ }
+ toast(blobs.length+' image save ho gayi');
+}
 function printPDF(){const v=state.vendors.find(x=>x.id===activeV);if(v&&curRoot().id==='pg-l3'){$('p3-body').innerHTML=rowsHTML(buildLedger(v).rows,0);window.onafterprint=()=>{window.onafterprint=null;renderLedger()}}
  toast('Opening Print / Save as PDF...');setTimeout(()=>window.print(),250)}
 function dlCSV(){const v=state.vendors.find(x=>x.id===activeV);if(!v)return;const L=buildLedger(v);
@@ -673,15 +703,15 @@ function matchQ(e,q){q=(q||'').trim().toLowerCase();if(!q)return true;
    if(pt.length===3){let yy=pt[2];if(yy<100)yy+=2000;return pt[0]===d&&pt[1]===m&&yy===y}
    if(pt.length===2)return pt[1]>=100?(pt[0]===m&&pt[1]===y):(pt[0]===d&&pt[1]===m);return false}
   return kv(e.vendor).includes(t)})}
-function shopRow(e,i){return `<tr class="${i%2?'':'o'}"><td class="sv">${esc(e.vendor)}</td><td class="sb">${e.bill}</td><td class="sp">${e.paid}</td><td class="sr ${e.rem<0?'neg':''}">${e.rem}</td><td class="sd">${fmtShort(e.date)}</td><td class="sa"><div class="act"><button type="button" onclick="openShopEdit('${e.id}')">✎</button><button type="button" class="d" onclick="delShop('${e.id}')">${pendDel===e.id?'OK?':'✕'}</button></div></td></tr>`}
+function shopRow(e,i){return `<tr class="${i%2?'':'o'}"><td class="sv">${esc(e.vendor)}</td><td class="sb">${e.bill}</td><td class="sp">${e.paid}</td><td class="sr ${e.rem<0?'neg':''}">${e.rem}</td><td class="sd">${fmtDate(e.date)} <button class="ra" onclick="delShop('${e.id}')">${pendDel===e.id?'OK?':'✕'}</button></td></tr>`}
 function vTotals(vl,prev){
- const ym=today().slice(0,7),y=Number(ym.slice(0,4)),m=Number(ym.slice(5)),mm=ym.slice(5),yy=ym.slice(2,4),last=String(new Date(y,m,0).getDate()).padStart(2,'0');
+ const ym=today().slice(0,7),y=Number(ym.slice(0,4)),m=Number(ym.slice(5)),mm=ym.slice(5),last=String(new Date(y,m,0).getDate()).padStart(2,'0');
  let mb=0,mp=0,ab=0,ap=0;vl.forEach(e=>{const b=Number(e.bill||0),p=Number(e.paid||0);ab+=b;ap+=p;if(e.date.startsWith(ym)){mb+=b;mp+=p}});
  const r=n=>Math.round(n*100)/100,mn=r(mb-mp),an=r(Number(prev||0)+ab-ap);
- const f=vl.length?fmtShort(vl[0].date):'-',l=vl.length?fmtShort(vl[vl.length-1].date):'-';
- return `<tr class="tr1"><td class="sv">Month Total<br><small>${MN[m-1]} ${y}</small></td><td>${r(mb)}</td><td>${r(mp)}</td><td class="${mn<0?'neg':''}">${mn}</td><td class="sd">01-${mm}-${yy}<br>se ${last}-${mm}-${yy}</td><td></td></tr><tr class="tr2"><td class="sv">Kul Total<br><small>Previous sahit</small></td><td>${r(ab)}</td><td>${r(ap)}</td><td class="${an<0?'neg':''}">${an}</td><td class="sd">${f}<br>se ${l}</td><td></td></tr>`}
+ const f=vl.length?fmtDate(vl[0].date):'-',l=vl.length?fmtDate(vl[vl.length-1].date):'-';
+ return `<tr class="tr1"><td class="sv">Month Total<br><small>${MN[m-1]} ${y}</small></td><td>${r(mb)}</td><td>${r(mp)}</td><td class="${mn<0?'neg':''}">${mn}</td><td class="sd">01-${mm}-${y}<br>se ${last}-${mm}-${y}</td></tr><tr class="tr2"><td class="sv">Kul Total<br><small>Previous sahit</small></td><td>${r(ab)}</td><td>${r(ap)}</td><td class="${an<0?'neg':''}">${an}</td><td class="sd">${f}<br>se ${l}</td></tr>`}
 function openRow(i,label){const v=i<0?(state.shop.openOthers||0):(state.shop.open[kv(state.shop.chips[i])]||0);
- return `<tr class="${(i<0?state.shop.chips.length:i)%2?'':'o'}"><td class="sv">${esc(label)}</td><td class="sb">—</td><td class="sp">—</td><td class="sr"><input class="oi mono" type="number" step="any" value="${v}" onchange="setOpen(${i},this.value)"/></td><td class="sd">Previous</td><td class="sa"></td></tr>`}
+ return `<tr class="${(i<0?state.shop.chips.length:i)%2?'':'o'}"><td class="sv">${esc(label)}</td><td class="sb">—</td><td class="sp">—</td><td class="sr"><input class="oi mono" type="number" step="any" value="${v}" onchange="setOpen(${i},this.value)"/></td><td class="sd">Previous</td></tr>`}
 function openRowsHTML(){return state.shop.chips.map((c,i)=>openRow(i,c)).join('')+openRow(-1,'Others')}
 function setOpen(i,val){const n=parseFloat(val)||0;if(i<0)state.shop.openOthers=n;else state.shop.open[kv(state.shop.chips[i])]=n;save();renderShopAll();toast('Previous amount saved')}
 function openShop(){show('pg-shop');renderShopAll();scrollShopEnd()}
@@ -705,7 +735,7 @@ function renderShopAll(){
  const un=Math.round((mb-mp)*100)/100,mn=MN[Number(ym.slice(5))-1]+' '+ym.slice(0,4);
  $('s-sum').innerHTML=`<div class="sumr"><div class="l">Total Month Bills</div><div class="v mono">${fn(mb)}</div></div><div class="sumr"><div class="l">Total Month Paid</div><div class="v mono">${fn(mp)}</div></div><div class="sumr"><div class="l">This Month Unpaid</div><div class="v mono ${un>0?'neg':''}">${fn(un)}</div></div>`;
  const q=$('s-q').value.trim();let list=E.filter(e=>matchQ(e,q)),shown=q?list:list.slice(-SHOP_LIMIT);
- $('s-body').innerHTML=(q?'':openRowsHTML())+(shown.map(shopRow).join('')||(q?'<tr><td colspan="6" style="padding:18px;color:#64748b">Koi entry nahi mili</td></tr>':''));
+ $('s-body').innerHTML=(q?'':openRowsHTML())+(shown.map(shopRow).join('')||(q?'<tr><td colspan="5" style="padding:18px;color:#64748b">Koi entry nahi mili</td></tr>':''));
  $('s-info').textContent=q?`${list.length} entries mili`:`${mn} • Latest ${shown.length} entries (kul ${E.length})`;
  const more=$('s-more');more.textContent=`📂 Full Entries dekhein (kul ${E.length})`;more.classList.toggle('hidden',!!q||E.length<=SHOP_LIMIT);
  if(shopV!==null){const isO=shopV<0,ck=isO?null:kv(state.shop.chips[shopV]),vl=E.filter(e=>isO?!chipKeys.includes(e.k):e.k===ck);
@@ -715,9 +745,9 @@ function renderShopAll(){
   $('sv-body').innerHTML=openRow(shopV,nm)+vl.map(shopRow).join('')+vTotals(vl,isO?(state.shop.openOthers||0):(state.shop.open[ck]||0))}
  const fq=$('sf-q').value.trim(),fl=E.filter(e=>matchQ(e,fq));let fh='',cm='',idx=0;
  fl.forEach(e=>{const m=e.date.slice(0,7);if(m!==cm){cm=m;let b=0,p=0;fl.forEach(x=>{if(x.date.startsWith(m)){b+=Number(x.bill||0);p+=Number(x.paid||0)}});
-  fh+=`<tr class="mh"><td colspan="6">${MN[Number(m.slice(5))-1]} ${m.slice(0,4)} — Bills ${fn(b)} • Paid ${fn(p)} • Unpaid ${fn(Math.round((b-p)*100)/100)}</td></tr>`;idx=0}
+  fh+=`<tr class="mh"><td colspan="5">${MN[Number(m.slice(5))-1]} ${m.slice(0,4)} — Bills ${fn(b)} • Paid ${fn(p)} • Unpaid ${fn(Math.round((b-p)*100)/100)}</td></tr>`;idx=0}
   fh+=shopRow(e,idx++)});
- $('sf-body').innerHTML=(fq?'':openRowsHTML())+(fh||(fq?'<tr><td colspan="6" style="padding:18px;color:#64748b">Koi entry nahi mili</td></tr>':''));
+ $('sf-body').innerHTML=(fq?'':openRowsHTML())+(fh||(fq?'<tr><td colspan="5" style="padding:18px;color:#64748b">Koi entry nahi mili</td></tr>':''));
  $('sf-info').textContent=`${fl.length} entries (kul ${E.length})`}
 function addShop(e){e.preventDefault();let name=$('s-v').value.trim();if(!name)return toast('Vendor ka naam bharein');
  const bill=parseFloat($('s-bill').value)||0,paid=parseFloat($('s-paid').value)||0;if(!bill&&!paid)return toast('Bill ya Paid amount bharein');
@@ -729,17 +759,6 @@ function addShop(e){e.preventDefault();let name=$('s-v').value.trim();if(!name)r
  save();renderShopAll();scrollShopEnd();toast('Entry saved • '+fmtDate(date))}
 function delShop(id){if(pendDel!==id){pendDel=id;renderShopAll();return toast('Delete ke liye dubara "OK?" dabayein')}
  state.shop.entries=state.shop.entries.filter(x=>x.id!==id);pendDel=null;save();renderShopAll();toast('Entry deleted')}
-/* NEW v19: shop entry edit */
-function openShopEdit(id){const e=state.shop.entries.find(x=>x.id===id);if(!e)return;pendDel=null;
- $('se-id').value=id;$('se-v').value=e.vendor||'';$('se-b').value=e.bill||'';$('se-p').value=e.paid||'';$('se-d').value=e.date||today();
- openModal('m-sedit')}
-function saveShopEdit(ev){ev.preventDefault();const e=state.shop.entries.find(x=>x.id===$('se-id').value);if(!e)return;
- let name=$('se-v').value.trim();if(!name)return toast('Vendor ka naam bharein');
- const bill=parseFloat($('se-b').value)||0,paid=parseFloat($('se-p').value)||0;if(!bill&&!paid)return toast('Bill ya Paid amount bharein');
- const ch=state.shop.chips.find(c=>kv(c)===kv(name));
- if(ch)name=ch;else{const ex=state.shop.entries.find(x=>x.id!==e.id&&kv(x.vendor)===kv(name));if(ex)name=ex.vendor}
- e.vendor=name;e.bill=bill;e.paid=paid;e.date=$('se-d').value||e.date;
- save();closeModal('m-sedit');renderShopAll();toast('Entry updated')}
 function openChipModal(){renderChips();openModal('m-chip')}
 function renderChips(){$('chip-list').innerHTML=state.shop.chips.map((c,i)=>`<div class="rr"><b>${esc(c)}</b><button class="ml" style="background:none;color:#94a3b8" onclick="delChip(${i})">✕</button></div>`).join('')}
 function addChip(e){e.preventDefault();const n=$('chip-name').value.trim();if(!n)return;if(!state.shop.chips.some(c=>kv(c)===kv(n)))state.shop.chips.push(n);$('chip-name').value='';save();renderChips();renderShopAll()}
@@ -751,7 +770,7 @@ function udTotal(id){let t=0;Object.values(udCalc(id).run).forEach(v=>t+=v);retu
 function openUd(k){udId=k;cashKey=k;$('ud-q').value='';show('pg-ud');renderUd();udScrollEnd()}
 function udScrollEnd(){const t=$('ud-st');if(t)setTimeout(()=>{t.scrollTop=t.scrollHeight},30)}
 function udInput(){renderUd()}
-function udRow(e,i){return `<tr class="${i%2?'':'o'}"><td class="sv">${esc(e.name)}</td><td class="ua">${e.amount||''}</td><td class="sv ud">${esc(e.desc)}</td><td class="up">${e.paid||''}</td><td class="sr ${e.net<0?'neg':''}">${e.net}</td><td class="sd">${fmtShort(e.at)}</td><td class="sa"><div class="act"><button type="button" onclick="openUdEdit('${e.id}')">✎</button><button type="button" class="d" onclick="delUd('${e.id}')">${pendDel===e.id?'OK?':'✕'}</button></div></td></tr>`}
+function udRow(e,i){return `<tr class="${i%2?'':'o'}"><td class="sv">${esc(e.name)}</td><td class="ua">${e.amount||''}</td><td class="sv ud">${esc(e.desc)}</td><td class="up">${e.paid||''}</td><td class="sr ${e.net<0?'neg':''}">${e.net}</td><td class="sd">${fmtShort(e.at)}</td><td class="sd"><button class="ra" onclick="delUd('${e.id}')">${pendDel===e.id?'OK?':'✕'}</button></td></tr>`}
 function renderUd(){
  const a=state.custom.find(x=>x.id===udId);if(!a)return;
  const{rows,run}=udCalc(udId);const udNm={};rows.forEach(r=>{if(!udNm[r.k])udNm[r.k]=r.name});
@@ -774,18 +793,8 @@ function addUd(e){e.preventDefault();let name=$('ud-n').value.trim();if(!name)re
  save();renderUd();udScrollEnd();toast('Entry saved')}
 function delUd(id){if(pendDel!==id){pendDel=id;renderUd();return toast('Delete ke liye dubara "OK?" dabayein')}
  state.accounts[udId]=state.accounts[udId].filter(x=>x.id!==id);pendDel=null;save();renderUd();toast('Entry deleted')}
-/* NEW v19: udhaar entry edit */
-function openUdEdit(id){const e=(state.accounts[udId]||[]).find(x=>x.id===id);if(!e)return;pendDel=null;
- $('ue-id').value=id;$('ue-n').value=e.name||'';$('ue-d').value=e.desc||'';$('ue-a').value=e.amount||'';$('ue-p').value=e.paid||'';$('ue-t').value=e.at||today();
- openModal('m-uedit')}
-function saveUdEdit(ev){ev.preventDefault();const e=(state.accounts[udId]||[]).find(x=>x.id===$('ue-id').value);if(!e)return;
- let name=$('ue-n').value.trim();if(!name)return toast('Naam bharein');
- const amount=parseFloat($('ue-a').value)||0,paid=parseFloat($('ue-p').value)||0;if(!amount&&!paid)return toast('Amount ya Paid bharein');
- const ex=(state.accounts[udId]||[]).find(x=>x.id!==e.id&&x.name!==undefined&&kv(x.name)===kv(name));if(ex)name=ex.name;
- e.name=name;e.desc=$('ue-d').value.trim();e.amount=amount;e.paid=paid;e.at=$('ue-t').value||e.at;
- save();closeModal('m-uedit');renderUd();toast('Entry updated')}
 
-/* ---------- SHEET + RATE SHEET ---------- */
+/* ---------- SHEET + RATE SHEET (main fixes) ---------- */
 const PERS_COLS=[{n:'Name',t:'text'},{n:'Amount Given',t:'num'},{n:'Description',t:'text'},{n:'Amount Received',t:'num'}];
 const RATE_COLS=[{n:'Products',t:'text'},{n:'Net rate',t:'num'},{n:'Price',t:'num'},{n:'MRP',t:'num'},{n:'Rate',t:'num'},{n:'GST %',t:'num'},{n:'Qty.',t:'num'}];
 const RATE_FORM=`<input id="sh-f0" class="ai" type="text" list="sh-nl" placeholder="Product" autocomplete="off" style="grid-column:span 3"/>
@@ -808,7 +817,7 @@ function calcNetPrice(rate,gst,extra,mp){
  const price=rd2((net+Number(extra||0))*(1+Number(mp||0)/100));
  return{net,price,gst:g}}
 function plItems(k){return shRows(k)}
-function renderPl(){$('sh-pl').classList.add('hidden')}
+function renderPl(){/* optional product list summary - kept simple */ $('sh-pl').classList.add('hidden')}
 function plToggle(){}
 
 function accInfo(k){const f=fmtOf(k);
@@ -842,6 +851,7 @@ function renderSheet(){const k=shId,cs=colsOf(k);if(!cs.length)return;
  const rows=q?all.filter(e=>cs.some((c,i)=>c.t!=='num'&&kv(String(e.v[i]||'')).includes(q))||fmtShort(e.at).includes(q)):all;
  const tbl=$('sh-st').querySelector('table'),isR=fmtOf(k)==='rate';$('pg-sh').classList.toggle('rate',isR);
  if(isR){
+  // Products | Net rate | Price | MRP | Rate | GST % | Qty | Date | Edit
   const W=Math.max(320,$('sh-st').clientWidth-4);
   const px=[.34,.22,.22,.22,.18,.14,.14,.22,.20].map(x=>Math.round(x*W));
   $('sh-cg').innerHTML=px.map(w=>`<col style="width:${w}px">`).join('');
@@ -860,11 +870,12 @@ function renderSheet(){const k=shId,cs=colsOf(k);if(!cs.length)return;
   $('sh-body').innerHTML=(rows.map((e,i)=>{
    const rate=Number(e.v[4]||0),gst=e.v[5]==null||e.v[5]===''?5:Number(e.v[5]);
    const {net,price}=calcNetPrice(rate,gst,state.rf.add,state.rf.mp);
-return `<tr class="${i%2?'':'o'}"><td class="sv">${esc(e.v[0])}</td><td>${net}</td><td>${price}</td><td>${e.v[3]||''}</td><td>${rate||''}</td><td>${gst}</td><td>${e.v[6]||''}</td><td class="sd">${fmtShort(e.at)}</td><td class="sd"><div class="row-btns"><button class="ra" onclick="openRedit('${e.id}')">✎</button> <button class="ra" onclick="delSheet('${e.id}')">${pendDel===e.id?'OK?':'✕'}</button></div></td></tr>`
+   // keep stored net/price in sync for display
+   return `<tr class="${i%2?'':'o'}"><td class="sv">${esc(e.v[0])}</td><td>${net}</td><td>${price}</td><td>${e.v[3]||''}</td><td>${rate||''}</td><td>${gst}</td><td>${e.v[6]||''}</td><td class="sd">${fmtShort(e.at)}</td><td class="sd"><button class="ra" onclick="openRedit('${e.id}')">✎</button> <button class="ra" onclick="delSheet('${e.id}')">${pendDel===e.id?'OK?':'✕'}</button></td></tr>`
   }).join('')||`<tr><td colspan="9" style="padding:18px;color:#64748b">Abhi koi entry nahi. Neeche se Product + Rate + (GST optional) + MRP + Qty add karein.</td></tr>`);
  }else{
   const sums=cs.map((c,i)=>c.t==='num'?rd2(rows.reduce((s,e)=>s+Number(e.v[i]||0),0)):'');
-  $('sh-body').innerHTML=(rows.map((e,i)=>`<tr class="${i%2?'':'o'}">`+cs.map((c,j)=>`<td class="${c.t==='num'?'':'sv'}">${c.t==='num'?(e.v[j]||''):esc(e.v[j])}</td>`).join('')+`<td class="sd">${fmtShort(e.at)}</td><td class="sd"><div class="row-btns"><button class="ra" onclick="delSheet('${e.id}')">${pendDel===e.id?'OK?':'✕'}</button></div></td></tr>`).join('')||`<tr><td colspan="${cs.length+2}" style="padding:18px;color:#64748b">Abhi koi entry nahi.</td></tr>`)+(rows.length?'<tr class="tr2">'+cs.map((c,i)=>i===0?'<td class="sv">Kul</td>':`<td>${sums[i]}</td>`).join('')+'<td></td><td></td></tr>':'');
+  $('sh-body').innerHTML=(rows.map((e,i)=>`<tr class="${i%2?'':'o'}">`+cs.map((c,j)=>`<td class="${c.t==='num'?'':'sv'}">${c.t==='num'?(e.v[j]||''):esc(e.v[j])}</td>`).join('')+`<td class="sd">${fmtShort(e.at)}</td><td class="sd"><button class="ra" onclick="delSheet('${e.id}')">${pendDel===e.id?'OK?':'✕'}</button></td></tr>`).join('')||`<tr><td colspan="${cs.length+2}" style="padding:18px;color:#64748b">Abhi koi entry nahi.</td></tr>`)+(rows.length?'<tr class="tr2">'+cs.map((c,i)=>i===0?'<td class="sv">Kul</td>':`<td>${sums[i]}</td>`).join('')+'<td></td><td></td></tr>':'');
  }
 }
 
@@ -881,6 +892,7 @@ function addRateEntry(e){e.preventDefault();
  const mrp=parseFloat($('sh-f3').value)||0;
  const qty=parseFloat($('sh-f4').value)||0;
  const {net,price}=calcNetPrice(rate,gst,state.rf.add,state.rf.mp);
+ // v order matches RATE_COLS: Products, Net rate, Price, MRP, Rate, GST %, Qty
  const v=[name,net,price,mrp,rate,gst,qty];
  (state.accounts[shId]||(state.accounts[shId]=[])).push({id:uid('h_'),v,at:today()});
  ['sh-f0','sh-f1','sh-f2','sh-f3','sh-f4'].forEach(i=>$(i).value='');
@@ -898,9 +910,9 @@ function saveRedit(e){e.preventDefault();const row=(state.accounts[shId]||[]).fi
  save();closeModal('m-redit');renderSheet();toast('Updated')}
 function saveRf(e){e.preventDefault();state.rf.add=parseFloat($('rf-add').value)||3;state.rf.mp=parseFloat($('rf-mp').value)||20;save();closeModal('m-rf');if(shId&&fmtOf(shId)==='rate')renderSheet();toast('Formula saved')}
 
-function setBanH(){const b=document.querySelector('.pg:not(.hidden) .ban, .pg:not(.hidden) .clban');if(b)document.documentElement.style.setProperty('--ban-h',b.offsetHeight+'px')}
+function setBanH(){const b=document.querySelector('.pg:not(.hidden) .ban');if(b)document.documentElement.style.setProperty('--ban-h',b.offsetHeight+'px')}
 
-/* ---------- CLINIC ---------- */
+/* ---------- CLINIC (kept) ---------- */
 const isClinic=v=>v.fmt==='clinic'||/rehman|रहमान/i.test(v.name||'');
 const cv=()=>state.vendors.find(x=>x.id===activeV);
 function clinicPeriod(v){const t=today(),y=t.slice(0,4),m=t.slice(5,7),last=new Date(+y,+m,0).getDate();
@@ -920,7 +932,7 @@ function renderClinic(){const v=cv();if(!v)return;const C=clinicCalc(v);
  $('cl-th5').innerHTML='Net Amount<br>('+C.pct+'% of MRP)';
  $('cl-pl').innerHTML=(v.products||[]).map(p=>`<option value="${esc(p.name)}">`).join('');
  let sn=0,st=0,sa=0;C.rows.forEach(r=>{sn+=r.net;st+=r.total;sa+=r.na});
-$('cl-body').innerHTML=(C.rows.map((r,i)=>`<tr class="${i%2?'g':''}"><td class="pn"><span>${esc(r.p.name)}</span></td><td class="${r.net<0?'neg':''}">${r.net}</td><td>${r.p.mrp}</td><td>${r.total}</td><td>${r.na}<div class="row-btns"><button class="clib e" onclick="editProd('${r.p.id}')">✎</button><button class="clib d" onclick="delProd('${r.p.id}')">${pendDel===r.p.id?'OK?':'✕'}</button></div></td></tr>`).join('')||'<tr><td colspan="5" style="padding:18px;color:#64748b">Abhi koi product nahi.</td></tr>')
+ $('cl-body').innerHTML=(C.rows.map((r,i)=>`<tr class="${i%2?'g':''}"><td class="pn"><div class="pnw"><span class="pnb"><button class="clib e" onclick="editProd('${r.p.id}')">✎</button><button class="clib d" onclick="delProd('${r.p.id}')">${pendDel===r.p.id?'OK?':'✕'}</button></span><span>${esc(r.p.name)}</span></div></td><td class="${r.net<0?'neg':''}">${r.net}</td><td>${r.p.mrp}</td><td>${r.total}</td><td>${r.na}</td></tr>`).join('')||'<tr><td colspan="5" style="padding:18px;color:#64748b">Abhi koi product nahi.</td></tr>')
   +(C.rows.length?`<tr class="tt"><td class="pn">Total</td><td>${rd2(sn)}</td><td></td><td>${rd2(st)}</td><td>${rd2(sa)}</td></tr>`:'')}
 function clHint(){const v=cv(),n=kv($('cl-p').value);const r=n?clinicCalc(v).rows.find(x=>kv(x.p.name)===n):null;
  $('cl-m').placeholder=r?String(r.p.mrp):'MRP/tab';$('cl-l').placeholder=r?String(r.last):'Last';$('cl-r').placeholder=r?String(r.rem):'Remain'}
@@ -941,14 +953,7 @@ function openCper(){const v=cv();if(!v)return;const P=clinicPeriod(v);$('cp-from
 function saveCper(e){e.preventDefault();const v=cv();if(!v)return;v.from=$('cp-from').value;v.to=$('cp-to').value;v.pct=parseFloat($('cp-pct').value)||30;save();closeModal('m-cper');renderClinic();toast('Period saved')}
 function resetCper(){const v=cv();if(!v)return;delete v.from;delete v.to;save();closeModal('m-cper');renderClinic()}
 function openClog(){toast('Entries log — period filter available in full version')}
-function clImg(){
-  document.body.classList.add('shooting');
-  toast('Screenshot le raha hai...');
-  setTimeout(()=>{
-    window.print();
-    document.body.classList.remove('shooting');
-  }, 500);
-}
+function clImg(){toast('Image share — use browser print for now')}
 
 /* ---------- IMPORT (Rate sheet aware) ---------- */
 function openImport(mode){impMode=mode;let help='';
@@ -967,6 +972,7 @@ function runImport(){
   lines.forEach(line=>{
    const p=line.split(/[\t,]/).map(s=>s.trim());
    if(p.length<3)return;
+   // expect: Product, Qty, MRP, Rate  (or Product, Rate, MRP, Qty — try smart)
    let name=p[0],qty=0,mrp=0,rate=0;
    if(p.length>=4){qty=parseFloat(p[1])||0;mrp=parseFloat(p[2])||0;rate=parseFloat(p[3])||0}
    else{rate=parseFloat(p[1])||0;mrp=parseFloat(p[2])||0}
@@ -1003,17 +1009,4 @@ function runImport(){
  toast('Is mode ke liye import abhi limited hai');closeModal('m-imp')}
 
 /* ---------- BACKUP / THEME / RESET ---------- */
-function dlBackup(){const blob=new Blob([JSON.stringify(state,null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='ledger_backup_'+today()+'.json';a.click();toast('Backup downloaded')}
-function copyBackup(){navigator.clipboard.writeText(JSON.stringify(state)).then(()=>toast('Backup text copied')).catch(()=>toast('Copy fail'))}
-function restoreFile(ev){const f=ev.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{state=normShop(JSON.parse(r.result));save();renderHome();closeModal('m-backup');toast('Restored!')}catch(e){toast('Invalid JSON')}};r.readAsText(f)}
-function restoreText(){try{state=normShop(JSON.parse($('rs-text').value));save();renderHome();closeModal('m-backup');toast('Restored!')}catch(e){toast('Invalid JSON')}}
-function toggleTheme(){document.body.classList.toggle('dk');toast(document.body.classList.contains('dk')?'Dark':'Light')}
-function resetDemo(){if(!confirm('Sample data se reset?'))return;localStorage.removeItem(KEY);state=load();renderHome();closeModal('m-backup');toast('Reset done')}
-
-/* ---------- BOOT ---------- */
-document.getElementById('boot').style.display='none';
-renderHome();
-</script>
-</body>
-</html>
-
+function dlBackup(){const blob=new Blob([JSON.stringify(state,null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);
